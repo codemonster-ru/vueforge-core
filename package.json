@@ -4,6 +4,17 @@
   "description": "Foundation layer for the VueForge design system.",
   "type": "module",
   "license": "MIT",
+  "keywords": [
+    "vue",
+    "vue3",
+    "typescript",
+    "ui",
+    "components",
+    "design-system",
+    "theme",
+    "library",
+    "vueforge"
+  ],
   "publishConfig": {
     "access": "public"
   },
