@@ -73,5 +73,5 @@
 - GitHub Actions will:
   - validate that the tag version matches `package.json`
   - create a GitHub Release from the matching changelog section
-  - run `lint`, `test`, and `build`
-  - publish the package to npm
+  - then, on `release.published`, run `lint`, `test`, and `build`
+  - publish the package to npm through Trusted Publisher

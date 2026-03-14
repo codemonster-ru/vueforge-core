@@ -14,9 +14,6 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-    outputs:
-      version: ${{ steps.meta.outputs.version }}
-      tag: ${{ steps.meta.outputs.tag }}
 
     steps:
       - uses: actions/checkout@v4
@@ -64,25 +61,3 @@ jobs:
           name: ${{ steps.meta.outputs.tag }}
           body_path: RELEASE_NOTES.md
           generate_release_notes: false
-
-  publish-npm:
-    needs: create-release
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      id-token: write
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: npm
-          registry-url: 'https://registry.npmjs.org'
-
-      - run: npm ci
-      - run: npm run lint
-      - run: npm run test
-      - run: npm run build
-      - run: npm publish --provenance --access public
