@@ -1,0 +1,26 @@
+.vf-button,
+.vf-link,
+.vf-input,
+.vf-card,
+.vf-textarea,
+.vf-panel,
+.vf-badge,
+.vf-divider,
+.vf-dialog,
+.vf-dialog__overlay,
+.vf-dialog__content,
+.vf-dropdown,
+.vf-dropdown__trigger,
+.vf-dropdown__menu,
+.vf-accordion,
+.vf-accordion__trigger,
+.vf-tooltip,
+.vf-tooltip__trigger,
+.vf-tooltip__content,
+.vf-tabs,
+.vf-tabs__list,
+.vf-tabs__tab,
+.vf-tabs__panel {
+  box-sizing: border-box;
+  font: inherit;
+}

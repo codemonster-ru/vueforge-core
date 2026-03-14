@@ -1,0 +1,69 @@
+# VueForge Core Release Checklist
+
+## Package
+
+- `npm run lint`
+- `npm run test`
+- `npm run build`
+- Verify exported API from [src/index.ts](../src/index.ts)
+- Verify `package.json` `exports`, `types`, and `sideEffects`
+
+## Visual
+
+- Review the demo page with `npm run dev`
+- Check both `light` and `dark`
+- Check component states:
+  - default
+  - hover
+  - focus
+  - disabled
+  - invalid
+  - open
+  - selected
+
+## Accessibility
+
+- Keyboard pass for:
+  - `VfDialog`
+  - `VfDropdown`
+  - `VfPopover`
+  - `VfTooltip`
+  - `VfTabs`
+  - `VfAccordion`
+- Verify focus order and visible focus state
+- Verify base ARIA attributes are present
+
+## Theme
+
+- Verify `app.use(VueForge)` works with the built-in default preset
+- Verify `app.use(VueForge, { theme: { extend: ... } })` overrides tokens correctly
+- Verify `VfThemeProvider` works with `light`, `dark`, and `system`
+- Verify `storageKey` and `attribute` overrides still work
+
+## Docs
+
+- Review [README.md](../README.md)
+- Review [theme-api.md](./theme-api.md)
+- Review [visual-baseline.md](./visual-baseline.md)
+- Update [CHANGELOG.md](../CHANGELOG.md)
+
+## Release Decision
+
+- If theme API or visual tokens are still changing: release `rc`
+- If API and visual baseline are stable in real usage: release `1.0.0`
+- Current repository target: `1.0.0`
+
+## Publish Flow
+
+- First release note:
+  - publish `1.0.0` manually from your machine
+  - create and configure the npm Trusted Publisher for this repository
+  - after that, tag-based releases can publish automatically from GitHub Actions
+- Update `package.json` version
+- Add matching section to [CHANGELOG.md](../CHANGELOG.md)
+- Create and push tag in the format `vX.Y.Z`
+- GitHub Actions will:
+  - validate that the tag version matches `package.json`
+  - create a GitHub Release from the matching changelog section
+  - run `lint`, `test`, and `build`
+  - publish the package to npm

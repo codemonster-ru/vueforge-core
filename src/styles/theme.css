@@ -1,0 +1,29 @@
+/* Fallback mode styles for package CSS consumers.
+   Runtime preset injection is the primary theme API. */
+:root {
+  color-scheme: light;
+  background-color: var(--vf-color-bg);
+  color: var(--vf-color-text);
+}
+
+:root[data-vf-theme='dark'] {
+  color-scheme: dark;
+  --vf-color-bg: #0f172a;
+  --vf-color-surface: #162033;
+  --vf-color-surface-muted: #1b2840;
+  --vf-color-text: #eff4ff;
+  --vf-color-muted: #9fb0cf;
+  --vf-color-border: #2d405f;
+  --vf-color-primary: #6ea8fe;
+  --vf-color-primary-contrast: #081120;
+  --vf-color-primary-soft: color-mix(in srgb, var(--vf-color-primary) 12%, var(--vf-color-surface));
+  --vf-color-primary-border-soft: color-mix(in srgb, var(--vf-color-primary) 22%, var(--vf-color-border));
+  --vf-color-focus-ring: color-mix(in srgb, var(--vf-color-primary) 52%, var(--vf-color-surface));
+  --vf-color-success: #4ade80;
+  --vf-color-danger: #f87171;
+  --vf-color-success-soft: color-mix(in srgb, var(--vf-color-success) 12%, var(--vf-color-surface));
+  --vf-color-danger-soft: color-mix(in srgb, var(--vf-color-danger) 12%, var(--vf-color-surface));
+  --vf-color-success-border-soft: color-mix(in srgb, var(--vf-color-success) 24%, var(--vf-color-border));
+  --vf-color-danger-border-soft: color-mix(in srgb, var(--vf-color-danger) 24%, var(--vf-color-border));
+  --vf-shadow: none;
+}
