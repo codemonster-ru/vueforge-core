@@ -24,7 +24,8 @@ export {
   VfTooltip
 } from './components'
 export { useClickOutside, useDisclosure, useEscapeKey, useFloating, useFocusTrap, useId, useTheme } from './composables'
-export { createThemePreset, defaultThemePreset } from './theme'
+export { vfBreakpoints, toMaxWidthQuery, toMinWidthQuery, useBreakpoint, useBreakpoints, useBreakpointValue, useScrollLock } from './foundation'
+export { createThemePreset, defaultThemePreset } from './theme/public'
 export type {
   VfBadgeTone,
   VfButtonVariant,
@@ -48,3 +49,10 @@ export type {
   VfThemeTokens,
   VfVueForgeOptions
 } from './types/theme'
+export type {
+  UseBreakpointOptions,
+  UseScrollLockOptions,
+  VfBreakpointName,
+  VfBreakpointValue,
+  VfBreakpointValues
+} from './foundation'

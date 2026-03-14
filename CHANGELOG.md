@@ -1,5 +1,39 @@
 # Changelog
 
+## 1.1.0 - 2026-03-15
+
+Foundation-focused minor release for `@codemonster-ru/vueforge-core`.
+
+### Added
+
+- Stable foundation layer with:
+  - `vfBreakpoints`
+  - `toMinWidthQuery`
+  - `toMaxWidthQuery`
+  - `useBreakpoint`
+  - `useBreakpoints`
+  - `useBreakpointValue`
+  - `useScrollLock`
+- New subpath exports:
+  - `@codemonster-ru/vueforge-core/foundation`
+  - `@codemonster-ru/vueforge-core/theme`
+  - `@codemonster-ru/vueforge-core/tokens.css`
+  - `@codemonster-ru/vueforge-core/foundation.css`
+- Foundation API documentation
+- Foundation contract and responsive helper tests
+- Breakpoint tokens in both TS and CSS layers
+
+### Changed
+
+- Breakpoints now come from a single canonical source and are synchronized into CSS tokens
+- `VfDialog` now uses the shared `useScrollLock` foundation helper
+- Package build now includes foundation and theme entry points for downstream packages
+
+### Notes
+
+- This release is intended to make `@codemonster-ru/vueforge-core` a cleaner dependency for `vueforge-layouts`
+- Public UI and theme APIs remain compatible with `1.0.0`
+
 ## 1.0.0 - 2026-03-15
 
 First stable release of `@codemonster-ru/vueforge-core`.

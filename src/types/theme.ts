@@ -26,6 +26,12 @@ export interface VfThemeTokens {
   radiusControlTight: string
   radiusSurface: string
   radiusOverlay: string
+  breakpointXs: string
+  breakpointSm: string
+  breakpointMd: string
+  breakpointLg: string
+  breakpointXl: string
+  breakpoint2xl: string
   controlHeightSm: string
   controlHeightMd: string
   controlHeightLg: string

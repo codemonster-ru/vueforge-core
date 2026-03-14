@@ -8,7 +8,7 @@ Stable foundation layer for the VueForge design system.
 
 ## Current scope
 
-Version `1.0.0` focuses on:
+Version `1.1.0` focuses on:
 
 - Vue 3 library build with Vite
 - TypeScript declarations
@@ -47,6 +47,43 @@ app.use(VueForge, {
 
 For the full theme runtime and preset API, see [Theme API](./docs/theme-api.md).
 
+## Foundation Usage
+
+Use the full package when you need VueForge components, styles, and theme runtime together.
+
+```ts
+import VueForge from "@codemonster-ru/vueforge-core";
+```
+
+Use foundation-only entry points when another package, such as `vueforge-layouts`, needs shared responsive or platform helpers without depending on the full UI surface.
+
+```ts
+import {
+  vfBreakpoints,
+  useBreakpoint,
+  useBreakpoints,
+  useBreakpointValue,
+  useScrollLock,
+} from "@codemonster-ru/vueforge-core/foundation";
+```
+
+Available subpaths:
+
+- `@codemonster-ru/vueforge-core`
+- `@codemonster-ru/vueforge-core/styles.css`
+- `@codemonster-ru/vueforge-core/tokens.css`
+- `@codemonster-ru/vueforge-core/foundation.css`
+- `@codemonster-ru/vueforge-core/foundation`
+- `@codemonster-ru/vueforge-core/theme`
+
+### Stability
+
+- Stable UI API: components exported from the root package
+- Stable theme API: `VueForge`, `createVueForge`, `defaultThemePreset`, `createThemePreset`
+- Stable foundation API: breakpoint constants and foundation composables from `./foundation`
+
+For the full foundation contract, see [Foundation API](./docs/foundation-api.md).
+
 ## Development
 
 ```bash
@@ -59,6 +96,7 @@ npm run test
 
 - [Visual Baseline 1.0](./docs/visual-baseline.md)
 - [Theme API](./docs/theme-api.md)
+- [Foundation API](./docs/foundation-api.md)
 - [Release Checklist](./docs/release-checklist.md)
 
 ## License

@@ -19,10 +19,14 @@ export default defineConfig({
   ],
   build: {
     lib: {
-      entry: resolve(__dirname, 'src/index.ts'),
+      entry: {
+        index: resolve(__dirname, 'src/index.ts'),
+        'foundation-api': resolve(__dirname, 'src/foundation/index.ts'),
+        'theme-api': resolve(__dirname, 'src/theme/public.ts')
+      },
       name: 'VueforgeCore',
       cssFileName: 'styles',
-      fileName: 'vueforge-core',
+      fileName: (_format, entryName) => `${entryName === 'index' ? 'vueforge-core' : entryName}.js`,
       formats: ['es']
     },
     rollupOptions: {

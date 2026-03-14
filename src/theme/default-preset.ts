@@ -1,4 +1,14 @@
 import type { VfThemePreset } from '@/types/theme'
+import breakpoints from '@/foundation/breakpoints.json'
+
+const breakpointTokens = {
+  breakpointXs: `${breakpoints.xs}px`,
+  breakpointSm: `${breakpoints.sm}px`,
+  breakpointMd: `${breakpoints.md}px`,
+  breakpointLg: `${breakpoints.lg}px`,
+  breakpointXl: `${breakpoints.xl}px`,
+  breakpoint2xl: `${breakpoints['2xl']}px`
+}
 
 export const defaultThemePreset: VfThemePreset = {
   name: 'vueforge-default',
@@ -25,6 +35,7 @@ export const defaultThemePreset: VfThemePreset = {
     radiusControlTight: 'calc(var(--vf-radius) - 0.25rem)',
     radiusSurface: 'var(--vf-radius)',
     radiusOverlay: 'calc(var(--vf-radius) + 0.125rem)',
+    ...breakpointTokens,
     controlHeightSm: '1.75rem',
     controlHeightMd: '2.25rem',
     controlHeightLg: '2.5rem',

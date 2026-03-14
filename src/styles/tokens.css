@@ -1,5 +1,7 @@
 /* Fallback baseline tokens for package CSS consumers.
    Canonical token values live in src/theme/default-preset.ts. */
+@import './generated-breakpoints.css';
+
 :root {
   --vf-color-bg: #fcfcfd;
   --vf-color-surface: #ffffff;

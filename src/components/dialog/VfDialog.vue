@@ -4,6 +4,7 @@ import { icons } from '@codemonster-ru/vueiconify'
 import VfIconButton from '@/components/icon-button/VfIconButton.vue'
 import { cx } from '@/utils/classes'
 import { useDisclosure, useEscapeKey, useFocusTrap, useId } from '@/composables'
+import { useScrollLock } from '@/foundation'
 import type { VfDialogSize } from '@/types/components'
 
 interface VfDialogProps {
@@ -35,7 +36,6 @@ const emit = defineEmits<{
 
 const contentRef = ref<HTMLElement | null>(null)
 const lastFocusedElement = ref<HTMLElement | null>(null)
-const previousBodyOverflow = ref<string | null>(null)
 const dialogSlots = useSlots() as Slots
 const titleId = useId({ prefix: 'vf-dialog-title' })
 const descriptionId = useId({ prefix: 'vf-dialog-description' })
@@ -93,27 +93,6 @@ function focusDialogContent() {
   container.focus()
 }
 
-function lockBodyScroll() {
-  if (typeof document === 'undefined') {
-    return
-  }
-
-  if (previousBodyOverflow.value === null) {
-    previousBodyOverflow.value = document.body.style.overflow
-  }
-
-  document.body.style.overflow = 'hidden'
-}
-
-function unlockBodyScroll() {
-  if (typeof document === 'undefined') {
-    return
-  }
-
-  document.body.style.overflow = previousBodyOverflow.value ?? ''
-  previousBodyOverflow.value = null
-}
-
 useEscapeKey(
   (event) => {
     if (!props.closeOnEscape || !isOpen.value) {
@@ -132,6 +111,8 @@ useFocusTrap(contentRef, {
   enabled: isOpen
 })
 
+useScrollLock(isOpen)
+
 watch(
   isOpen,
   async (value) => {
@@ -141,13 +122,11 @@ watch(
 
     if (value) {
       lastFocusedElement.value = document.activeElement instanceof HTMLElement ? document.activeElement : null
-      lockBodyScroll()
       await nextTick()
       focusDialogContent()
       return
     }
 
-    unlockBodyScroll()
     lastFocusedElement.value?.focus()
   },
   { immediate: true }
@@ -155,7 +134,6 @@ watch(
 
 onBeforeUnmount(() => {
   if (isOpen.value) {
-    unlockBodyScroll()
     lastFocusedElement.value?.focus()
   }
 })

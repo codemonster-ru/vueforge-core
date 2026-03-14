@@ -40,9 +40,17 @@
 - Verify `VfThemeProvider` works with `light`, `dark`, and `system`
 - Verify `storageKey` and `attribute` overrides still work
 
+## Foundation
+
+- Verify `@codemonster-ru/vueforge-core/foundation` exports are stable
+- Verify `@codemonster-ru/vueforge-core/tokens.css` can be imported on its own
+- Verify `@codemonster-ru/vueforge-core/foundation.css` resolves correctly
+- Verify breakpoint helpers and `useScrollLock` tests are green
+
 ## Docs
 
 - Review [README.md](../README.md)
+- Review [foundation-api.md](./foundation-api.md)
 - Review [theme-api.md](./theme-api.md)
 - Review [visual-baseline.md](./visual-baseline.md)
 - Update [CHANGELOG.md](../CHANGELOG.md)
@@ -50,8 +58,8 @@
 ## Release Decision
 
 - If theme API or visual tokens are still changing: release `rc`
-- If API and visual baseline are stable in real usage: release `1.0.0`
-- Current repository target: `1.0.0`
+- If API and visual baseline are stable in real usage: release `1.1.0`
+- Current repository target: `1.1.0`
 
 ## Publish Flow
 

@@ -1,0 +1,9 @@
+/* Generated from src/foundation/breakpoints.json */
+:root {
+  --vf-breakpoint-xs: 480px;
+  --vf-breakpoint-sm: 640px;
+  --vf-breakpoint-md: 768px;
+  --vf-breakpoint-lg: 1024px;
+  --vf-breakpoint-xl: 1280px;
+  --vf-breakpoint-2xl: 1536px;
+}
