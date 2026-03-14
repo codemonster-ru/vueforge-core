@@ -72,6 +72,6 @@
 - Create and push tag in the format `vX.Y.Z`
 - GitHub Actions will:
   - validate that the tag version matches `package.json`
-  - create a GitHub Release from the matching changelog section
-  - then, after the `Release` workflow completes successfully, run `lint`, `test`, and `build`
+  - run `lint`, `test`, and `build`
   - publish the package to npm through Trusted Publisher
+  - create a GitHub Release from the matching changelog section
