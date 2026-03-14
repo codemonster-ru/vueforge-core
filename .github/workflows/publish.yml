@@ -1,15 +1,17 @@
 name: Publish
 
 on:
-  release:
-    types: [published]
+  workflow_run:
+    workflows: ['Release']
+    types: [completed]
 
 concurrency:
-  group: publish-${{ github.event.release.tag_name }}
+  group: publish-${{ github.event.workflow_run.id }}
   cancel-in-progress: false
 
 jobs:
   publish-npm:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -17,15 +19,25 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+          fetch-depth: 0
 
       - name: Validate release tag matches package version
         run: |
-          TAG="${{ github.event.release.tag_name }}"
-          VERSION="${TAG#v}"
           PACKAGE_VERSION=$(node -p "require('./package.json').version")
+          TAG="v${PACKAGE_VERSION}"
 
-          if [ "$PACKAGE_VERSION" != "$VERSION" ]; then
-            echo "package.json version ($PACKAGE_VERSION) does not match release tag version ($VERSION)"
+          git fetch --force --tags
+          RELEASE_TAG=$(git tag --points-at HEAD | grep '^v' | head -n 1)
+
+          if [ -z "$RELEASE_TAG" ]; then
+            echo "Could not resolve a version tag for the release commit"
+            exit 1
+          fi
+
+          if [ "$RELEASE_TAG" != "$TAG" ]; then
+            echo "workflow release tag ($RELEASE_TAG) does not match package.json version tag ($TAG)"
             exit 1
           fi
 
