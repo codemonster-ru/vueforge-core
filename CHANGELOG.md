@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.1.1 - 2026-03-15
+
+Patch release for `@codemonster-ru/vueforge-core`.
+
+### Fixed
+
+- Improved TypeScript consumer resolution for `@codemonster-ru/vueforge-core/foundation`
+- Foundation and theme subpath exports now point directly at their stable declaration entry files
+- Added `typesVersions` mappings for `foundation` and `theme` to make downstream `tsc` and `vue-tsc` resolution more reliable
+
 ## 1.1.0 - 2026-03-15
 
 Foundation-focused minor release for `@codemonster-ru/vueforge-core`.
