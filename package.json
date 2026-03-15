@@ -4,6 +4,14 @@
   "description": "Foundation layer for the VueForge design system.",
   "type": "module",
   "license": "MIT",
+  "homepage": "https://github.com/codemonster-ru/vueforge-core#readme",
+  "bugs": {
+    "url": "https://github.com/codemonster-ru/vueforge-core/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/codemonster-ru/vueforge-core.git"
+  },
   "keywords": [
     "vue",
     "vue3",
