@@ -26,7 +26,7 @@ const attrs = useAttrs()
 const classes = computed(() =>
   cx(
     'vf-button',
-    props.variant !== 'primary' && `vf-button--${props.variant}`,
+    `vf-button--${props.variant}`,
     props.size !== 'md' && `vf-button--${props.size}`,
     props.block && 'vf-button--block'
   )

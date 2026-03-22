@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { computed, useAttrs } from 'vue'
+import { computed, resolveDynamicComponent, useAttrs } from 'vue'
+import type { Component } from 'vue'
 import { cx } from '@/utils/classes'
 import type { VfLinkTone } from '@/types/components'
 
@@ -9,21 +10,33 @@ defineOptions({
 
 interface VfLinkProps {
   href?: string
+  to?: string | Record<string, unknown>
   target?: string
   rel?: string
   underline?: boolean
   tone?: VfLinkTone
+  component?: string | Component
 }
 
 const props = withDefaults(defineProps<VfLinkProps>(), {
   href: undefined,
+  to: undefined,
   target: undefined,
   rel: undefined,
   underline: false,
-  tone: 'default'
+  tone: 'default',
+  component: undefined
 })
 
 const attrs = useAttrs()
+const isRouterLink = computed(() => props.to !== undefined)
+const resolvedComponent = computed(() => {
+  if (!isRouterLink.value) {
+    return 'a'
+  }
+
+  return props.component ?? resolveDynamicComponent('RouterLink')
+})
 
 const resolvedRel = computed(() => {
   if (props.rel) {
@@ -40,16 +53,35 @@ const classes = computed(() =>
     props.tone === 'muted' && 'vf-link--muted'
   )
 )
+
+const linkProps = computed(() => {
+  if (isRouterLink.value) {
+    return {
+      to: props.to,
+      target: props.target,
+      rel: resolvedRel.value
+    }
+  }
+
+  return {
+    href: props.href,
+    target: props.target,
+    rel: resolvedRel.value
+  }
+})
+
+const componentProps = computed(() => ({
+  ...attrs,
+  ...linkProps.value,
+  class: classes.value
+}))
 </script>
 
 <template>
-  <a
-    :class="classes"
-    :href="props.href"
-    :target="props.target"
-    :rel="resolvedRel"
-    v-bind="attrs"
+  <component
+    :is="resolvedComponent"
+    v-bind="componentProps"
   >
     <slot />
-  </a>
+  </component>
 </template>

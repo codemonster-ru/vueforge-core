@@ -19,4 +19,16 @@ describe('ShowcasePage', () => {
     await wrapper.get('[data-test="open-dialog"]').trigger('click')
     expect(document.body.querySelector('[role="dialog"]')).not.toBeNull()
   })
+
+  it('opens the drawer from the demo button', async () => {
+    const wrapper = mount(VfThemeProvider, {
+      attachTo: document.body,
+      slots: {
+        default: ShowcasePage
+      }
+    })
+
+    await wrapper.get('[data-test="open-drawer"]').trigger('click')
+    expect(document.body.querySelector('.vf-drawer__content')).not.toBeNull()
+  })
 })

@@ -7,34 +7,129 @@ import {
   VfBadge,
   VfButton,
   VfCard,
+  VfCheckbox,
+  VfDrawer,
   VfDialog,
   VfDivider,
   VfDropdown,
   VfIconButton,
   VfInput,
   VfLink,
+  VfNavMenu,
   VfPanel,
   VfPopover,
+  VfRadio,
+  VfSwitch,
   VfTag,
   VfTabs,
   VfTextarea,
   VfTooltip,
   useTheme
 } from '@/index'
+import type { VfNavMenuItem } from '@/index'
 
 const { setTheme, toggleTheme } = useTheme()
 
 const dialogOpen = ref(false)
+const drawerOpen = ref(false)
 const dropdownControlled = ref(false)
 const popoverOpen = ref(false)
 const inputValue = ref('')
 const textareaValue = ref('A compact foundation for the ecosystem.')
+const checkboxValue = ref(true)
+const switchValue = ref(true)
+const radioValue = ref('pro')
 const activeTab = ref('overview')
+const activeMenuValue = ref('button')
+const activeSimpleMenuValue = ref('button')
 
 const releaseTabs = [
   { value: 'overview', label: 'Overview' },
   { value: 'api', label: 'API' },
   { value: 'status', label: 'Status' }
+]
+
+const docsMenuItems: VfNavMenuItem[] = [
+  {
+    value: 'getting-started',
+    label: 'Getting Started',
+    leadingIcon: 'info',
+    children: [
+      { value: 'installation', label: 'Installation' },
+      { value: 'quick-start', label: 'Quick Start' }
+    ]
+  },
+  {
+    value: 'components',
+    label: 'Components',
+    leadingIcon: 'gear',
+    children: [
+      {
+        value: 'actions-group',
+        kind: 'group',
+        label: 'Actions',
+        children: [{ value: 'button', label: 'Button' }]
+      },
+      {
+        value: 'navigation-group',
+        kind: 'group',
+        label: 'Navigation',
+        children: [
+          {
+            value: 'tabs',
+            label: 'Tabs',
+            children: [
+              { value: 'overview-tab', label: 'Overview Tab' },
+              { value: 'status-tab', label: 'Status Tab' }
+            ]
+          }
+        ]
+      },
+      {
+        value: 'overlay-group',
+        kind: 'group',
+        label: 'Overlay',
+        children: [{ value: 'dialog', label: 'Dialog' }]
+      }
+    ]
+  },
+  {
+    value: 'foundation',
+    label: 'Foundation',
+    leadingIcon: 'checkCircle',
+    children: [
+      { value: 'tokens', label: 'Tokens' },
+      { value: 'theme', label: 'Theme' }
+    ]
+  }
+]
+
+const docsMenuSimpleItems: VfNavMenuItem[] = [
+  {
+    value: 'getting-started',
+    label: 'Getting Started',
+    children: [
+      { value: 'installation', label: 'Installation' },
+      { value: 'quick-start', label: 'Quick Start' }
+    ]
+  },
+  {
+    value: 'components',
+    label: 'Components',
+    children: [
+      { value: 'button', label: 'Button' },
+      { value: 'tabs', label: 'Tabs' },
+      { value: 'dialog', label: 'Dialog' }
+    ]
+  },
+  {
+    value: 'foundation',
+    label: 'Foundation',
+    children: [
+      { value: 'tokens', label: 'Tokens' },
+      { value: 'theme', label: 'Theme' }
+    ]
+  }
 ]
 
 const tabContent = computed<Record<string, string>>(() => ({
@@ -57,7 +152,7 @@ const tabContent = computed<Record<string, string>>(() => ({
           <h2>Theme</h2>
         </div>
 
-        <div class="demo-grid demo-grid--two">
+        <div class="demo-grid demo-grid--three">
           <div class="demo-example">
             <p class="demo-label">vf-theme-provider</p>
             <div class="demo-inline">
@@ -75,92 +170,46 @@ const tabContent = computed<Record<string, string>>(() => ({
           <h2>Actions and Links</h2>
         </div>
 
-        <div class="demo-grid demo-grid--two">
+        <div class="demo-grid demo-grid--three">
           <div class="demo-example">
-            <p class="demo-label">vf-button, vf-icon-button</p>
+            <p class="demo-label">vf-button</p>
             <div class="demo-inline">
               <VfButton>Primary</VfButton>
               <VfButton variant="secondary">Secondary</VfButton>
-              <VfIconButton :icon="icons.gear" aria-label="Settings" variant="secondary" />
+              <VfButton variant="success">Success</VfButton>
+              <VfButton variant="info">Info</VfButton>
+              <VfButton variant="warn">Warn</VfButton>
+              <VfButton variant="help">Help</VfButton>
+              <VfButton variant="danger">Danger</VfButton>
+              <VfButton variant="contrast">Contrast</VfButton>
+              <VfButton variant="ghost">Ghost</VfButton>
               <VfButton disabled>Disabled</VfButton>
             </div>
           </div>
 
           <div class="demo-example">
+            <p class="demo-label">vf-icon-button</p>
+            <div class="demo-inline">
+              <VfIconButton :icon="icons.gear" aria-label="Primary settings" variant="primary" />
+              <VfIconButton :icon="icons.gear" aria-label="Secondary settings" variant="secondary" />
+              <VfIconButton :icon="icons.gear" aria-label="Success settings" variant="success" />
+              <VfIconButton :icon="icons.gear" aria-label="Info settings" variant="info" />
+              <VfIconButton :icon="icons.gear" aria-label="Warn settings" variant="warn" />
+              <VfIconButton :icon="icons.gear" aria-label="Help settings" variant="help" />
+              <VfIconButton :icon="icons.gear" aria-label="Danger settings" variant="danger" />
+              <VfIconButton :icon="icons.gear" aria-label="Contrast settings" variant="contrast" />
+              <VfIconButton :icon="icons.gear" aria-label="Ghost settings" variant="ghost" />
+              <VfIconButton :icon="icons.gear" aria-label="Disabled settings" disabled />
+            </div>
+          </div>
+
+          <div class="demo-example">
             <p class="demo-label">vf-link</p>
-            <VfLink href="https://example.com" target="_blank" underline>
-              External Docs Link
-            </VfLink>
-          </div>
-        </div>
-      </section>
-
-      <section class="demo-block">
-        <div class="demo-block__header">
-          <h2>States</h2>
-        </div>
-
-        <div class="demo-grid demo-grid--three">
-          <div class="demo-example">
-            <p class="demo-label">vf-button states</p>
-            <div class="demo-state-grid">
-              <div class="demo-state">
-                <span class="demo-state__label">default</span>
-                <VfButton>Primary</VfButton>
-              </div>
-              <div class="demo-state">
-                <span class="demo-state__label">secondary</span>
-                <VfButton variant="secondary">Secondary</VfButton>
-              </div>
-              <div class="demo-state">
-                <span class="demo-state__label">disabled</span>
-                <VfButton disabled>Disabled</VfButton>
-              </div>
-            </div>
-          </div>
-
-          <div class="demo-example">
-            <p class="demo-label">vf-input states</p>
-            <div class="demo-state-grid">
-              <div class="demo-state">
-                <span class="demo-state__label">default</span>
-                <VfInput placeholder="Default input" />
-              </div>
-              <div class="demo-state">
-                <span class="demo-state__label">invalid</span>
-                <VfInput invalid placeholder="Invalid input" />
-              </div>
-              <div class="demo-state">
-                <span class="demo-state__label">disabled</span>
-                <VfInput disabled placeholder="Disabled input" />
-              </div>
-            </div>
-          </div>
-
-          <div class="demo-example">
-            <p class="demo-label">vf-feedback states</p>
-            <div class="demo-state-grid">
-              <div class="demo-state">
-                <span class="demo-state__label">neutral</span>
-                <div class="demo-inline">
-                  <VfBadge>Neutral</VfBadge>
-                  <VfTag>Neutral</VfTag>
-                </div>
-              </div>
-              <div class="demo-state">
-                <span class="demo-state__label">primary</span>
-                <div class="demo-inline">
-                  <VfBadge tone="primary">Primary</VfBadge>
-                  <VfTag tone="primary">Primary</VfTag>
-                </div>
-              </div>
-              <div class="demo-state">
-                <span class="demo-state__label">danger</span>
-                <div class="demo-inline">
-                  <VfBadge tone="danger">Danger</VfBadge>
-                  <VfTag tone="danger">Danger</VfTag>
-                </div>
-              </div>
+            <div class="demo-stack">
+              <VfLink href="https://example.com" target="_blank" underline>
+                External Docs Link
+              </VfLink>
+              <p class="demo-text">Supports regular links, new-tab links, and router-style navigation.</p>
             </div>
           </div>
         </div>
@@ -215,7 +264,7 @@ const tabContent = computed<Record<string, string>>(() => ({
           <h2>Surface Components</h2>
         </div>
 
-        <div class="demo-grid demo-grid--two">
+        <div class="demo-grid demo-grid--three">
           <div class="demo-item">
             <p class="demo-label">vf-card</p>
             <VfCard title="Release Summary">
@@ -249,7 +298,11 @@ const tabContent = computed<Record<string, string>>(() => ({
             <div class="demo-stack">
               <VfAlert title="Heads up">Alert content.</VfAlert>
               <VfAlert tone="success" title="Saved">Success content.</VfAlert>
+              <VfAlert tone="info" title="FYI">Info content.</VfAlert>
+              <VfAlert tone="warn" title="Warning">Warn content.</VfAlert>
+              <VfAlert tone="help" title="Need help?">Help content.</VfAlert>
               <VfAlert tone="danger" title="Error">Danger content.</VfAlert>
+              <VfAlert tone="contrast" title="Contrast">Contrast content.</VfAlert>
             </div>
           </div>
 
@@ -260,14 +313,22 @@ const tabContent = computed<Record<string, string>>(() => ({
                 <VfBadge>Neutral</VfBadge>
                 <VfBadge tone="primary">Primary</VfBadge>
                 <VfBadge tone="success">Success</VfBadge>
+                <VfBadge tone="info">Info</VfBadge>
+                <VfBadge tone="warn">Warn</VfBadge>
+                <VfBadge tone="help">Help</VfBadge>
                 <VfBadge tone="danger">Danger</VfBadge>
+                <VfBadge tone="contrast">Contrast</VfBadge>
               </div>
               <VfDivider />
               <div class="demo-inline">
                 <VfTag>Neutral</VfTag>
                 <VfTag tone="primary">Primary</VfTag>
                 <VfTag tone="success">Success</VfTag>
+                <VfTag tone="info">Info</VfTag>
+                <VfTag tone="warn">Warn</VfTag>
+                <VfTag tone="help">Help</VfTag>
                 <VfTag tone="danger">Danger</VfTag>
+                <VfTag tone="contrast">Contrast</VfTag>
               </div>
             </div>
           </div>
@@ -279,7 +340,7 @@ const tabContent = computed<Record<string, string>>(() => ({
           <h2>Forms</h2>
         </div>
 
-        <div class="demo-grid demo-grid--two">
+        <div class="demo-grid demo-grid--three">
           <div class="demo-item">
             <p class="demo-label">vf-input</p>
             <div class="demo-stack">
@@ -294,6 +355,18 @@ const tabContent = computed<Record<string, string>>(() => ({
               <VfTextarea v-model="textareaValue" placeholder="Describe the release..." />
             </div>
           </div>
+
+          <div class="demo-item">
+            <p class="demo-label">vf-checkbox, vf-switch, vf-radio</p>
+            <div class="demo-stack">
+              <VfCheckbox v-model="checkboxValue">Accept terms</VfCheckbox>
+              <VfCheckbox invalid>Invalid choice</VfCheckbox>
+              <VfSwitch v-model="switchValue">Enable notifications</VfSwitch>
+              <VfSwitch size="sm">Compact toggle</VfSwitch>
+              <VfRadio v-model="radioValue" name="demo-plan" value="free">Free plan</VfRadio>
+              <VfRadio v-model="radioValue" name="demo-plan" value="pro">Pro plan</VfRadio>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -302,7 +375,7 @@ const tabContent = computed<Record<string, string>>(() => ({
           <h2>Navigation and Disclosure</h2>
         </div>
 
-        <div class="demo-grid demo-grid--two">
+        <div class="demo-grid demo-grid--three">
           <div class="demo-item">
             <p class="demo-label">vf-tabs</p>
             <VfTabs v-model="activeTab" :items="releaseTabs">
@@ -320,6 +393,23 @@ const tabContent = computed<Record<string, string>>(() => ({
               <VfAccordion title="Section Three">Accordion content.</VfAccordion>
             </div>
           </div>
+
+          <div class="demo-item">
+            <p class="demo-label">vf-nav-menu</p>
+            <div class="demo-stack">
+              <div class="demo-stack">
+                <p class="demo-text">Complex</p>
+                <VfNavMenu v-model="activeMenuValue" :items="docsMenuItems" />
+              </div>
+
+              <VfDivider />
+
+              <div class="demo-stack">
+                <p class="demo-text">Simple</p>
+                <VfNavMenu v-model="activeSimpleMenuValue" :items="docsMenuSimpleItems" />
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -328,9 +418,26 @@ const tabContent = computed<Record<string, string>>(() => ({
           <h2>Dialog</h2>
         </div>
 
-        <div class="demo-example demo-example--compact">
-          <p class="demo-label">vf-dialog</p>
-          <VfButton data-test="open-dialog" @click="dialogOpen = true">Open Dialog</VfButton>
+        <div class="demo-grid demo-grid--two">
+          <div class="demo-example">
+            <p class="demo-label">vf-dialog</p>
+            <div class="demo-stack">
+              <p class="demo-text">Modal dialog with focus trap, keyboard support, and semantic actions.</p>
+              <div class="demo-inline">
+                <VfButton data-test="open-dialog" @click="dialogOpen = true">Open Dialog</VfButton>
+              </div>
+            </div>
+          </div>
+
+          <div class="demo-example">
+            <p class="demo-label">vf-drawer</p>
+            <div class="demo-stack">
+              <p class="demo-text">Side sheet for settings, filters, and contextual workflows.</p>
+              <div class="demo-inline">
+                <VfButton data-test="open-drawer" variant="secondary" @click="drawerOpen = true">Open Drawer</VfButton>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
     </div>
@@ -349,5 +456,21 @@ const tabContent = computed<Record<string, string>>(() => ({
         </div>
       </template>
     </VfDialog>
+
+    <VfDrawer
+      v-model:open="drawerOpen"
+      title="Drawer"
+    >
+      <template #default="{ close }">
+        <div class="demo-stack">
+          <p>Drawer content.</p>
+          <VfInput placeholder="Search in drawer" />
+          <div class="demo-inline">
+            <VfButton data-autofocus @click="close">Apply</VfButton>
+            <VfButton variant="secondary" @click="drawerOpen = false">Close</VfButton>
+          </div>
+        </div>
+      </template>
+    </VfDrawer>
   </div>
 </template>

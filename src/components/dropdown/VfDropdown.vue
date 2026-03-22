@@ -2,12 +2,15 @@
 import { nextTick, ref, computed } from 'vue'
 import { arrow, flip, offset, shift, type MiddlewareType, type PlacementType } from '@codemonster-ru/floater.js'
 import { useClickOutside, useDisclosure, useEscapeKey, useFloating, useId } from '@/composables'
+import { vfMotionDurationsMs } from '@/theme/motion'
 import type { VfDropdownPlacement } from '@/types/components'
 
 interface VfDropdownProps {
   open?: boolean
   defaultOpen?: boolean
   placement?: VfDropdownPlacement
+  teleportTo?: string | HTMLElement | null | false
+  disableTeleport?: boolean
   closeOnSelect?: boolean
 }
 
@@ -15,6 +18,8 @@ const props = withDefaults(defineProps<VfDropdownProps>(), {
   open: undefined,
   defaultOpen: false,
   placement: 'bottom-start',
+  teleportTo: undefined,
+  disableTeleport: false,
   closeOnSelect: true
 })
 
@@ -28,6 +33,22 @@ const menuRef = ref<HTMLElement | null>(null)
 const arrowRef = ref<HTMLElement | null>(null)
 const menuId = useId({ prefix: 'vf-dropdown-menu' })
 const triggerId = useId({ prefix: 'vf-dropdown-trigger' })
+const transitionDuration = {
+  enter: vfMotionDurationsMs.fast,
+  leave: vfMotionDurationsMs.fast
+} as const
+const teleportDisabled = computed(() => props.disableTeleport || props.teleportTo === false || props.teleportTo === null)
+const teleportTarget = computed(() => {
+  if (typeof props.teleportTo === 'string') {
+    return props.teleportTo
+  }
+
+  if (typeof HTMLElement !== 'undefined' && props.teleportTo instanceof HTMLElement) {
+    return props.teleportTo
+  }
+
+  return 'body'
+})
 
 const disclosure = useDisclosure({
   defaultOpen: props.defaultOpen,
@@ -195,21 +216,23 @@ useEscapeKey(
       <slot name="trigger" :open="isOpen" :toggle="toggleMenu" />
     </div>
 
-    <Teleport to="body">
-      <div
-        v-if="isOpen"
-        :id="menuId"
-        ref="menuRef"
-        :class="menuClasses"
-        :style="menuStyles"
-        :aria-labelledby="triggerId"
-        role="menu"
-        @click="handleItemClick"
-        @keydown="onMenuKeydown"
-      >
-        <span ref="arrowRef" :class="arrowClasses" :style="arrowStyles" aria-hidden="true" />
-        <slot :close="closeMenu" :open="isOpen" />
-      </div>
+    <Teleport :to="teleportTarget" :disabled="teleportDisabled">
+      <Transition name="vf-floating-transition" appear :duration="transitionDuration">
+        <div
+          v-if="isOpen"
+          :id="menuId"
+          ref="menuRef"
+          :class="menuClasses"
+          :style="menuStyles"
+          :aria-labelledby="triggerId"
+          role="menu"
+          @click="handleItemClick"
+          @keydown="onMenuKeydown"
+        >
+          <span ref="arrowRef" :class="arrowClasses" :style="arrowStyles" aria-hidden="true" />
+          <slot :close="closeMenu" :open="isOpen" />
+        </div>
+      </Transition>
     </Teleport>
   </div>
 </template>

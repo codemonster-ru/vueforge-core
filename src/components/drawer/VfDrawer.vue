@@ -1,34 +1,55 @@
 <script setup lang="ts">
-import { computed, nextTick, onBeforeUnmount, ref, useSlots, watch, type Slots } from 'vue'
+import {
+  computed,
+  nextTick,
+  onBeforeUnmount,
+  ref,
+  useAttrs,
+  useSlots,
+  watch,
+  type CSSProperties,
+  type Slots,
+  type StyleValue
+} from 'vue'
 import { icons } from '@codemonster-ru/vueiconify'
 import VfIconButton from '@/components/icon-button/VfIconButton.vue'
 import { cx } from '@/utils/classes'
 import { useDisclosure, useEscapeKey, useFocusTrap, useId } from '@/composables'
 import { useScrollLock } from '@/foundation'
 import { vfMotionDurationsMs } from '@/theme/motion'
-import type { VfDialogSize } from '@/types/components'
+import type { VfDialogSize, VfDrawerPlacement } from '@/types/components'
 
-interface VfDialogProps {
+defineOptions({
+  inheritAttrs: false
+})
+
+interface VfDrawerProps {
   open?: boolean
   defaultOpen?: boolean
   title?: string
-  description?: string
   size?: VfDialogSize
+  placement?: VfDrawerPlacement
+  offsetTop?: string | number
+  bodyPadding?: string | number
   teleportTo?: string | HTMLElement | null | false
   disableTeleport?: boolean
+  scrollLockTarget?: HTMLElement | null | false
   closeOnOverlayClick?: boolean
   closeOnEscape?: boolean
   closable?: boolean
 }
 
-const props = withDefaults(defineProps<VfDialogProps>(), {
+const props = withDefaults(defineProps<VfDrawerProps>(), {
   open: undefined,
   defaultOpen: false,
   title: undefined,
-  description: undefined,
   size: 'md',
+  placement: 'right',
+  offsetTop: undefined,
+  bodyPadding: undefined,
   teleportTo: undefined,
   disableTeleport: false,
+  scrollLockTarget: undefined,
   closeOnOverlayClick: true,
   closeOnEscape: true,
   closable: true
@@ -39,11 +60,11 @@ const emit = defineEmits<{
   openChange: [value: boolean]
 }>()
 
+const attrs = useAttrs()
 const contentRef = ref<HTMLElement | null>(null)
 const lastFocusedElement = ref<HTMLElement | null>(null)
-const dialogSlots = useSlots() as Slots
-const titleId = useId({ prefix: 'vf-dialog-title' })
-const descriptionId = useId({ prefix: 'vf-dialog-description' })
+const drawerSlots = useSlots() as Slots
+const titleId = useId({ prefix: 'vf-drawer-title' })
 
 const disclosure = useDisclosure({
   defaultOpen: props.defaultOpen,
@@ -56,10 +77,49 @@ const disclosure = useDisclosure({
 
 const isOpen = disclosure.isOpen
 const transitionDuration = {
-  enter: vfMotionDurationsMs.fast,
-  leave: vfMotionDurationsMs.fast
+  enter: vfMotionDurationsMs.normal,
+  leave: vfMotionDurationsMs.normal
 } as const
+
+function normalizeCssLength(value: string | number | undefined): string | undefined {
+  if (typeof value === 'number') {
+    return `${value}px`
+  }
+
+  return value
+}
+
+const drawerVariables = computed<CSSProperties>(() => {
+  const variables: CSSProperties = {}
+  const offsetTop = normalizeCssLength(props.offsetTop)
+  const bodyPadding = normalizeCssLength(props.bodyPadding)
+
+  if (offsetTop != null) {
+    variables['--vf-drawer-offset-top'] = offsetTop
+  }
+
+  if (bodyPadding != null) {
+    variables['--vf-drawer-body-padding'] = bodyPadding
+  }
+
+  return variables
+})
+
+const rootClasses = computed(() =>
+  cx('vf-drawer', `vf-drawer--${props.placement}`, props.offsetTop != null && 'vf-drawer--offset-top')
+)
+const rootStyles = computed<StyleValue>(() => [drawerVariables.value, attrs.style as StyleValue])
+const rootAttrs = computed(() => {
+  return Object.fromEntries(Object.entries(attrs).filter(([key]) => key !== 'class' && key !== 'style'))
+})
 const teleportDisabled = computed(() => props.disableTeleport || props.teleportTo === false || props.teleportTo === null)
+const resolvedScrollLockTarget = computed(() => {
+  if (props.scrollLockTarget === false) {
+    return null
+  }
+
+  return props.scrollLockTarget
+})
 const teleportTarget = computed(() => {
   if (typeof props.teleportTo === 'string') {
     return props.teleportTo
@@ -71,18 +131,13 @@ const teleportTarget = computed(() => {
 
   return 'body'
 })
-
-const dialogClasses = computed(() =>
-  cx('vf-dialog__content', props.size !== 'md' && `vf-dialog__content--${props.size}`)
+const contentClasses = computed(() =>
+  cx('vf-drawer__content', `vf-drawer__content--${props.placement}`, `vf-drawer__content--${props.size}`)
 )
 
-const hasHeaderSlot = computed(() => Boolean(dialogSlots.header))
-const hasDescriptionSlot = computed(() => Boolean(dialogSlots.description))
+const hasHeaderSlot = computed(() => Boolean(drawerSlots.header))
 const labelledBy = computed<string | undefined>(() =>
   props.title || hasHeaderSlot.value ? titleId.value : undefined
-)
-const describedBy = computed<string | undefined>(() =>
-  props.description || hasDescriptionSlot.value ? descriptionId.value : undefined
 )
 
 function close() {
@@ -97,7 +152,7 @@ function handleOverlayClick() {
   close()
 }
 
-function focusDialogContent() {
+function focusDrawerContent() {
   const container = contentRef.value
 
   if (!container) {
@@ -132,7 +187,9 @@ useFocusTrap(contentRef, {
   enabled: isOpen
 })
 
-useScrollLock(isOpen)
+useScrollLock(isOpen, {
+  target: resolvedScrollLockTarget
+})
 
 watch(
   isOpen,
@@ -144,7 +201,7 @@ watch(
     if (value) {
       lastFocusedElement.value = document.activeElement instanceof HTMLElement ? document.activeElement : null
       await nextTick()
-      focusDialogContent()
+      focusDrawerContent()
       return
     }
 
@@ -162,50 +219,43 @@ onBeforeUnmount(() => {
 
 <template>
   <Teleport :to="teleportTarget" :disabled="teleportDisabled">
-    <Transition name="vf-dialog-transition" appear :duration="transitionDuration">
-      <div v-if="isOpen" class="vf-dialog">
-        <div class="vf-dialog__overlay" aria-hidden="true" @click="handleOverlayClick" />
+    <Transition name="vf-drawer-transition" appear :duration="transitionDuration">
+      <div v-if="isOpen" :class="[rootClasses, attrs.class]" :style="rootStyles" v-bind="rootAttrs">
+        <div class="vf-drawer__overlay" aria-hidden="true" @click="handleOverlayClick" />
 
         <section
           ref="contentRef"
-          :class="dialogClasses"
-          :aria-describedby="describedBy"
+          :class="contentClasses"
           :aria-labelledby="labelledBy"
           aria-modal="true"
           role="dialog"
           tabindex="-1"
         >
-          <header v-if="title || description || $slots.header || $slots.description" class="vf-dialog__header">
+          <header v-if="title || $slots.header" class="vf-drawer__header">
             <div>
               <slot name="header">
-                <h2 v-if="title" :id="titleId" class="vf-dialog__title">{{ title }}</h2>
-              </slot>
-
-              <slot name="description">
-                <p v-if="description" :id="descriptionId" class="vf-dialog__description">
-                  {{ description }}
-                </p>
+                <h2 v-if="title" :id="titleId" class="vf-drawer__title">{{ title }}</h2>
               </slot>
             </div>
 
-            <div class="vf-dialog__actions">
+            <div class="vf-drawer__actions">
               <slot name="actions" :close="close" />
 
               <VfIconButton
                 v-if="props.closable"
                 :icon="icons.xmark"
-                aria-label="Close dialog"
+                aria-label="Close drawer"
                 size="sm"
                 @click="close"
               />
             </div>
           </header>
 
-          <div v-if="$slots.default" class="vf-dialog__body">
+          <div v-if="$slots.default" class="vf-drawer__body">
             <slot :close="close" />
           </div>
 
-          <footer v-if="$slots.footer" class="vf-dialog__footer">
+          <footer v-if="$slots.footer" class="vf-drawer__footer">
             <slot name="footer" :close="close" />
           </footer>
         </section>

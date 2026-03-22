@@ -21,6 +21,8 @@ const storageKey = computed(
 const attribute = computed(
   () => props.attribute ?? config?.theme.options.attribute ?? DEFAULT_ATTRIBUTE
 )
+const hasMounted = ref(false)
+let themeTransitionTimeout: number | null = null
 
 function readStoredTheme() {
   if (typeof window === 'undefined') {
@@ -34,12 +36,33 @@ function readStoredTheme() {
   }
 }
 
-function updateDocumentTheme(theme: VfResolvedTheme) {
+function clearThemeTransitionTimeout() {
+  if (themeTransitionTimeout !== null) {
+    window.clearTimeout(themeTransitionTimeout)
+    themeTransitionTimeout = null
+  }
+}
+
+function updateDocumentTheme(theme: VfResolvedTheme, options: { animate?: boolean } = {}) {
   if (typeof document === 'undefined') {
     return
   }
 
-  document.documentElement.setAttribute(attribute.value, theme)
+  const root = document.documentElement
+
+  if (options.animate) {
+    clearThemeTransitionTimeout()
+    root.classList.add('vf-theme-transitioning')
+  }
+
+  root.setAttribute(attribute.value, theme)
+
+  if (options.animate) {
+    themeTransitionTimeout = window.setTimeout(() => {
+      root.classList.remove('vf-theme-transitioning')
+      themeTransitionTimeout = null
+    }, 320)
+  }
 }
 
 function handleSystemThemeChange(event?: MediaQueryListEvent) {
@@ -71,7 +94,7 @@ watch(mode, (value) => {
 watch(
   resolvedTheme,
   (value) => {
-    updateDocumentTheme(value)
+    updateDocumentTheme(value, { animate: hasMounted.value })
   },
   { immediate: true }
 )
@@ -82,10 +105,12 @@ onMounted(() => {
   mediaQuery.value = window.matchMedia('(prefers-color-scheme: dark)')
   handleSystemThemeChange()
   mediaQuery.value.addEventListener('change', handleSystemThemeChange)
+  hasMounted.value = true
 })
 
 onBeforeUnmount(() => {
   mediaQuery.value?.removeEventListener('change', handleSystemThemeChange)
+  clearThemeTransitionTimeout()
 })
 
 provide(themeContextKey, {

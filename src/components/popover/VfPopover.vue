@@ -2,12 +2,15 @@
 import { computed, nextTick, ref } from 'vue'
 import { arrow, flip, offset, shift, type MiddlewareType, type PlacementType } from '@codemonster-ru/floater.js'
 import { useClickOutside, useDisclosure, useEscapeKey, useFloating, useId } from '@/composables'
+import { vfMotionDurationsMs } from '@/theme/motion'
 import type { VfDropdownPlacement } from '@/types/components'
 
 interface VfPopoverProps {
   open?: boolean
   defaultOpen?: boolean
   placement?: VfDropdownPlacement
+  teleportTo?: string | HTMLElement | null | false
+  disableTeleport?: boolean
   closeOnOutsideClick?: boolean
   closeOnEscape?: boolean
 }
@@ -16,6 +19,8 @@ const props = withDefaults(defineProps<VfPopoverProps>(), {
   open: undefined,
   defaultOpen: false,
   placement: 'bottom-start',
+  teleportTo: undefined,
+  disableTeleport: false,
   closeOnOutsideClick: true,
   closeOnEscape: true
 })
@@ -30,6 +35,22 @@ const contentRef = ref<HTMLElement | null>(null)
 const arrowRef = ref<HTMLElement | null>(null)
 const contentId = useId({ prefix: 'vf-popover-content' })
 const triggerId = useId({ prefix: 'vf-popover-trigger' })
+const transitionDuration = {
+  enter: vfMotionDurationsMs.fast,
+  leave: vfMotionDurationsMs.fast
+} as const
+const teleportDisabled = computed(() => props.disableTeleport || props.teleportTo === false || props.teleportTo === null)
+const teleportTarget = computed(() => {
+  if (typeof props.teleportTo === 'string') {
+    return props.teleportTo
+  }
+
+  if (typeof HTMLElement !== 'undefined' && props.teleportTo instanceof HTMLElement) {
+    return props.teleportTo
+  }
+
+  return 'body'
+})
 
 const disclosure = useDisclosure({
   defaultOpen: props.defaultOpen,
@@ -169,20 +190,22 @@ useEscapeKey(
       <slot name="trigger" :open="isOpen" :toggle="togglePopover" />
     </div>
 
-    <Teleport to="body">
-      <section
-        v-if="isOpen"
-        :id="contentId"
-        ref="contentRef"
-        :class="contentClasses"
-        :style="contentStyles"
-        :aria-labelledby="triggerId"
-        role="dialog"
-        tabindex="-1"
-      >
-        <span ref="arrowRef" :class="arrowClasses" :style="arrowStyles" aria-hidden="true" />
-        <slot :open="isOpen" :close="closePopover" />
-      </section>
+    <Teleport :to="teleportTarget" :disabled="teleportDisabled">
+      <Transition name="vf-floating-transition" appear :duration="transitionDuration">
+        <section
+          v-if="isOpen"
+          :id="contentId"
+          ref="contentRef"
+          :class="contentClasses"
+          :style="contentStyles"
+          :aria-labelledby="triggerId"
+          role="dialog"
+          tabindex="-1"
+        >
+          <span ref="arrowRef" :class="arrowClasses" :style="arrowStyles" aria-hidden="true" />
+          <slot :open="isOpen" :close="closePopover" />
+        </section>
+      </Transition>
     </Teleport>
   </div>
 </template>

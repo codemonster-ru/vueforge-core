@@ -40,4 +40,68 @@ describe('VfTooltip', () => {
 
     vi.useRealTimers()
   })
+
+  it('can render without teleport when requested', async () => {
+    vi.useFakeTimers()
+
+    const host = document.createElement('div')
+    document.body.appendChild(host)
+
+    const wrapper = mount(VfTooltip, {
+      attachTo: host,
+      props: {
+        text: 'Inline hint',
+        openDelay: 0,
+        disableTeleport: true
+      },
+      slots: {
+        default: '<button type="button">Info</button>'
+      }
+    })
+
+    await wrapper.trigger('mouseenter')
+    vi.advanceTimersByTime(0)
+    await wrapper.vm.$nextTick()
+    await wrapper.vm.$nextTick()
+
+    expect(host.querySelector('.vf-tooltip__content')).not.toBeNull()
+
+    wrapper.unmount()
+    host.remove()
+    vi.useRealTimers()
+  })
+
+  it('can render into a custom teleport target', async () => {
+    vi.useFakeTimers()
+
+    const host = document.createElement('div')
+    const target = document.createElement('div')
+    document.body.appendChild(host)
+    document.body.appendChild(target)
+
+    const wrapper = mount(VfTooltip, {
+      attachTo: host,
+      props: {
+        text: 'Targeted hint',
+        openDelay: 0,
+        teleportTo: target
+      },
+      slots: {
+        default: '<button type="button">Info</button>'
+      }
+    })
+
+    await wrapper.trigger('mouseenter')
+    vi.advanceTimersByTime(0)
+    await wrapper.vm.$nextTick()
+    await wrapper.vm.$nextTick()
+
+    expect(target.querySelector('.vf-tooltip__content')).not.toBeNull()
+    expect(host.querySelector('.vf-tooltip__content')).toBeNull()
+
+    wrapper.unmount()
+    host.remove()
+    target.remove()
+    vi.useRealTimers()
+  })
 })

@@ -2,6 +2,7 @@
 import { computed } from 'vue'
 import { VueIconify, icons } from '@codemonster-ru/vueiconify'
 import { useDisclosure, useId } from '@/composables'
+import { vfMotionDurationsMs } from '@/theme/motion'
 
 interface VfAccordionProps {
   open?: boolean
@@ -35,6 +36,16 @@ const disclosure = useDisclosure({
 })
 const isOpen = disclosure.isOpen
 
+const accordionTransition = [
+  'height var(--vf-motion-duration-normal) var(--vf-motion-ease-standard)',
+  'opacity var(--vf-motion-duration-normal) var(--vf-motion-ease-standard)'
+].join(', ')
+
+function getContentHeight(target: HTMLElement) {
+  const inner = target.firstElementChild as HTMLElement | null
+  return inner?.offsetHeight ?? target.scrollHeight
+}
+
 function toggle() {
   if (!props.disabled) {
     disclosure.toggle()
@@ -46,6 +57,58 @@ function handleKeydown(event: KeyboardEvent) {
     event.preventDefault()
     toggle()
   }
+}
+
+function onBeforeEnter(el: Element) {
+  const target = el as HTMLElement
+  target.style.height = '0px'
+  target.style.opacity = '0'
+  target.style.overflow = 'hidden'
+}
+
+function onEnter(el: Element, done: () => void) {
+  const target = el as HTMLElement
+  target.style.transition = accordionTransition
+
+  requestAnimationFrame(() => {
+    target.style.height = `${getContentHeight(target)}px`
+    target.style.opacity = '1'
+  })
+
+  window.setTimeout(done, vfMotionDurationsMs.normal)
+}
+
+function onAfterEnter(el: Element) {
+  const target = el as HTMLElement
+  target.style.height = ''
+  target.style.opacity = ''
+  target.style.overflow = ''
+  target.style.transition = ''
+}
+
+function onBeforeLeave(el: Element) {
+  const target = el as HTMLElement
+  target.style.height = `${getContentHeight(target)}px`
+  target.style.opacity = '1'
+  target.style.overflow = 'hidden'
+}
+
+function onLeave(el: Element, done: () => void) {
+  const target = el as HTMLElement
+  target.style.transition = accordionTransition
+  void target.offsetHeight
+  target.style.height = '0px'
+  target.style.opacity = '0'
+
+  window.setTimeout(done, vfMotionDurationsMs.normal)
+}
+
+function onAfterLeave(el: Element) {
+  const target = el as HTMLElement
+  target.style.height = ''
+  target.style.opacity = ''
+  target.style.overflow = ''
+  target.style.transition = ''
 }
 </script>
 
@@ -73,14 +136,26 @@ function handleKeydown(event: KeyboardEvent) {
       </span>
     </button>
 
-    <div
-      v-if="isOpen"
-      :id="contentId"
-      :aria-labelledby="triggerId"
-      class="vf-accordion__content"
-      role="region"
+    <Transition
+      :css="false"
+      @before-enter="onBeforeEnter"
+      @enter="onEnter"
+      @after-enter="onAfterEnter"
+      @before-leave="onBeforeLeave"
+      @leave="onLeave"
+      @after-leave="onAfterLeave"
     >
-      <slot :open="isOpen" />
-    </div>
+      <div
+        v-if="isOpen"
+        :id="contentId"
+        :aria-labelledby="triggerId"
+        class="vf-accordion__content"
+        role="region"
+      >
+        <div class="vf-accordion__content-inner">
+          <slot :open="isOpen" />
+        </div>
+      </div>
+    </Transition>
   </section>
 </template>

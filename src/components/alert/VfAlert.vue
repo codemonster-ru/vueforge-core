@@ -29,8 +29,24 @@ const iconName = computed(() => {
     return icons.checkCircle
   }
 
+  if (props.tone === 'info') {
+    return icons.info
+  }
+
+  if (props.tone === 'warn') {
+    return icons.warning
+  }
+
+  if (props.tone === 'help') {
+    return icons.questionCircle
+  }
+
   if (props.tone === 'danger') {
     return icons.warning
+  }
+
+  if (props.tone === 'contrast') {
+    return icons.info
   }
 
   return icons.info

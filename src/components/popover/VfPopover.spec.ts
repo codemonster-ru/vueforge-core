@@ -103,4 +103,56 @@ describe('VfPopover', () => {
     await nextTick()
     expect(wrapper.find('[role="dialog"]').exists()).toBe(false)
   })
+
+  it('can render without teleport when requested', async () => {
+    const host = document.createElement('div')
+    document.body.appendChild(host)
+
+    const wrapper = mount(VfPopover, {
+      attachTo: host,
+      props: {
+        defaultOpen: true,
+        disableTeleport: true
+      },
+      slots: {
+        trigger: '<button type="button">Open</button>',
+        default: '<div>Popover body</div>'
+      }
+    })
+
+    await nextTick()
+
+    expect(host.querySelector('.vf-popover__content')).not.toBeNull()
+
+    wrapper.unmount()
+    host.remove()
+  })
+
+  it('can render into a custom teleport target', async () => {
+    const host = document.createElement('div')
+    const target = document.createElement('div')
+    document.body.appendChild(host)
+    document.body.appendChild(target)
+
+    const wrapper = mount(VfPopover, {
+      attachTo: host,
+      props: {
+        defaultOpen: true,
+        teleportTo: target
+      },
+      slots: {
+        trigger: '<button type="button">Open</button>',
+        default: '<div>Popover body</div>'
+      }
+    })
+
+    await nextTick()
+
+    expect(target.querySelector('.vf-popover__content')).not.toBeNull()
+    expect(host.querySelector('.vf-popover__content')).toBeNull()
+
+    wrapper.unmount()
+    host.remove()
+    target.remove()
+  })
 })

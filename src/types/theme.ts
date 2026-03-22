@@ -16,11 +16,30 @@ export interface VfThemeTokens {
   colorPrimaryBorderSoft: string
   colorFocusRing: string
   colorSuccess: string
+  colorSuccessContrast: string
+  colorInfo: string
+  colorInfoContrast: string
+  colorWarn: string
+  colorWarnContrast: string
+  colorHelp: string
+  colorHelpContrast: string
   colorDanger: string
+  colorDangerContrast: string
+  colorContrast: string
+  colorContrastContrast: string
   colorSuccessSoft: string
+  colorInfoSoft: string
+  colorWarnSoft: string
+  colorHelpSoft: string
   colorDangerSoft: string
+  colorContrastSoft: string
   colorSuccessBorderSoft: string
+  colorInfoBorderSoft: string
+  colorWarnBorderSoft: string
+  colorHelpBorderSoft: string
   colorDangerBorderSoft: string
+  colorContrastBorderSoft: string
+  focusRingWidth: string
   radius: string
   radiusControl: string
   radiusControlTight: string
@@ -45,6 +64,25 @@ export interface VfThemeTokens {
   fieldPaddingSm: string
   fieldPaddingMd: string
   fieldPaddingLg: string
+  checkboxSizeSm: string
+  checkboxSizeMd: string
+  checkboxSizeLg: string
+  selectionGap: string
+  checkboxMarkWidth: string
+  checkboxMarkHeight: string
+  checkboxMarkStrokeWidth: string
+  checkboxMarkOffsetY: string
+  radioDotSize: string
+  switchWidthSm: string
+  switchWidthMd: string
+  switchWidthLg: string
+  switchHeightSm: string
+  switchHeightMd: string
+  switchHeightLg: string
+  switchThumbSizeSm: string
+  switchThumbSizeMd: string
+  switchThumbSizeLg: string
+  switchThumbInset: string
   textareaMinHeightSm: string
   textareaMinHeightMd: string
   textareaMinHeightLg: string
@@ -65,6 +103,24 @@ export interface VfThemeTokens {
   tabsListPadding: string
   tabsTabPaddingInline: string
   tabsPanelPaddingTop: string
+  navMenuListGap: string
+  navMenuNestedGap: string
+  navMenuCollapseOffsetTop: string
+  navMenuCollapseInsetLevel0Margin: string
+  navMenuCollapseInsetLevel0Padding: string
+  navMenuCollapseInsetSimpleLevel0Margin: string
+  navMenuCollapseInsetSimpleLevel0Padding: string
+  navMenuCollapseInsetDeepMargin: string
+  navMenuCollapseInsetDeepPadding: string
+  navMenuCollapseInsetSimpleDeepMargin: string
+  navMenuCollapseInsetSimpleDeepPadding: string
+  navMenuNodeGroupSpacing: string
+  navMenuGroupPadding: string
+  navMenuGroupFontSize: string
+  navMenuItemPadding: string
+  navMenuItemGap: string
+  navMenuLeadingIconSize: string
+  navMenuLeadingIconColumnSize: string
   badgeHeight: string
   badgePadding: string
   badgeGap: string
@@ -83,13 +139,17 @@ export interface VfThemeTokens {
   dialogWidthMd: string
   dialogWidthLg: string
   dialogMaxHeight: string
+  drawerSizeSm: string
+  drawerSizeMd: string
+  drawerSizeLg: string
+  drawerOffsetTop: string
+  drawerBodyPadding: string
   dialogTitleFontSize: string
   dialogHeaderGap: string
   dialogActionsGap: string
   popoverWidth: string
   floatingArrowSize: string
   overlayBackdrop: string
-  overlayBackdropBlur: string
   alertPrimarySoft: string
   alertPrimaryBorderSoft: string
   alertContentGap: string
@@ -99,6 +159,14 @@ export interface VfThemeTokens {
   textLineHeight: string
   headingLineHeight: string
   tabsLineHeight: string
+  motionDurationFast: string
+  motionDurationNormal: string
+  motionEaseStandard: string
+  zOverlay: string
+  zDrawer: string
+  zDropdown: string
+  zPopover: string
+  zTooltip: string
   spacing: string
   shadow: string
 }

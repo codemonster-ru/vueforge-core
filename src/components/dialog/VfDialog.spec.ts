@@ -140,4 +140,56 @@ describe('VfDialog', () => {
     await nextTick()
     expect(document.body.style.overflow).toBe('auto')
   })
+
+  it('can render without teleport when requested', async () => {
+    const host = document.createElement('div')
+    document.body.appendChild(host)
+
+    const wrapper = mount(VfDialog, {
+      attachTo: host,
+      props: {
+        open: true,
+        disableTeleport: true,
+        title: 'Inline dialog'
+      },
+      slots: {
+        default: 'Dialog body'
+      }
+    })
+
+    await nextTick()
+
+    expect(host.querySelector('.vf-dialog')).not.toBeNull()
+
+    wrapper.unmount()
+    host.remove()
+  })
+
+  it('can render into a custom teleport target', async () => {
+    const host = document.createElement('div')
+    const target = document.createElement('div')
+    document.body.appendChild(host)
+    document.body.appendChild(target)
+
+    const wrapper = mount(VfDialog, {
+      attachTo: host,
+      props: {
+        open: true,
+        teleportTo: target,
+        title: 'Targeted dialog'
+      },
+      slots: {
+        default: 'Dialog body'
+      }
+    })
+
+    await nextTick()
+
+    expect(target.querySelector('.vf-dialog')).not.toBeNull()
+    expect(host.querySelector('.vf-dialog')).toBeNull()
+
+    wrapper.unmount()
+    host.remove()
+    target.remove()
+  })
 })

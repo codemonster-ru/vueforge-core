@@ -97,6 +97,7 @@ npm run test
 - [Visual Baseline 1.0](./docs/visual-baseline.md)
 - [Theme API](./docs/theme-api.md)
 - [Foundation API](./docs/foundation-api.md)
+- [Overlay API](./docs/overlay-api.md)
 - [Release Checklist](./docs/release-checklist.md)
 
 ## License

@@ -116,24 +116,6 @@ body {
   gap: 0.75rem;
 }
 
-.demo-state-grid {
-  display: grid;
-  gap: 0.75rem;
-}
-
-.demo-state {
-  display: grid;
-  gap: 0.5rem;
-}
-
-.demo-state__label {
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.03em;
-  text-transform: lowercase;
-  color: var(--vf-color-muted);
-}
-
 .demo-kv {
   display: flex;
   align-items: center;

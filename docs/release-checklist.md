@@ -58,8 +58,8 @@
 ## Release Decision
 
 - If theme API or visual tokens are still changing: release `rc`
-- If API and visual baseline are stable in real usage: release `1.1.0`
-- Current repository target: `1.1.0`
+- If API and visual baseline are stable in real usage: release `1.2.0`
+- Current repository target: `1.2.0`
 
 ## Publish Flow
 

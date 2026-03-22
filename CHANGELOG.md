@@ -1,5 +1,41 @@
 # Changelog
 
+## 1.2.0 - 2026-03-22
+
+Feature release for `@codemonster-ru/vueforge-core`.
+
+### Added
+
+- New navigation component:
+  - `VfNavMenu`
+- New selection controls:
+  - `VfCheckbox`
+  - `VfSwitch`
+  - `VfRadio`
+- Shared overlay teleport contract for:
+  - `VfDialog`
+  - `VfDrawer`
+  - `VfDropdown`
+  - `VfPopover`
+  - `VfTooltip`
+- New overlay API documentation
+- New z-index theme tokens for overlay and floating layers
+
+### Changed
+
+- `VfDrawer` now has a stronger embedding contract for downstream shell/layout use cases:
+  - `offsetTop`
+  - `bodyPadding`
+  - root attr/class/style forwarding
+  - drawer radius CSS variables
+- `VfNavMenu` now supports:
+  - grouped navigation
+  - leading icons
+  - `single` and `multiple` expand modes
+  - automatic compact styling for simple menu trees
+- Demo showcase now includes richer navigation comparisons and selection control coverage
+- Selection controls and navigation visuals were polished across light and dark themes
+
 ## 1.1.1 - 2026-03-15
 
 Patch release for `@codemonster-ru/vueforge-core`.

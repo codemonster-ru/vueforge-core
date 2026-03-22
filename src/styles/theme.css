@@ -18,12 +18,50 @@
   --vf-color-primary-contrast: #081120;
   --vf-color-primary-soft: color-mix(in srgb, var(--vf-color-primary) 12%, var(--vf-color-surface));
   --vf-color-primary-border-soft: color-mix(in srgb, var(--vf-color-primary) 22%, var(--vf-color-border));
-  --vf-color-focus-ring: color-mix(in srgb, var(--vf-color-primary) 52%, var(--vf-color-surface));
+  --vf-color-focus-ring: color-mix(in srgb, var(--vf-color-primary) 32%, var(--vf-color-surface));
   --vf-color-success: #4ade80;
+  --vf-color-success-contrast: #081120;
+  --vf-color-info: #38bdf8;
+  --vf-color-info-contrast: #081120;
+  --vf-color-warn: #fbbf24;
+  --vf-color-warn-contrast: #1f1300;
+  --vf-color-help: #a78bfa;
+  --vf-color-help-contrast: #081120;
   --vf-color-danger: #f87171;
+  --vf-color-danger-contrast: #081120;
+  --vf-color-contrast: #f3f4f6;
+  --vf-color-contrast-contrast: #111827;
   --vf-color-success-soft: color-mix(in srgb, var(--vf-color-success) 12%, var(--vf-color-surface));
+  --vf-color-info-soft: color-mix(in srgb, var(--vf-color-info) 12%, var(--vf-color-surface));
+  --vf-color-warn-soft: color-mix(in srgb, var(--vf-color-warn) 12%, var(--vf-color-surface));
+  --vf-color-help-soft: color-mix(in srgb, var(--vf-color-help) 12%, var(--vf-color-surface));
   --vf-color-danger-soft: color-mix(in srgb, var(--vf-color-danger) 12%, var(--vf-color-surface));
+  --vf-color-contrast-soft: color-mix(in srgb, var(--vf-color-contrast) 10%, var(--vf-color-surface));
   --vf-color-success-border-soft: color-mix(in srgb, var(--vf-color-success) 24%, var(--vf-color-border));
+  --vf-color-info-border-soft: color-mix(in srgb, var(--vf-color-info) 24%, var(--vf-color-border));
+  --vf-color-warn-border-soft: color-mix(in srgb, var(--vf-color-warn) 24%, var(--vf-color-border));
+  --vf-color-help-border-soft: color-mix(in srgb, var(--vf-color-help) 24%, var(--vf-color-border));
   --vf-color-danger-border-soft: color-mix(in srgb, var(--vf-color-danger) 24%, var(--vf-color-border));
+  --vf-color-contrast-border-soft: color-mix(in srgb, var(--vf-color-contrast) 24%, var(--vf-color-border));
   --vf-shadow: none;
+}
+
+:root.vf-theme-transitioning,
+:root.vf-theme-transitioning body,
+:root.vf-theme-transitioning #app,
+:root.vf-theme-transitioning [class^='vf-'],
+:root.vf-theme-transitioning [class*=' vf-'],
+:root.vf-theme-transitioning .demo-page,
+:root.vf-theme-transitioning .demo-container,
+:root.vf-theme-transitioning .demo-header,
+:root.vf-theme-transitioning .demo-block,
+:root.vf-theme-transitioning .demo-example,
+:root.vf-theme-transitioning .demo-item {
+  transition:
+    background-color var(--vf-motion-duration-normal) var(--vf-motion-ease-standard),
+    border-color var(--vf-motion-duration-normal) var(--vf-motion-ease-standard),
+    color var(--vf-motion-duration-normal) var(--vf-motion-ease-standard),
+    box-shadow var(--vf-motion-duration-normal) var(--vf-motion-ease-standard),
+    fill var(--vf-motion-duration-normal) var(--vf-motion-ease-standard),
+    stroke var(--vf-motion-duration-normal) var(--vf-motion-ease-standard);
 }

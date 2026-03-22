@@ -5,11 +5,14 @@ import {
   VfBadge,
   VfButton,
   VfCard,
+  VfCheckbox,
   VfDivider,
   VfIconButton,
   VfInput,
   VfLink,
   VfPanel,
+  VfRadio,
+  VfSwitch,
   VfTag,
   VfTextarea
 } from '@/components'
@@ -18,7 +21,7 @@ describe('core primitives', () => {
   it('renders button variants and respects native attributes', async () => {
     const wrapper = mount(VfButton, {
       props: {
-        variant: 'secondary',
+        variant: 'danger',
         size: 'sm',
         disabled: true
       },
@@ -29,7 +32,7 @@ describe('core primitives', () => {
 
     expect(wrapper.attributes('type')).toBe('button')
     expect(wrapper.attributes('disabled')).toBeDefined()
-    expect(wrapper.classes()).toContain('vf-button--secondary')
+    expect(wrapper.classes()).toContain('vf-button--danger')
     expect(wrapper.classes()).toContain('vf-button--sm')
     expect(wrapper.text()).toBe('Save')
   })
@@ -47,6 +50,29 @@ describe('core primitives', () => {
     })
 
     expect(wrapper.attributes('rel')).toBe('noopener noreferrer')
+    expect(wrapper.classes()).toContain('vf-link--underline')
+  })
+
+  it('supports router-style links via to prop', () => {
+    const wrapper = mount(VfLink, {
+      props: {
+        to: '/docs',
+        underline: true
+      },
+      slots: {
+        default: 'Docs'
+      },
+      global: {
+        stubs: {
+          RouterLink: {
+            props: ['to'],
+            template: '<a :data-to="to" :class="$attrs.class"><slot /></a>'
+          }
+        }
+      }
+    })
+
+    expect(wrapper.attributes('data-to')).toBe('/docs')
     expect(wrapper.classes()).toContain('vf-link--underline')
   })
 
@@ -98,6 +124,61 @@ describe('core primitives', () => {
     expect(wrapper.emitted('update:modelValue')).toEqual([['published']])
   })
 
+  it('emits checkbox and switch updates', async () => {
+    const checkbox = mount(VfCheckbox, {
+      props: {
+        modelValue: true,
+        invalid: true
+      },
+      slots: {
+        default: 'Accept terms'
+      }
+    })
+
+    const switchControl = mount(VfSwitch, {
+      props: {
+        modelValue: false,
+        size: 'lg'
+      },
+      slots: {
+        default: 'Enable notifications'
+      }
+    })
+
+    expect(checkbox.classes()).toContain('vf-checkbox--checked')
+    expect(checkbox.classes()).toContain('vf-checkbox--invalid')
+    expect(switchControl.classes()).toContain('vf-switch--lg')
+
+    await checkbox.get('input').setValue(false)
+    await switchControl.get('input').setValue(true)
+
+    expect(checkbox.emitted('update:modelValue')).toEqual([[false]])
+    expect(switchControl.emitted('update:modelValue')).toEqual([[true]])
+  })
+
+  it('emits radio updates and reflects checked state', async () => {
+    const radio = mount(VfRadio, {
+      props: {
+        modelValue: 'a',
+        value: 'b',
+        invalid: true
+      },
+      attrs: {
+        name: 'plan'
+      },
+      slots: {
+        default: 'Pro plan'
+      }
+    })
+
+    expect(radio.classes()).toContain('vf-radio--invalid')
+    expect(radio.get('input').attributes('name')).toBe('plan')
+
+    await radio.get('input').setValue(true)
+
+    expect(radio.emitted('update:modelValue')).toEqual([['b']])
+  })
+
   it('renders divider orientation and decorative default semantics', () => {
     const wrapper = mount(VfDivider, {
       props: {
@@ -113,7 +194,7 @@ describe('core primitives', () => {
   it('renders badge tone and panel content', () => {
     const badge = mount(VfBadge, {
       props: {
-        tone: 'success'
+        tone: 'help'
       },
       slots: {
         default: 'Stable'
@@ -130,7 +211,7 @@ describe('core primitives', () => {
       }
     })
 
-    expect(badge.classes()).toContain('vf-badge--success')
+    expect(badge.classes()).toContain('vf-badge--help')
     expect(badge.text()).toBe('Stable')
     expect(panel.classes()).toContain('vf-panel--subtle')
     expect(panel.text()).toContain('Quick notes')
@@ -142,20 +223,20 @@ describe('core primitives', () => {
       props: {
         icon: 'gear',
         'aria-label': 'Open settings',
-        variant: 'secondary'
+        variant: 'help'
       }
     })
 
     expect(wrapper.attributes('type')).toBe('button')
     expect(wrapper.attributes('aria-label')).toBe('Open settings')
-    expect(wrapper.classes()).toContain('vf-icon-button--secondary')
+    expect(wrapper.classes()).toContain('vf-icon-button--help')
     expect(wrapper.find('.vif-icon').exists()).toBe(true)
   })
 
   it('renders alert and tag tones', () => {
     const alert = mount(VfAlert, {
       props: {
-        tone: 'danger',
+        tone: 'warn',
         title: 'Attention'
       },
       slots: {
@@ -165,18 +246,18 @@ describe('core primitives', () => {
 
     const tag = mount(VfTag, {
       props: {
-        tone: 'primary'
+        tone: 'contrast'
       },
       slots: {
         default: 'Preview'
       }
     })
 
-    expect(alert.classes()).toContain('vf-alert--danger')
+    expect(alert.classes()).toContain('vf-alert--warn')
     expect(alert.text()).toContain('Attention')
     expect(alert.text()).toContain('Alert content')
     expect(alert.find('.vif-icon').exists()).toBe(true)
-    expect(tag.classes()).toContain('vf-tag--primary')
+    expect(tag.classes()).toContain('vf-tag--contrast')
     expect(tag.text()).toBe('Preview')
   })
 })

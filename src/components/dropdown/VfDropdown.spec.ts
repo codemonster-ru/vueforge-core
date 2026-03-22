@@ -135,4 +135,56 @@ describe('VfDropdown', () => {
     await nextTick()
     expect(wrapper.find('[role="menu"]').exists()).toBe(false)
   })
+
+  it('can render without teleport when requested', async () => {
+    const host = document.createElement('div')
+    document.body.appendChild(host)
+
+    const wrapper = mount(VfDropdown, {
+      attachTo: host,
+      props: {
+        defaultOpen: true,
+        disableTeleport: true
+      },
+      slots: {
+        trigger: '<button type="button">More</button>',
+        default: '<button role="menuitem">Edit</button>'
+      }
+    })
+
+    await nextTick()
+
+    expect(host.querySelector('.vf-dropdown__menu')).not.toBeNull()
+
+    wrapper.unmount()
+    host.remove()
+  })
+
+  it('can render into a custom teleport target', async () => {
+    const host = document.createElement('div')
+    const target = document.createElement('div')
+    document.body.appendChild(host)
+    document.body.appendChild(target)
+
+    const wrapper = mount(VfDropdown, {
+      attachTo: host,
+      props: {
+        defaultOpen: true,
+        teleportTo: target
+      },
+      slots: {
+        trigger: '<button type="button">More</button>',
+        default: '<button role="menuitem">Edit</button>'
+      }
+    })
+
+    await nextTick()
+
+    expect(target.querySelector('.vf-dropdown__menu')).not.toBeNull()
+    expect(host.querySelector('.vf-dropdown__menu')).toBeNull()
+
+    wrapper.unmount()
+    host.remove()
+    target.remove()
+  })
 })

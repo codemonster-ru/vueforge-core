@@ -1,10 +1,22 @@
-export type VfButtonVariant = 'primary' | 'secondary' | 'ghost'
+import type { IconName } from '@codemonster-ru/vueiconify'
+
+export type VfButtonVariant =
+  | 'primary'
+  | 'secondary'
+  | 'success'
+  | 'info'
+  | 'warn'
+  | 'help'
+  | 'danger'
+  | 'contrast'
+  | 'ghost'
 export type VfControlSize = 'sm' | 'md' | 'lg'
 export type VfLinkTone = 'default' | 'muted'
-export type VfBadgeTone = 'neutral' | 'primary' | 'success' | 'danger'
-export type VfFeedbackTone = 'neutral' | 'primary' | 'success' | 'danger'
+export type VfBadgeTone = 'neutral' | 'primary' | 'success' | 'info' | 'warn' | 'help' | 'danger' | 'contrast'
+export type VfFeedbackTone = 'neutral' | 'primary' | 'success' | 'info' | 'warn' | 'help' | 'danger' | 'contrast'
 export type VfDividerOrientation = 'horizontal' | 'vertical'
 export type VfDialogSize = 'sm' | 'md' | 'lg'
+export type VfDrawerPlacement = 'left' | 'right' | 'top' | 'bottom'
 export type VfDropdownPlacement = 'bottom-start' | 'bottom-end'
 export type VfTooltipPlacement = 'top' | 'bottom'
 
@@ -12,4 +24,17 @@ export interface VfTabItem {
   value: string
   label: string
   disabled?: boolean
+}
+
+export interface VfNavMenuItem {
+  value: string
+  label: string
+  kind?: 'item' | 'group'
+  leadingIcon?: IconName | string
+  href?: string
+  to?: string | Record<string, unknown>
+  target?: string
+  rel?: string
+  disabled?: boolean
+  children?: VfNavMenuItem[]
 }

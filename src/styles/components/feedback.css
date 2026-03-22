@@ -26,10 +26,34 @@
   color: var(--vf-color-success);
 }
 
+.vf-badge--info {
+  background: var(--vf-color-info-soft);
+  border-color: var(--vf-color-info);
+  color: var(--vf-color-info);
+}
+
+.vf-badge--warn {
+  background: var(--vf-color-warn-soft);
+  border-color: var(--vf-color-warn);
+  color: var(--vf-color-warn);
+}
+
+.vf-badge--help {
+  background: var(--vf-color-help-soft);
+  border-color: var(--vf-color-help);
+  color: var(--vf-color-help);
+}
+
 .vf-badge--danger {
   background: var(--vf-color-danger-soft);
   border-color: var(--vf-color-danger);
   color: var(--vf-color-danger);
+}
+
+.vf-badge--contrast {
+  background: var(--vf-color-contrast-soft);
+  border-color: var(--vf-color-contrast);
+  color: var(--vf-color-contrast);
 }
 
 .vf-tag {
@@ -56,9 +80,29 @@
   color: var(--vf-color-success);
 }
 
+.vf-tag--info {
+  border-color: var(--vf-color-info);
+  color: var(--vf-color-info);
+}
+
+.vf-tag--warn {
+  border-color: var(--vf-color-warn);
+  color: var(--vf-color-warn);
+}
+
+.vf-tag--help {
+  border-color: var(--vf-color-help);
+  color: var(--vf-color-help);
+}
+
 .vf-tag--danger {
   border-color: var(--vf-color-danger);
   color: var(--vf-color-danger);
+}
+
+.vf-tag--contrast {
+  border-color: var(--vf-color-contrast);
+  color: var(--vf-color-contrast);
 }
 
 .vf-alert {
@@ -78,9 +122,29 @@
   background: var(--vf-color-success-soft);
 }
 
+.vf-alert--info {
+  border-color: var(--vf-color-info-border-soft);
+  background: var(--vf-color-info-soft);
+}
+
+.vf-alert--warn {
+  border-color: var(--vf-color-warn-border-soft);
+  background: var(--vf-color-warn-soft);
+}
+
+.vf-alert--help {
+  border-color: var(--vf-color-help-border-soft);
+  background: var(--vf-color-help-soft);
+}
+
 .vf-alert--danger {
   border-color: var(--vf-color-danger-border-soft);
   background: var(--vf-color-danger-soft);
+}
+
+.vf-alert--contrast {
+  border-color: var(--vf-color-contrast-border-soft);
+  background: var(--vf-color-contrast-soft);
 }
 
 .vf-alert__icon {
@@ -95,8 +159,24 @@
   color: var(--vf-color-success);
 }
 
+.vf-alert--info .vf-alert__icon {
+  color: var(--vf-color-info);
+}
+
+.vf-alert--warn .vf-alert__icon {
+  color: var(--vf-color-warn);
+}
+
+.vf-alert--help .vf-alert__icon {
+  color: var(--vf-color-help);
+}
+
 .vf-alert--danger .vf-alert__icon {
   color: var(--vf-color-danger);
+}
+
+.vf-alert--contrast .vf-alert__icon {
+  color: var(--vf-color-contrast);
 }
 
 .vf-alert__content {
