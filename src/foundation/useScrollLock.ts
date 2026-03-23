@@ -1,65 +1,70 @@
-import { onBeforeUnmount, toValue, watchEffect, type MaybeRefOrGetter } from 'vue'
+import {
+  onBeforeUnmount,
+  toValue,
+  watchEffect,
+  type MaybeRefOrGetter,
+} from "vue";
 
 export interface UseScrollLockOptions {
-  target?: MaybeRefOrGetter<HTMLElement | null | undefined>
+  target?: MaybeRefOrGetter<HTMLElement | null | undefined>;
 }
 
 export function useScrollLock(
   enabled: MaybeRefOrGetter<boolean>,
-  options: UseScrollLockOptions = {}
+  options: UseScrollLockOptions = {},
 ) {
-  let previousOverflow = ''
+  let previousOverflow = "";
 
   const resolveTarget = () => {
-    const target = toValue(options.target)
+    const target = toValue(options.target);
 
     if (target) {
-      return target
+      return target;
     }
 
-    if (typeof document === 'undefined') {
-      return null
+    if (typeof document === "undefined") {
+      return null;
     }
 
-    return document.body
-  }
+    return document.body;
+  };
 
   const unlock = () => {
-    const target = resolveTarget()
+    const target = resolveTarget();
 
     if (!target) {
-      return
+      return;
     }
 
-    target.style.overflow = previousOverflow
-  }
+    target.style.overflow = previousOverflow;
+  };
 
   watchEffect((onCleanup) => {
-    const isEnabled = toValue(enabled)
-    const target = resolveTarget()
+    const isEnabled = toValue(enabled);
+    const target = resolveTarget();
 
     if (!target) {
-      return
+      return;
     }
 
     if (!isEnabled) {
-      unlock()
-      return
+      unlock();
+      return;
     }
 
-    previousOverflow = target.style.overflow
-    target.style.overflow = 'hidden'
+    previousOverflow = target.style.overflow;
+    target.style.overflow = "hidden";
 
     onCleanup(() => {
-      target.style.overflow = previousOverflow
-    })
-  })
+      target.style.overflow = previousOverflow;
+    });
+  });
 
   onBeforeUnmount(() => {
-    unlock()
-  })
+    unlock();
+  });
 
   return {
-    unlock
-  }
+    unlock,
+  };
 }

@@ -1,135 +1,139 @@
 <script setup lang="ts">
-import { computed, resolveDynamicComponent } from 'vue'
-import { VueIconify, icons } from '@codemonster-ru/vueiconify'
-import type { VfNavMenuItem } from '@/types/components'
+import { computed, resolveDynamicComponent } from "vue";
+import { VueIconify, icons } from "@codemonster-ru/vueiconify";
+import type { VfNavMenuItem } from "@/types/components";
 
 defineOptions({
-  name: 'VfNavMenuItemNode'
-})
+  name: "VfNavMenuItemNode",
+});
 
 const props = defineProps<{
-  item: VfNavMenuItem
-  level: number
-  parentPath: string[]
-  activeValue?: string
-  expandedValues: string[]
-}>()
+  item: VfNavMenuItem;
+  level: number;
+  parentPath: string[];
+  activeValue?: string;
+  expandedValues: string[];
+}>();
 
 const emit = defineEmits<{
-  toggle: [payload: { value: string; parentPath: string[] }]
-  select: [item: VfNavMenuItem]
-}>()
+  toggle: [payload: { value: string; parentPath: string[] }];
+  select: [item: VfNavMenuItem];
+}>();
 
-const hasChildren = computed(() => Boolean(props.item.children?.length))
-const isGroup = computed(() => props.item.kind === 'group')
-const isExpanded = computed(() => props.expandedValues.includes(props.item.value))
-const isActive = computed(() => props.activeValue === props.item.value)
-const isLink = computed(() => props.item.href !== undefined || props.item.to !== undefined)
+const hasChildren = computed(() => Boolean(props.item.children?.length));
+const isGroup = computed(() => props.item.kind === "group");
+const isExpanded = computed(() =>
+  props.expandedValues.includes(props.item.value),
+);
+const isActive = computed(() => props.activeValue === props.item.value);
+const isLink = computed(
+  () => props.item.href !== undefined || props.item.to !== undefined,
+);
 const resolvedComponent = computed(() => {
   if (props.item.to !== undefined) {
-    return resolveDynamicComponent('RouterLink')
+    return resolveDynamicComponent("RouterLink");
   }
 
-  return 'a'
-})
+  return "a";
+});
 
 const resolvedRel = computed(() => {
   if (props.item.rel) {
-    return props.item.rel
+    return props.item.rel;
   }
 
-  return props.item.target === '_blank' ? 'noopener noreferrer' : undefined
-})
+  return props.item.target === "_blank" ? "noopener noreferrer" : undefined;
+});
 
 const linkProps = computed(() => {
   if (props.item.to !== undefined) {
     return {
       to: props.item.to,
       target: props.item.target,
-      rel: resolvedRel.value
-    }
+      rel: resolvedRel.value,
+    };
   }
 
   return {
     href: props.item.href,
     target: props.item.target,
-    rel: resolvedRel.value
-  }
-})
+    rel: resolvedRel.value,
+  };
+});
 
 function onBranchClick() {
   if (props.item.disabled) {
-    return
+    return;
   }
 
-  emit('toggle', {
+  emit("toggle", {
     value: props.item.value,
-    parentPath: props.parentPath
-  })
+    parentPath: props.parentPath,
+  });
 }
 
 function onLeafClick(event?: MouseEvent) {
   if (props.item.disabled) {
-    event?.preventDefault()
-    return
+    event?.preventDefault();
+    return;
   }
 
-  emit('select', props.item)
+  emit("select", props.item);
 }
 
 function setNestedListTransition(element: Element) {
-  const target = element as HTMLElement
+  const target = element as HTMLElement;
   target.style.transition =
-    'height var(--vf-motion-duration-normal) var(--vf-motion-ease-standard), opacity var(--vf-motion-duration-normal) var(--vf-motion-ease-standard)'
+    "height var(--vf-motion-duration-normal) var(--vf-motion-ease-standard), opacity var(--vf-motion-duration-normal) var(--vf-motion-ease-standard)";
 
-  return target
+  return target;
 }
 
 function onNestedListBeforeEnter(element: Element) {
-  const target = setNestedListTransition(element)
-  target.style.overflow = 'hidden'
-  target.style.height = '0'
-  target.style.opacity = '0'
+  const target = setNestedListTransition(element);
+  target.style.overflow = "hidden";
+  target.style.height = "0";
+  target.style.opacity = "0";
 }
 
 function onNestedListEnter(element: Element) {
-  const target = setNestedListTransition(element)
+  const target = setNestedListTransition(element);
   requestAnimationFrame(() => {
-    target.style.height = `${target.scrollHeight}px`
-    target.style.opacity = '1'
-  })
+    target.style.height = `${target.scrollHeight}px`;
+    target.style.opacity = "1";
+  });
 }
 
 function onNestedListAfterEnter(element: Element) {
-  const target = element as HTMLElement
-  target.style.transition = ''
-  target.style.overflow = ''
-  target.style.height = ''
-  target.style.opacity = ''
+  const target = element as HTMLElement;
+  target.style.transition = "";
+  target.style.overflow = "";
+  target.style.height = "";
+  target.style.opacity = "";
 }
 
 function onNestedListBeforeLeave(element: Element) {
-  const target = setNestedListTransition(element)
-  target.style.overflow = 'hidden'
-  target.style.height = `${target.scrollHeight}px`
-  target.style.opacity = '1'
+  const target = setNestedListTransition(element);
+  target.style.overflow = "hidden";
+  target.style.height = `${target.scrollHeight}px`;
+  target.style.opacity = "1";
 }
 
 function onNestedListLeave(element: Element) {
-  const target = element as HTMLElement
-  void target.offsetHeight
+  const target = element as HTMLElement;
+  void target.offsetHeight;
   requestAnimationFrame(() => {
-    target.style.height = '0'
-    target.style.opacity = '0'
-  })
+    target.style.height = "0";
+    target.style.opacity = "0";
+  });
 }
 
 function onNestedListAfterLeave(element: Element) {
-  const target = element as HTMLElement
-  target.style.transition = ''
-  target.style.overflow = ''
-  target.style.height = ''
-  target.style.opacity = ''
+  const target = element as HTMLElement;
+  target.style.transition = "";
+  target.style.overflow = "";
+  target.style.height = "";
+  target.style.opacity = "";
 }
 </script>
 
@@ -147,7 +151,11 @@ function onNestedListAfterLeave(element: Element) {
 
     <button
       v-else-if="hasChildren"
-      :class="['vf-nav-menu__item', 'vf-nav-menu__item--branch', isExpanded && 'vf-nav-menu__item--expanded']"
+      :class="[
+        'vf-nav-menu__item',
+        'vf-nav-menu__item--branch',
+        isExpanded && 'vf-nav-menu__item--expanded',
+      ]"
       :style="{ '--vf-nav-menu-level': String(level) }"
       :aria-expanded="isExpanded"
       :disabled="item.disabled"
@@ -155,12 +163,19 @@ function onNestedListAfterLeave(element: Element) {
       @click="onBranchClick"
     >
       <span class="vf-nav-menu__item-content">
-        <span v-if="item.leadingIcon" class="vf-nav-menu__leading-icon" aria-hidden="true">
+        <span
+          v-if="item.leadingIcon"
+          class="vf-nav-menu__leading-icon"
+          aria-hidden="true"
+        >
           <VueIconify :icon="item.leadingIcon" size="1rem" />
         </span>
         <span class="vf-nav-menu__label">{{ item.label }}</span>
       </span>
-      <span :class="['vf-nav-menu__icon', isExpanded && 'vf-nav-menu__icon--open']" aria-hidden="true">
+      <span
+        :class="['vf-nav-menu__icon', isExpanded && 'vf-nav-menu__icon--open']"
+        aria-hidden="true"
+      >
         <VueIconify :icon="icons.chevronDown" size="0.875rem" />
       </span>
     </button>
@@ -169,13 +184,21 @@ function onNestedListAfterLeave(element: Element) {
       :is="resolvedComponent"
       v-else-if="isLink"
       v-bind="linkProps"
-      :class="['vf-nav-menu__item', isActive && 'vf-nav-menu__item--active', item.disabled && 'vf-nav-menu__item--disabled']"
+      :class="[
+        'vf-nav-menu__item',
+        isActive && 'vf-nav-menu__item--active',
+        item.disabled && 'vf-nav-menu__item--disabled',
+      ]"
       :style="{ '--vf-nav-menu-level': String(level) }"
       :aria-current="isActive ? 'page' : undefined"
       @click="onLeafClick"
     >
       <span class="vf-nav-menu__item-content">
-        <span v-if="item.leadingIcon" class="vf-nav-menu__leading-icon" aria-hidden="true">
+        <span
+          v-if="item.leadingIcon"
+          class="vf-nav-menu__leading-icon"
+          aria-hidden="true"
+        >
           <VueIconify :icon="item.leadingIcon" size="1rem" />
         </span>
         <span class="vf-nav-menu__label">{{ item.label }}</span>
@@ -184,7 +207,11 @@ function onNestedListAfterLeave(element: Element) {
 
     <button
       v-else
-      :class="['vf-nav-menu__item', isActive && 'vf-nav-menu__item--active', item.disabled && 'vf-nav-menu__item--disabled']"
+      :class="[
+        'vf-nav-menu__item',
+        isActive && 'vf-nav-menu__item--active',
+        item.disabled && 'vf-nav-menu__item--disabled',
+      ]"
       :style="{ '--vf-nav-menu-level': String(level) }"
       :aria-current="isActive ? 'page' : undefined"
       :disabled="item.disabled"
@@ -192,14 +219,21 @@ function onNestedListAfterLeave(element: Element) {
       @click="onLeafClick()"
     >
       <span class="vf-nav-menu__item-content">
-        <span v-if="item.leadingIcon" class="vf-nav-menu__leading-icon" aria-hidden="true">
+        <span
+          v-if="item.leadingIcon"
+          class="vf-nav-menu__leading-icon"
+          aria-hidden="true"
+        >
           <VueIconify :icon="item.leadingIcon" size="1rem" />
         </span>
         <span class="vf-nav-menu__label">{{ item.label }}</span>
       </span>
     </button>
 
-    <ul v-if="hasChildren && isGroup" class="vf-nav-menu__list vf-nav-menu__list--nested">
+    <ul
+      v-if="hasChildren && isGroup"
+      class="vf-nav-menu__list vf-nav-menu__list--nested"
+    >
       <VfNavMenuItemNode
         v-for="child in item.children"
         :key="child.value"
@@ -224,7 +258,10 @@ function onNestedListAfterLeave(element: Element) {
     >
       <div
         v-if="isExpanded"
-        :class="['vf-nav-menu__collapse', `vf-nav-menu__collapse--level-${level}`]"
+        :class="[
+          'vf-nav-menu__collapse',
+          `vf-nav-menu__collapse--level-${level}`,
+        ]"
       >
         <ul class="vf-nav-menu__list vf-nav-menu__list--nested">
           <VfNavMenuItemNode

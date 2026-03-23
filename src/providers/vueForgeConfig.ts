@@ -1,8 +1,9 @@
-import type { InjectionKey } from 'vue'
-import type { VfResolvedThemeConfig } from '@/types/theme'
+import type { InjectionKey } from "vue";
+import type { VfResolvedThemeConfig } from "@/types/theme";
 
 export interface VfVueForgeRuntimeConfig {
-  theme: VfResolvedThemeConfig
+  theme: VfResolvedThemeConfig;
 }
 
-export const vueForgeConfigKey: InjectionKey<VfVueForgeRuntimeConfig> = Symbol('VueForgeConfig')
+export const vueForgeConfigKey: InjectionKey<VfVueForgeRuntimeConfig> =
+  Symbol("VueForgeConfig");

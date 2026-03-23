@@ -1,68 +1,46 @@
-import { afterEach, describe, expect, it } from 'vitest'
+import { afterEach, describe, expect, it } from "vitest";
 import {
   applyThemeConfig,
   defaultThemePreset,
   resolveThemeConfig,
-  themePresetToCssText,
-  themeTokensToCssVars
-} from '@/theme'
+} from "@/theme";
 
-describe('theme preset runtime', () => {
+describe("theme bridge", () => {
   afterEach(() => {
-    document.getElementById('vf-theme-preset')?.remove()
-    document.getElementById('vf-test-theme')?.remove()
-  })
+    document.getElementById("vf-test-theme")?.remove();
+  });
 
-  it('serializes theme tokens to css variables', () => {
-    const cssVars = themeTokensToCssVars(
-      {
-        colorPrimary: '#ff5a36',
-        controlHeightMd: '2.5rem'
-      },
-      'vf'
-    )
-
-    expect(cssVars['--vf-color-primary']).toBe('#ff5a36')
-    expect(cssVars['--vf-control-height-md']).toBe('2.5rem')
-  })
-
-  it('builds light and dark css text from a preset', () => {
+  it("uses core defaultThemePreset when preset is omitted", () => {
     const config = resolveThemeConfig({
-      preset: defaultThemePreset,
       extend: {
-        colorPrimary: '#ff5a36'
-      },
-      dark: {
-        colorPrimary: '#ff8f70'
+        colorPrimary: "#ff5a36",
       },
       options: {
-        styleId: 'vf-test-theme'
-      }
-    })
+        styleId: "vf-test-theme",
+      },
+    });
 
-    const cssText = themePresetToCssText(config)
+    expect(config.preset.name).toBe(defaultThemePreset.name);
+    expect(config.preset.light.colorPrimary).toBe("#ff5a36");
+    expect(config.preset.light.controlHeightMd).toBe(
+      defaultThemePreset.tokens.controlHeightMd,
+    );
+  });
 
-    expect(cssText).toContain(':root')
-    expect(cssText).toContain(":root[data-vf-theme='dark']")
-    expect(cssText).toContain('--vf-color-primary: #ff5a36;')
-    expect(cssText).toContain('--vf-color-primary: #ff8f70;')
-  })
-
-  it('injects a style tag with resolved theme variables', () => {
+  it("applies resolved theme variables through the bridge API", () => {
     const style = applyThemeConfig(
       resolveThemeConfig({
-        preset: defaultThemePreset,
         extend: {
-          colorPrimary: '#ff5a36'
+          colorPrimary: "#ff5a36",
         },
         options: {
-          styleId: 'vf-test-theme'
-        }
-      })
-    )
+          styleId: "vf-test-theme",
+        },
+      }),
+    );
 
-    expect(style.id).toBe('vf-test-theme')
-    expect(style.textContent).toContain('--vf-color-primary: #ff5a36;')
-    expect(document.getElementById('vf-test-theme')).toBe(style)
-  })
-})
+    expect(style.id).toBe("vf-test-theme");
+    expect(style.textContent).toContain("--vf-color-primary: #ff5a36;");
+    expect(document.getElementById("vf-test-theme")).toBe(style);
+  });
+});

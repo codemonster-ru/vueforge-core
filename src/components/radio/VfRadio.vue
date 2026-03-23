@@ -1,60 +1,64 @@
 <script setup lang="ts">
-import { computed, useAttrs, type StyleValue } from 'vue'
-import { cx } from '@/utils/classes'
-import type { VfControlSize } from '@/types/components'
+import { computed, useAttrs, type StyleValue } from "vue";
+import { cx } from "@/utils/classes";
+import type { VfControlSize } from "@/types/components";
 
 defineOptions({
-  inheritAttrs: false
-})
+  inheritAttrs: false,
+});
 
-type VfRadioValue = string | number | boolean
+type VfRadioValue = string | number | boolean;
 
 interface VfRadioProps {
-  modelValue?: VfRadioValue
-  value: VfRadioValue
-  size?: VfControlSize
-  invalid?: boolean
-  disabled?: boolean
-  label?: string
+  modelValue?: VfRadioValue;
+  value: VfRadioValue;
+  size?: VfControlSize;
+  invalid?: boolean;
+  disabled?: boolean;
+  label?: string;
 }
 
 const props = withDefaults(defineProps<VfRadioProps>(), {
   modelValue: undefined,
-  size: 'md',
+  size: "md",
   invalid: false,
   disabled: false,
-  label: undefined
-})
+  label: undefined,
+});
 
 const emit = defineEmits<{
-  'update:modelValue': [value: VfRadioValue]
-  change: [value: VfRadioValue]
-}>()
+  "update:modelValue": [value: VfRadioValue];
+  change: [value: VfRadioValue];
+}>();
 
-const attrs = useAttrs()
-const isChecked = computed(() => props.modelValue === props.value)
+const attrs = useAttrs();
+const isChecked = computed(() => props.modelValue === props.value);
 
 const rootClasses = computed(() =>
   cx(
-    'vf-radio',
+    "vf-radio",
     `vf-radio--${props.size}`,
-    isChecked.value && 'vf-radio--checked',
-    props.invalid && 'vf-radio--invalid',
-    props.disabled && 'vf-radio--disabled',
-    attrs.class as string | undefined
-  )
-)
+    isChecked.value && "vf-radio--checked",
+    props.invalid && "vf-radio--invalid",
+    props.disabled && "vf-radio--disabled",
+    attrs.class as string | undefined,
+  ),
+);
 
-const rootStyles = computed<StyleValue>(() => attrs.style as StyleValue)
-const inputAttrs = computed(() => Object.fromEntries(Object.entries(attrs).filter(([key]) => key !== 'class' && key !== 'style')))
+const rootStyles = computed<StyleValue>(() => attrs.style as StyleValue);
+const inputAttrs = computed(() =>
+  Object.fromEntries(
+    Object.entries(attrs).filter(([key]) => key !== "class" && key !== "style"),
+  ),
+);
 
 function handleChange(event: Event) {
   if (!(event.target as HTMLInputElement).checked) {
-    return
+    return;
   }
 
-  emit('update:modelValue', props.value)
-  emit('change', props.value)
+  emit("update:modelValue", props.value);
+  emit("change", props.value);
 }
 </script>
 

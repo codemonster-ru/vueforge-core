@@ -1,29 +1,34 @@
-import { onBeforeUnmount, onMounted, toValue, type MaybeRefOrGetter } from 'vue'
+import {
+  onBeforeUnmount,
+  onMounted,
+  toValue,
+  type MaybeRefOrGetter,
+} from "vue";
 
 interface UseEscapeKeyOptions {
-  enabled?: MaybeRefOrGetter<boolean>
-  event?: 'keydown' | 'keyup'
+  enabled?: MaybeRefOrGetter<boolean>;
+  event?: "keydown" | "keyup";
 }
 
 export function useEscapeKey(
   handler: (event: KeyboardEvent) => void,
-  options: UseEscapeKeyOptions = {}
+  options: UseEscapeKeyOptions = {},
 ) {
-  const eventName = options.event ?? 'keydown'
+  const eventName = options.event ?? "keydown";
 
   const listener = (event: KeyboardEvent) => {
-    if (toValue(options.enabled) === false || event.key !== 'Escape') {
-      return
+    if (toValue(options.enabled) === false || event.key !== "Escape") {
+      return;
     }
 
-    handler(event)
-  }
+    handler(event);
+  };
 
   onMounted(() => {
-    document.addEventListener(eventName, listener)
-  })
+    document.addEventListener(eventName, listener);
+  });
 
   onBeforeUnmount(() => {
-    document.removeEventListener(eventName, listener)
-  })
+    document.removeEventListener(eventName, listener);
+  });
 }

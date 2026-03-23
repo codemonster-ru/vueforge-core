@@ -1,5 +1,5 @@
-import { mount } from '@vue/test-utils'
-import { describe, expect, it } from 'vitest'
+import { mount } from "@vue/test-utils";
+import { describe, expect, it } from "vitest";
 import {
   VfAlert,
   VfBadge,
@@ -14,250 +14,250 @@ import {
   VfRadio,
   VfSwitch,
   VfTag,
-  VfTextarea
-} from '@/components'
+  VfTextarea,
+} from "@/components";
 
-describe('core primitives', () => {
-  it('renders button variants and respects native attributes', async () => {
+describe("core primitives", () => {
+  it("renders button variants and respects native attributes", async () => {
     const wrapper = mount(VfButton, {
       props: {
-        variant: 'danger',
-        size: 'sm',
-        disabled: true
+        variant: "danger",
+        size: "sm",
+        disabled: true,
       },
       slots: {
-        default: 'Save'
-      }
-    })
+        default: "Save",
+      },
+    });
 
-    expect(wrapper.attributes('type')).toBe('button')
-    expect(wrapper.attributes('disabled')).toBeDefined()
-    expect(wrapper.classes()).toContain('vf-button--danger')
-    expect(wrapper.classes()).toContain('vf-button--sm')
-    expect(wrapper.text()).toBe('Save')
-  })
+    expect(wrapper.attributes("type")).toBe("button");
+    expect(wrapper.attributes("disabled")).toBeDefined();
+    expect(wrapper.classes()).toContain("vf-button--danger");
+    expect(wrapper.classes()).toContain("vf-button--sm");
+    expect(wrapper.text()).toBe("Save");
+  });
 
-  it('adds safe rel defaults for external links', () => {
+  it("adds safe rel defaults for external links", () => {
     const wrapper = mount(VfLink, {
       props: {
-        href: 'https://example.com',
-        target: '_blank',
-        underline: true
+        href: "https://example.com",
+        target: "_blank",
+        underline: true,
       },
       slots: {
-        default: 'Docs'
-      }
-    })
+        default: "Docs",
+      },
+    });
 
-    expect(wrapper.attributes('rel')).toBe('noopener noreferrer')
-    expect(wrapper.classes()).toContain('vf-link--underline')
-  })
+    expect(wrapper.attributes("rel")).toBe("noopener noreferrer");
+    expect(wrapper.classes()).toContain("vf-link--underline");
+  });
 
-  it('supports router-style links via to prop', () => {
+  it("supports router-style links via to prop", () => {
     const wrapper = mount(VfLink, {
       props: {
-        to: '/docs',
-        underline: true
+        to: "/docs",
+        underline: true,
       },
       slots: {
-        default: 'Docs'
+        default: "Docs",
       },
       global: {
         stubs: {
           RouterLink: {
-            props: ['to'],
-            template: '<a :data-to="to" :class="$attrs.class"><slot /></a>'
-          }
-        }
-      }
-    })
+            props: ["to"],
+            template: '<a :data-to="to" :class="$attrs.class"><slot /></a>',
+          },
+        },
+      },
+    });
 
-    expect(wrapper.attributes('data-to')).toBe('/docs')
-    expect(wrapper.classes()).toContain('vf-link--underline')
-  })
+    expect(wrapper.attributes("data-to")).toBe("/docs");
+    expect(wrapper.classes()).toContain("vf-link--underline");
+  });
 
-  it('renders card title and slots', () => {
+  it("renders card title and slots", () => {
     const wrapper = mount(VfCard, {
       props: {
-        title: 'Overview'
+        title: "Overview",
       },
       slots: {
-        default: 'Body copy',
-        footer: 'Footer'
-      }
-    })
+        default: "Body copy",
+        footer: "Footer",
+      },
+    });
 
-    expect(wrapper.find('.vf-card__title').text()).toBe('Overview')
-    expect(wrapper.text()).toContain('Body copy')
-    expect(wrapper.text()).toContain('Footer')
-  })
+    expect(wrapper.find(".vf-card__title").text()).toBe("Overview");
+    expect(wrapper.text()).toContain("Body copy");
+    expect(wrapper.text()).toContain("Footer");
+  });
 
-  it('emits input updates and invalid state', async () => {
+  it("emits input updates and invalid state", async () => {
     const wrapper = mount(VfInput, {
       props: {
-        modelValue: 'hello',
+        modelValue: "hello",
         invalid: true,
-        placeholder: 'Type here'
-      }
-    })
+        placeholder: "Type here",
+      },
+    });
 
-    expect(wrapper.attributes('aria-invalid')).toBe('true')
-    expect(wrapper.attributes('placeholder')).toBe('Type here')
+    expect(wrapper.attributes("aria-invalid")).toBe("true");
+    expect(wrapper.attributes("placeholder")).toBe("Type here");
 
-    await wrapper.setValue('world')
+    await wrapper.setValue("world");
 
-    expect(wrapper.emitted('update:modelValue')).toEqual([['world']])
-  })
+    expect(wrapper.emitted("update:modelValue")).toEqual([["world"]]);
+  });
 
-  it('emits textarea updates and supports size modifiers', async () => {
+  it("emits textarea updates and supports size modifiers", async () => {
     const wrapper = mount(VfTextarea, {
       props: {
-        modelValue: 'draft',
-        size: 'lg'
-      }
-    })
+        modelValue: "draft",
+        size: "lg",
+      },
+    });
 
-    expect(wrapper.classes()).toContain('vf-textarea--lg')
+    expect(wrapper.classes()).toContain("vf-textarea--lg");
 
-    await wrapper.setValue('published')
+    await wrapper.setValue("published");
 
-    expect(wrapper.emitted('update:modelValue')).toEqual([['published']])
-  })
+    expect(wrapper.emitted("update:modelValue")).toEqual([["published"]]);
+  });
 
-  it('emits checkbox and switch updates', async () => {
+  it("emits checkbox and switch updates", async () => {
     const checkbox = mount(VfCheckbox, {
       props: {
         modelValue: true,
-        invalid: true
+        invalid: true,
       },
       slots: {
-        default: 'Accept terms'
-      }
-    })
+        default: "Accept terms",
+      },
+    });
 
     const switchControl = mount(VfSwitch, {
       props: {
         modelValue: false,
-        size: 'lg'
+        size: "lg",
       },
       slots: {
-        default: 'Enable notifications'
-      }
-    })
+        default: "Enable notifications",
+      },
+    });
 
-    expect(checkbox.classes()).toContain('vf-checkbox--checked')
-    expect(checkbox.classes()).toContain('vf-checkbox--invalid')
-    expect(switchControl.classes()).toContain('vf-switch--lg')
+    expect(checkbox.classes()).toContain("vf-checkbox--checked");
+    expect(checkbox.classes()).toContain("vf-checkbox--invalid");
+    expect(switchControl.classes()).toContain("vf-switch--lg");
 
-    await checkbox.get('input').setValue(false)
-    await switchControl.get('input').setValue(true)
+    await checkbox.get("input").setValue(false);
+    await switchControl.get("input").setValue(true);
 
-    expect(checkbox.emitted('update:modelValue')).toEqual([[false]])
-    expect(switchControl.emitted('update:modelValue')).toEqual([[true]])
-  })
+    expect(checkbox.emitted("update:modelValue")).toEqual([[false]]);
+    expect(switchControl.emitted("update:modelValue")).toEqual([[true]]);
+  });
 
-  it('emits radio updates and reflects checked state', async () => {
+  it("emits radio updates and reflects checked state", async () => {
     const radio = mount(VfRadio, {
       props: {
-        modelValue: 'a',
-        value: 'b',
-        invalid: true
+        modelValue: "a",
+        value: "b",
+        invalid: true,
       },
       attrs: {
-        name: 'plan'
+        name: "plan",
       },
       slots: {
-        default: 'Pro plan'
-      }
-    })
+        default: "Pro plan",
+      },
+    });
 
-    expect(radio.classes()).toContain('vf-radio--invalid')
-    expect(radio.get('input').attributes('name')).toBe('plan')
+    expect(radio.classes()).toContain("vf-radio--invalid");
+    expect(radio.get("input").attributes("name")).toBe("plan");
 
-    await radio.get('input').setValue(true)
+    await radio.get("input").setValue(true);
 
-    expect(radio.emitted('update:modelValue')).toEqual([['b']])
-  })
+    expect(radio.emitted("update:modelValue")).toEqual([["b"]]);
+  });
 
-  it('renders divider orientation and decorative default semantics', () => {
+  it("renders divider orientation and decorative default semantics", () => {
     const wrapper = mount(VfDivider, {
       props: {
-        orientation: 'vertical'
-      }
-    })
+        orientation: "vertical",
+      },
+    });
 
-    expect(wrapper.attributes('aria-orientation')).toBe('vertical')
-    expect(wrapper.attributes('role')).toBe('separator')
-    expect(wrapper.classes()).toContain('vf-divider--vertical')
-  })
+    expect(wrapper.attributes("aria-orientation")).toBe("vertical");
+    expect(wrapper.attributes("role")).toBe("separator");
+    expect(wrapper.classes()).toContain("vf-divider--vertical");
+  });
 
-  it('renders badge tone and panel content', () => {
+  it("renders badge tone and panel content", () => {
     const badge = mount(VfBadge, {
       props: {
-        tone: 'help'
+        tone: "help",
       },
       slots: {
-        default: 'Stable'
-      }
-    })
+        default: "Stable",
+      },
+    });
 
     const panel = mount(VfPanel, {
       props: {
-        title: 'Quick notes',
-        subtle: true
+        title: "Quick notes",
+        subtle: true,
       },
       slots: {
-        default: 'Panel content'
-      }
-    })
+        default: "Panel content",
+      },
+    });
 
-    expect(badge.classes()).toContain('vf-badge--help')
-    expect(badge.text()).toBe('Stable')
-    expect(panel.classes()).toContain('vf-panel--subtle')
-    expect(panel.text()).toContain('Quick notes')
-    expect(panel.text()).toContain('Panel content')
-  })
+    expect(badge.classes()).toContain("vf-badge--help");
+    expect(badge.text()).toBe("Stable");
+    expect(panel.classes()).toContain("vf-panel--subtle");
+    expect(panel.text()).toContain("Quick notes");
+    expect(panel.text()).toContain("Panel content");
+  });
 
-  it('renders icon button with accessible label and icon stub', () => {
+  it("renders icon button with accessible label and icon stub", () => {
     const wrapper = mount(VfIconButton, {
       props: {
-        icon: 'gear',
-        'aria-label': 'Open settings',
-        variant: 'help'
-      }
-    })
+        icon: "gear",
+        "aria-label": "Open settings",
+        variant: "help",
+      },
+    });
 
-    expect(wrapper.attributes('type')).toBe('button')
-    expect(wrapper.attributes('aria-label')).toBe('Open settings')
-    expect(wrapper.classes()).toContain('vf-icon-button--help')
-    expect(wrapper.find('.vif-icon').exists()).toBe(true)
-  })
+    expect(wrapper.attributes("type")).toBe("button");
+    expect(wrapper.attributes("aria-label")).toBe("Open settings");
+    expect(wrapper.classes()).toContain("vf-icon-button--help");
+    expect(wrapper.find(".vif-icon").exists()).toBe(true);
+  });
 
-  it('renders alert and tag tones', () => {
+  it("renders alert and tag tones", () => {
     const alert = mount(VfAlert, {
       props: {
-        tone: 'warn',
-        title: 'Attention'
+        tone: "warn",
+        title: "Attention",
       },
       slots: {
-        default: 'Alert content'
-      }
-    })
+        default: "Alert content",
+      },
+    });
 
     const tag = mount(VfTag, {
       props: {
-        tone: 'contrast'
+        tone: "contrast",
       },
       slots: {
-        default: 'Preview'
-      }
-    })
+        default: "Preview",
+      },
+    });
 
-    expect(alert.classes()).toContain('vf-alert--warn')
-    expect(alert.text()).toContain('Attention')
-    expect(alert.text()).toContain('Alert content')
-    expect(alert.find('.vif-icon').exists()).toBe(true)
-    expect(tag.classes()).toContain('vf-tag--contrast')
-    expect(tag.text()).toBe('Preview')
-  })
-})
+    expect(alert.classes()).toContain("vf-alert--warn");
+    expect(alert.text()).toContain("Attention");
+    expect(alert.text()).toContain("Alert content");
+    expect(alert.find(".vif-icon").exists()).toBe(true);
+    expect(tag.classes()).toContain("vf-tag--contrast");
+    expect(tag.text()).toBe("Preview");
+  });
+});

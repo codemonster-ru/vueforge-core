@@ -1,25 +1,25 @@
 <script setup lang="ts">
-import { computed, useAttrs } from 'vue'
-import { cx } from '@/utils/classes'
-import type { VfBadgeTone } from '@/types/components'
+import { computed, useAttrs } from "vue";
+import { cx } from "@/utils/classes";
+import type { VfBadgeTone } from "@/types/components";
 
 defineOptions({
-  inheritAttrs: false
-})
+  inheritAttrs: false,
+});
 
 interface VfBadgeProps {
-  tone?: VfBadgeTone
+  tone?: VfBadgeTone;
 }
 
 const props = withDefaults(defineProps<VfBadgeProps>(), {
-  tone: 'neutral'
-})
+  tone: "neutral",
+});
 
-const attrs = useAttrs()
+const attrs = useAttrs();
 
 const classes = computed(() =>
-  cx('vf-badge', props.tone !== 'neutral' && `vf-badge--${props.tone}`)
-)
+  cx("vf-badge", props.tone !== "neutral" && `vf-badge--${props.tone}`),
+);
 </script>
 
 <template>

@@ -1,24 +1,26 @@
 <script setup lang="ts">
-import { computed, useAttrs } from 'vue'
-import { cx } from '@/utils/classes'
+import { computed, useAttrs } from "vue";
+import { cx } from "@/utils/classes";
 
 defineOptions({
-  inheritAttrs: false
-})
+  inheritAttrs: false,
+});
 
 interface VfCardProps {
-  title?: string
-  compact?: boolean
+  title?: string;
+  compact?: boolean;
 }
 
 const props = withDefaults(defineProps<VfCardProps>(), {
   title: undefined,
-  compact: false
-})
+  compact: false,
+});
 
-const attrs = useAttrs()
+const attrs = useAttrs();
 
-const classes = computed(() => cx('vf-card', props.compact && 'vf-card--compact'))
+const classes = computed(() =>
+  cx("vf-card", props.compact && "vf-card--compact"),
+);
 </script>
 
 <template>

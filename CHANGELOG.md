@@ -1,5 +1,22 @@
 # Changelog
 
+## 1.3.0 - 2026-03-23
+
+Minor release for `@codemonster-ru/vueforge-core`.
+
+### Added
+
+- Published shared theme engine dependency:
+  - `@codemonster-ru/vueforge-theme`
+- Dedicated engine runtime tests now live in the theme package
+
+### Changed
+
+- `vueforge-core` now consumes the published `@codemonster-ru/vueforge-theme` package instead of a local file dependency
+- Theme runtime helpers and shared theme types continue to be exposed through `core` bridge APIs for backward-compatible consumption
+- `defaultThemePreset` remains in `vueforge-core` as the built-in opinionated design language
+- Development and release setup were aligned with the published theme package and refreshed dependency trees
+
 ## 1.2.0 - 2026-03-22
 
 Feature release for `@codemonster-ru/vueforge-core`.
@@ -20,9 +37,13 @@ Feature release for `@codemonster-ru/vueforge-core`.
   - `VfTooltip`
 - New overlay API documentation
 - New z-index theme tokens for overlay and floating layers
+- New shared neutral theme engine package:
+  - `@codemonster-ru/vueforge-theme`
 
 ### Changed
 
+- Theme runtime helpers, mode helpers, motion tokens, and shared theme types now come from `@codemonster-ru/vueforge-theme`
+- `defaultThemePreset` remains in `vueforge-core` as the package's built-in design language
 - `VfDrawer` now has a stronger embedding contract for downstream shell/layout use cases:
   - `offsetTop`
   - `bodyPadding`

@@ -1,21 +1,21 @@
 <script setup lang="ts">
-import { computed, resolveDynamicComponent, useAttrs } from 'vue'
-import type { Component } from 'vue'
-import { cx } from '@/utils/classes'
-import type { VfLinkTone } from '@/types/components'
+import { computed, resolveDynamicComponent, useAttrs } from "vue";
+import type { Component } from "vue";
+import { cx } from "@/utils/classes";
+import type { VfLinkTone } from "@/types/components";
 
 defineOptions({
-  inheritAttrs: false
-})
+  inheritAttrs: false,
+});
 
 interface VfLinkProps {
-  href?: string
-  to?: string | Record<string, unknown>
-  target?: string
-  rel?: string
-  underline?: boolean
-  tone?: VfLinkTone
-  component?: string | Component
+  href?: string;
+  to?: string | Record<string, unknown>;
+  target?: string;
+  rel?: string;
+  underline?: boolean;
+  tone?: VfLinkTone;
+  component?: string | Component;
 }
 
 const props = withDefaults(defineProps<VfLinkProps>(), {
@@ -24,64 +24,61 @@ const props = withDefaults(defineProps<VfLinkProps>(), {
   target: undefined,
   rel: undefined,
   underline: false,
-  tone: 'default',
-  component: undefined
-})
+  tone: "default",
+  component: undefined,
+});
 
-const attrs = useAttrs()
-const isRouterLink = computed(() => props.to !== undefined)
+const attrs = useAttrs();
+const isRouterLink = computed(() => props.to !== undefined);
 const resolvedComponent = computed(() => {
   if (!isRouterLink.value) {
-    return 'a'
+    return "a";
   }
 
-  return props.component ?? resolveDynamicComponent('RouterLink')
-})
+  return props.component ?? resolveDynamicComponent("RouterLink");
+});
 
 const resolvedRel = computed(() => {
   if (props.rel) {
-    return props.rel
+    return props.rel;
   }
 
-  return props.target === '_blank' ? 'noopener noreferrer' : undefined
-})
+  return props.target === "_blank" ? "noopener noreferrer" : undefined;
+});
 
 const classes = computed(() =>
   cx(
-    'vf-link',
-    props.underline && 'vf-link--underline',
-    props.tone === 'muted' && 'vf-link--muted'
-  )
-)
+    "vf-link",
+    props.underline && "vf-link--underline",
+    props.tone === "muted" && "vf-link--muted",
+  ),
+);
 
 const linkProps = computed(() => {
   if (isRouterLink.value) {
     return {
       to: props.to,
       target: props.target,
-      rel: resolvedRel.value
-    }
+      rel: resolvedRel.value,
+    };
   }
 
   return {
     href: props.href,
     target: props.target,
-    rel: resolvedRel.value
-  }
-})
+    rel: resolvedRel.value,
+  };
+});
 
 const componentProps = computed(() => ({
   ...attrs,
   ...linkProps.value,
-  class: classes.value
-}))
+  class: classes.value,
+}));
 </script>
 
 <template>
-  <component
-    :is="resolvedComponent"
-    v-bind="componentProps"
-  >
+  <component :is="resolvedComponent" v-bind="componentProps">
     <slot />
   </component>
 </template>

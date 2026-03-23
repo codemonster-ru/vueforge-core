@@ -1,9 +1,9 @@
-import './styles/tokens.css'
-import './styles/theme.css'
-import './styles/components.css'
+import "./styles/tokens.css";
+import "./styles/theme.css";
+import "./styles/components.css";
 
-export { default, VueForge, createVueForge } from './plugin'
-export { default as VfThemeProvider } from './providers/VfThemeProvider.vue'
+export { default, VueForge, createVueForge } from "./plugin";
+export { default as VfThemeProvider } from "./providers/VfThemeProvider.vue";
 export {
   VfAccordion,
   VfAlert,
@@ -26,11 +26,27 @@ export {
   VfTag,
   VfTabs,
   VfTextarea,
-  VfTooltip
-} from './components'
-export { useClickOutside, useDisclosure, useEscapeKey, useFloating, useFocusTrap, useId, useTheme } from './composables'
-export { vfBreakpoints, toMaxWidthQuery, toMinWidthQuery, useBreakpoint, useBreakpoints, useBreakpointValue, useScrollLock } from './foundation'
-export { createThemePreset, defaultThemePreset } from './theme/public'
+  VfTooltip,
+} from "./components";
+export {
+  useClickOutside,
+  useDisclosure,
+  useEscapeKey,
+  useFloating,
+  useFocusTrap,
+  useId,
+  useTheme,
+} from "./composables";
+export {
+  vfBreakpoints,
+  toMaxWidthQuery,
+  toMinWidthQuery,
+  useBreakpoint,
+  useBreakpoints,
+  useBreakpointValue,
+  useScrollLock,
+} from "./foundation";
+export { createThemePreset, defaultThemePreset } from "./theme/public";
 export type {
   VfBadgeTone,
   VfButtonVariant,
@@ -43,8 +59,8 @@ export type {
   VfNavMenuItem,
   VfTabItem,
   VfTooltipPlacement,
-  VfLinkTone
-} from './types/components'
+  VfLinkTone,
+} from "./types/components";
 export type {
   VfResolvedTheme,
   VfThemeConfig,
@@ -54,12 +70,12 @@ export type {
   VfThemePresetOptions,
   VfThemeProviderProps,
   VfThemeTokens,
-  VfVueForgeOptions
-} from './types/theme'
+  VfVueForgeOptions,
+} from "./types/theme";
 export type {
   UseBreakpointOptions,
   UseScrollLockOptions,
   VfBreakpointName,
   VfBreakpointValue,
-  VfBreakpointValues
-} from './foundation'
+  VfBreakpointValues,
+} from "./foundation";

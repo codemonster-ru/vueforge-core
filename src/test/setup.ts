@@ -1,21 +1,21 @@
-import { afterEach, beforeEach, vi } from 'vitest'
+import { afterEach, beforeEach, vi } from "vitest";
 
-vi.mock('@codemonster-ru/vueiconify', () => ({
+vi.mock("@codemonster-ru/vueiconify", () => ({
   VueIconify: {
-    name: 'VueIconifyStub',
-    template: '<span class="vif-icon" aria-hidden="true" />'
+    name: "VueIconifyStub",
+    template: '<span class="vif-icon" aria-hidden="true" />',
   },
   icons: {
-    chevronDown: 'chevronDown'
-  }
-}))
+    chevronDown: "chevronDown",
+  },
+}));
 
 beforeEach(() => {
-  window.localStorage.clear()
-  document.documentElement.removeAttribute('data-vf-theme')
+  window.localStorage.clear();
+  document.documentElement.removeAttribute("data-vf-theme");
 
   vi.stubGlobal(
-    'matchMedia',
+    "matchMedia",
     vi.fn().mockImplementation((query: string) => ({
       matches: false,
       media: query,
@@ -24,11 +24,11 @@ beforeEach(() => {
       removeEventListener: vi.fn(),
       addListener: vi.fn(),
       removeListener: vi.fn(),
-      dispatchEvent: vi.fn()
-    }))
-  )
-})
+      dispatchEvent: vi.fn(),
+    })),
+  );
+});
 
 afterEach(() => {
-  vi.unstubAllGlobals()
-})
+  vi.unstubAllGlobals();
+});

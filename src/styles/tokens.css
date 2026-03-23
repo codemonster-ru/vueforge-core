@@ -1,6 +1,6 @@
 /* Fallback baseline tokens for package CSS consumers.
    Canonical token values live in src/theme/default-preset.ts. */
-@import './generated-breakpoints.css';
+@import "./generated-breakpoints.css";
 
 :root {
   --vf-color-bg: #fcfcfd;
@@ -11,9 +11,21 @@
   --vf-color-border: #d8e0ef;
   --vf-color-primary: #0b63f6;
   --vf-color-primary-contrast: #ffffff;
-  --vf-color-primary-soft: color-mix(in srgb, var(--vf-color-primary) 12%, var(--vf-color-surface));
-  --vf-color-primary-border-soft: color-mix(in srgb, var(--vf-color-primary) 22%, var(--vf-color-border));
-  --vf-color-focus-ring: color-mix(in srgb, var(--vf-color-primary) 32%, var(--vf-color-surface));
+  --vf-color-primary-soft: color-mix(
+    in srgb,
+    var(--vf-color-primary) 12%,
+    var(--vf-color-surface)
+  );
+  --vf-color-primary-border-soft: color-mix(
+    in srgb,
+    var(--vf-color-primary) 22%,
+    var(--vf-color-border)
+  );
+  --vf-color-focus-ring: color-mix(
+    in srgb,
+    var(--vf-color-primary) 32%,
+    var(--vf-color-surface)
+  );
   --vf-color-success: #16a34a;
   --vf-color-success-contrast: #ffffff;
   --vf-color-info: #0ea5e9;
@@ -26,18 +38,66 @@
   --vf-color-danger-contrast: #ffffff;
   --vf-color-contrast: #111827;
   --vf-color-contrast-contrast: #ffffff;
-  --vf-color-success-soft: color-mix(in srgb, var(--vf-color-success) 12%, var(--vf-color-surface));
-  --vf-color-info-soft: color-mix(in srgb, var(--vf-color-info) 12%, var(--vf-color-surface));
-  --vf-color-warn-soft: color-mix(in srgb, var(--vf-color-warn) 12%, var(--vf-color-surface));
-  --vf-color-help-soft: color-mix(in srgb, var(--vf-color-help) 12%, var(--vf-color-surface));
-  --vf-color-danger-soft: color-mix(in srgb, var(--vf-color-danger) 12%, var(--vf-color-surface));
-  --vf-color-contrast-soft: color-mix(in srgb, var(--vf-color-contrast) 10%, var(--vf-color-surface));
-  --vf-color-success-border-soft: color-mix(in srgb, var(--vf-color-success) 24%, var(--vf-color-border));
-  --vf-color-info-border-soft: color-mix(in srgb, var(--vf-color-info) 24%, var(--vf-color-border));
-  --vf-color-warn-border-soft: color-mix(in srgb, var(--vf-color-warn) 24%, var(--vf-color-border));
-  --vf-color-help-border-soft: color-mix(in srgb, var(--vf-color-help) 24%, var(--vf-color-border));
-  --vf-color-danger-border-soft: color-mix(in srgb, var(--vf-color-danger) 24%, var(--vf-color-border));
-  --vf-color-contrast-border-soft: color-mix(in srgb, var(--vf-color-contrast) 24%, var(--vf-color-border));
+  --vf-color-success-soft: color-mix(
+    in srgb,
+    var(--vf-color-success) 12%,
+    var(--vf-color-surface)
+  );
+  --vf-color-info-soft: color-mix(
+    in srgb,
+    var(--vf-color-info) 12%,
+    var(--vf-color-surface)
+  );
+  --vf-color-warn-soft: color-mix(
+    in srgb,
+    var(--vf-color-warn) 12%,
+    var(--vf-color-surface)
+  );
+  --vf-color-help-soft: color-mix(
+    in srgb,
+    var(--vf-color-help) 12%,
+    var(--vf-color-surface)
+  );
+  --vf-color-danger-soft: color-mix(
+    in srgb,
+    var(--vf-color-danger) 12%,
+    var(--vf-color-surface)
+  );
+  --vf-color-contrast-soft: color-mix(
+    in srgb,
+    var(--vf-color-contrast) 10%,
+    var(--vf-color-surface)
+  );
+  --vf-color-success-border-soft: color-mix(
+    in srgb,
+    var(--vf-color-success) 24%,
+    var(--vf-color-border)
+  );
+  --vf-color-info-border-soft: color-mix(
+    in srgb,
+    var(--vf-color-info) 24%,
+    var(--vf-color-border)
+  );
+  --vf-color-warn-border-soft: color-mix(
+    in srgb,
+    var(--vf-color-warn) 24%,
+    var(--vf-color-border)
+  );
+  --vf-color-help-border-soft: color-mix(
+    in srgb,
+    var(--vf-color-help) 24%,
+    var(--vf-color-border)
+  );
+  --vf-color-danger-border-soft: color-mix(
+    in srgb,
+    var(--vf-color-danger) 24%,
+    var(--vf-color-border)
+  );
+  --vf-color-contrast-border-soft: color-mix(
+    in srgb,
+    var(--vf-color-contrast) 24%,
+    var(--vf-color-border)
+  );
   --vf-focus-ring-width: 3px;
   --vf-radius: 0.75rem;
   --vf-radius-control: calc(var(--vf-radius) - 0.125rem);
@@ -143,8 +203,16 @@
   --vf-popover-width: min(100vw - 2rem, 22rem);
   --vf-floating-arrow-size: 0.625rem;
   --vf-overlay-backdrop: rgba(15, 23, 42, 0.56);
-  --vf-alert-primary-soft: color-mix(in srgb, var(--vf-color-primary) 8%, var(--vf-color-surface));
-  --vf-alert-primary-border-soft: color-mix(in srgb, var(--vf-color-primary) 22%, var(--vf-color-border));
+  --vf-alert-primary-soft: color-mix(
+    in srgb,
+    var(--vf-color-primary) 8%,
+    var(--vf-color-surface)
+  );
+  --vf-alert-primary-border-soft: color-mix(
+    in srgb,
+    var(--vf-color-primary) 22%,
+    var(--vf-color-border)
+  );
   --vf-alert-content-gap: 0.25rem;
   --vf-alert-title-font-size: 0.9375rem;
   --vf-card-title-font-size: 1rem;

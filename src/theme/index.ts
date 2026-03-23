@@ -1,10 +1,12 @@
-export { defaultThemePreset } from './default-preset'
 export {
-  applyThemeConfig,
   createThemePreset,
-  resolveThemeConfig,
-  resolveThemePreset,
   resolveThemePresetOptions,
   themePresetToCssText,
-  themeTokensToCssVars
-} from './utils'
+  themeTokensToCssVars,
+} from "./utils";
+export {
+  applyThemeConfig,
+  resolveThemeConfig,
+  resolveThemePreset,
+} from "./utils";
+export { defaultThemePreset } from "./default-preset";

@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
-import { icons } from '@codemonster-ru/vueiconify'
+import { computed, ref } from "vue";
+import { icons } from "@codemonster-ru/vueiconify";
 import {
   VfAccordion,
   VfAlert,
@@ -24,119 +24,119 @@ import {
   VfTabs,
   VfTextarea,
   VfTooltip,
-  useTheme
-} from '@/index'
-import type { VfNavMenuItem } from '@/index'
+  useTheme,
+} from "@/index";
+import type { VfNavMenuItem } from "@/index";
 
-const { setTheme, toggleTheme } = useTheme()
+const { setTheme, toggleTheme } = useTheme();
 
-const dialogOpen = ref(false)
-const drawerOpen = ref(false)
-const dropdownControlled = ref(false)
-const popoverOpen = ref(false)
-const inputValue = ref('')
-const textareaValue = ref('A compact foundation for the ecosystem.')
-const checkboxValue = ref(true)
-const switchValue = ref(true)
-const radioValue = ref('pro')
-const activeTab = ref('overview')
-const activeMenuValue = ref('button')
-const activeSimpleMenuValue = ref('button')
+const dialogOpen = ref(false);
+const drawerOpen = ref(false);
+const dropdownControlled = ref(false);
+const popoverOpen = ref(false);
+const inputValue = ref("");
+const textareaValue = ref("A compact foundation for the ecosystem.");
+const checkboxValue = ref(true);
+const switchValue = ref(true);
+const radioValue = ref("pro");
+const activeTab = ref("overview");
+const activeMenuValue = ref("button");
+const activeSimpleMenuValue = ref("button");
 
 const releaseTabs = [
-  { value: 'overview', label: 'Overview' },
-  { value: 'api', label: 'API' },
-  { value: 'status', label: 'Status' }
-]
+  { value: "overview", label: "Overview" },
+  { value: "api", label: "API" },
+  { value: "status", label: "Status" },
+];
 
 const docsMenuItems: VfNavMenuItem[] = [
   {
-    value: 'getting-started',
-    label: 'Getting Started',
-    leadingIcon: 'info',
+    value: "getting-started",
+    label: "Getting Started",
+    leadingIcon: "info",
     children: [
-      { value: 'installation', label: 'Installation' },
-      { value: 'quick-start', label: 'Quick Start' }
-    ]
+      { value: "installation", label: "Installation" },
+      { value: "quick-start", label: "Quick Start" },
+    ],
   },
   {
-    value: 'components',
-    label: 'Components',
-    leadingIcon: 'gear',
+    value: "components",
+    label: "Components",
+    leadingIcon: "gear",
     children: [
       {
-        value: 'actions-group',
-        kind: 'group',
-        label: 'Actions',
-        children: [{ value: 'button', label: 'Button' }]
+        value: "actions-group",
+        kind: "group",
+        label: "Actions",
+        children: [{ value: "button", label: "Button" }],
       },
       {
-        value: 'navigation-group',
-        kind: 'group',
-        label: 'Navigation',
+        value: "navigation-group",
+        kind: "group",
+        label: "Navigation",
         children: [
           {
-            value: 'tabs',
-            label: 'Tabs',
+            value: "tabs",
+            label: "Tabs",
             children: [
-              { value: 'overview-tab', label: 'Overview Tab' },
-              { value: 'status-tab', label: 'Status Tab' }
-            ]
-          }
-        ]
+              { value: "overview-tab", label: "Overview Tab" },
+              { value: "status-tab", label: "Status Tab" },
+            ],
+          },
+        ],
       },
       {
-        value: 'overlay-group',
-        kind: 'group',
-        label: 'Overlay',
-        children: [{ value: 'dialog', label: 'Dialog' }]
-      }
-    ]
+        value: "overlay-group",
+        kind: "group",
+        label: "Overlay",
+        children: [{ value: "dialog", label: "Dialog" }],
+      },
+    ],
   },
   {
-    value: 'foundation',
-    label: 'Foundation',
-    leadingIcon: 'checkCircle',
+    value: "foundation",
+    label: "Foundation",
+    leadingIcon: "checkCircle",
     children: [
-      { value: 'tokens', label: 'Tokens' },
-      { value: 'theme', label: 'Theme' }
-    ]
-  }
-]
+      { value: "tokens", label: "Tokens" },
+      { value: "theme", label: "Theme" },
+    ],
+  },
+];
 
 const docsMenuSimpleItems: VfNavMenuItem[] = [
   {
-    value: 'getting-started',
-    label: 'Getting Started',
+    value: "getting-started",
+    label: "Getting Started",
     children: [
-      { value: 'installation', label: 'Installation' },
-      { value: 'quick-start', label: 'Quick Start' }
-    ]
+      { value: "installation", label: "Installation" },
+      { value: "quick-start", label: "Quick Start" },
+    ],
   },
   {
-    value: 'components',
-    label: 'Components',
+    value: "components",
+    label: "Components",
     children: [
-      { value: 'button', label: 'Button' },
-      { value: 'tabs', label: 'Tabs' },
-      { value: 'dialog', label: 'Dialog' }
-    ]
+      { value: "button", label: "Button" },
+      { value: "tabs", label: "Tabs" },
+      { value: "dialog", label: "Dialog" },
+    ],
   },
   {
-    value: 'foundation',
-    label: 'Foundation',
+    value: "foundation",
+    label: "Foundation",
     children: [
-      { value: 'tokens', label: 'Tokens' },
-      { value: 'theme', label: 'Theme' }
-    ]
-  }
-]
+      { value: "tokens", label: "Tokens" },
+      { value: "theme", label: "Theme" },
+    ],
+  },
+];
 
 const tabContent = computed<Record<string, string>>(() => ({
-  overview: 'Overview content.',
-  api: 'API content.',
-  status: 'Status content.'
-}))
+  overview: "Overview content.",
+  api: "API content.",
+  status: "Status content.",
+}));
 </script>
 
 <template>
@@ -156,9 +156,18 @@ const tabContent = computed<Record<string, string>>(() => ({
           <div class="demo-example">
             <p class="demo-label">vf-theme-provider</p>
             <div class="demo-inline">
-              <VfButton size="sm" variant="secondary" @click="setTheme('light')">Light</VfButton>
-              <VfButton size="sm" variant="secondary" @click="setTheme('dark')">Dark</VfButton>
-              <VfButton size="sm" variant="secondary" @click="setTheme('system')">System</VfButton>
+              <VfButton size="sm" variant="secondary" @click="setTheme('light')"
+                >Light</VfButton
+              >
+              <VfButton size="sm" variant="secondary" @click="setTheme('dark')"
+                >Dark</VfButton
+              >
+              <VfButton
+                size="sm"
+                variant="secondary"
+                @click="setTheme('system')"
+                >System</VfButton
+              >
               <VfButton size="sm" @click="toggleTheme">Toggle</VfButton>
             </div>
           </div>
@@ -190,16 +199,56 @@ const tabContent = computed<Record<string, string>>(() => ({
           <div class="demo-example">
             <p class="demo-label">vf-icon-button</p>
             <div class="demo-inline">
-              <VfIconButton :icon="icons.gear" aria-label="Primary settings" variant="primary" />
-              <VfIconButton :icon="icons.gear" aria-label="Secondary settings" variant="secondary" />
-              <VfIconButton :icon="icons.gear" aria-label="Success settings" variant="success" />
-              <VfIconButton :icon="icons.gear" aria-label="Info settings" variant="info" />
-              <VfIconButton :icon="icons.gear" aria-label="Warn settings" variant="warn" />
-              <VfIconButton :icon="icons.gear" aria-label="Help settings" variant="help" />
-              <VfIconButton :icon="icons.gear" aria-label="Danger settings" variant="danger" />
-              <VfIconButton :icon="icons.gear" aria-label="Contrast settings" variant="contrast" />
-              <VfIconButton :icon="icons.gear" aria-label="Ghost settings" variant="ghost" />
-              <VfIconButton :icon="icons.gear" aria-label="Disabled settings" disabled />
+              <VfIconButton
+                :icon="icons.gear"
+                aria-label="Primary settings"
+                variant="primary"
+              />
+              <VfIconButton
+                :icon="icons.gear"
+                aria-label="Secondary settings"
+                variant="secondary"
+              />
+              <VfIconButton
+                :icon="icons.gear"
+                aria-label="Success settings"
+                variant="success"
+              />
+              <VfIconButton
+                :icon="icons.gear"
+                aria-label="Info settings"
+                variant="info"
+              />
+              <VfIconButton
+                :icon="icons.gear"
+                aria-label="Warn settings"
+                variant="warn"
+              />
+              <VfIconButton
+                :icon="icons.gear"
+                aria-label="Help settings"
+                variant="help"
+              />
+              <VfIconButton
+                :icon="icons.gear"
+                aria-label="Danger settings"
+                variant="danger"
+              />
+              <VfIconButton
+                :icon="icons.gear"
+                aria-label="Contrast settings"
+                variant="contrast"
+              />
+              <VfIconButton
+                :icon="icons.gear"
+                aria-label="Ghost settings"
+                variant="ghost"
+              />
+              <VfIconButton
+                :icon="icons.gear"
+                aria-label="Disabled settings"
+                disabled
+              />
             </div>
           </div>
 
@@ -209,7 +258,10 @@ const tabContent = computed<Record<string, string>>(() => ({
               <VfLink href="https://example.com" target="_blank" underline>
                 External Docs Link
               </VfLink>
-              <p class="demo-text">Supports regular links, new-tab links, and router-style navigation.</p>
+              <p class="demo-text">
+                Supports regular links, new-tab links, and router-style
+                navigation.
+              </p>
             </div>
           </div>
         </div>
@@ -223,7 +275,10 @@ const tabContent = computed<Record<string, string>>(() => ({
         <div class="demo-grid demo-grid--three">
           <div class="demo-example">
             <p class="demo-label">vf-tooltip</p>
-            <VfTooltip text="Tooltip is opened by hover and focus." placement="bottom">
+            <VfTooltip
+              text="Tooltip is opened by hover and focus."
+              placement="bottom"
+            >
               <VfButton variant="secondary">Tooltip</VfButton>
             </VfTooltip>
           </div>
@@ -232,11 +287,17 @@ const tabContent = computed<Record<string, string>>(() => ({
             <p class="demo-label">vf-dropdown</p>
             <VfDropdown v-model:open="dropdownControlled">
               <template #trigger="{ open }">
-                <VfButton tabindex="-1" variant="secondary">{{ open ? 'Close menu' : 'Open menu' }}</VfButton>
+                <VfButton tabindex="-1" variant="secondary">{{
+                  open ? "Close menu" : "Open menu"
+                }}</VfButton>
               </template>
 
-              <button class="vf-dropdown__item" role="menuitem">Action one</button>
-              <button class="vf-dropdown__item" role="menuitem">Action two</button>
+              <button class="vf-dropdown__item" role="menuitem">
+                Action one
+              </button>
+              <button class="vf-dropdown__item" role="menuitem">
+                Action two
+              </button>
             </VfDropdown>
           </div>
 
@@ -244,7 +305,9 @@ const tabContent = computed<Record<string, string>>(() => ({
             <p class="demo-label">vf-popover</p>
             <VfPopover v-model:open="popoverOpen">
               <template #trigger="{ open }">
-                <VfButton tabindex="-1" variant="secondary">{{ open ? 'Close popover' : 'Open popover' }}</VfButton>
+                <VfButton tabindex="-1" variant="secondary">{{
+                  open ? "Close popover" : "Open popover"
+                }}</VfButton>
               </template>
 
               <div class="demo-stack">
@@ -302,7 +365,9 @@ const tabContent = computed<Record<string, string>>(() => ({
               <VfAlert tone="warn" title="Warning">Warn content.</VfAlert>
               <VfAlert tone="help" title="Need help?">Help content.</VfAlert>
               <VfAlert tone="danger" title="Error">Danger content.</VfAlert>
-              <VfAlert tone="contrast" title="Contrast">Contrast content.</VfAlert>
+              <VfAlert tone="contrast" title="Contrast"
+                >Contrast content.</VfAlert
+              >
             </div>
           </div>
 
@@ -352,7 +417,10 @@ const tabContent = computed<Record<string, string>>(() => ({
           <div class="demo-item">
             <p class="demo-label">vf-textarea</p>
             <div class="demo-stack">
-              <VfTextarea v-model="textareaValue" placeholder="Describe the release..." />
+              <VfTextarea
+                v-model="textareaValue"
+                placeholder="Describe the release..."
+              />
             </div>
           </div>
 
@@ -363,8 +431,12 @@ const tabContent = computed<Record<string, string>>(() => ({
               <VfCheckbox invalid>Invalid choice</VfCheckbox>
               <VfSwitch v-model="switchValue">Enable notifications</VfSwitch>
               <VfSwitch size="sm">Compact toggle</VfSwitch>
-              <VfRadio v-model="radioValue" name="demo-plan" value="free">Free plan</VfRadio>
-              <VfRadio v-model="radioValue" name="demo-plan" value="pro">Pro plan</VfRadio>
+              <VfRadio v-model="radioValue" name="demo-plan" value="free"
+                >Free plan</VfRadio
+              >
+              <VfRadio v-model="radioValue" name="demo-plan" value="pro"
+                >Pro plan</VfRadio
+              >
             </div>
           </div>
         </div>
@@ -388,9 +460,13 @@ const tabContent = computed<Record<string, string>>(() => ({
           <div class="demo-item">
             <p class="demo-label">vf-accordion</p>
             <div class="demo-stack">
-              <VfAccordion title="Section One" default-open>Accordion content.</VfAccordion>
+              <VfAccordion title="Section One" default-open
+                >Accordion content.</VfAccordion
+              >
               <VfAccordion title="Section Two">Accordion content.</VfAccordion>
-              <VfAccordion title="Section Three">Accordion content.</VfAccordion>
+              <VfAccordion title="Section Three"
+                >Accordion content.</VfAccordion
+              >
             </div>
           </div>
 
@@ -406,7 +482,10 @@ const tabContent = computed<Record<string, string>>(() => ({
 
               <div class="demo-stack">
                 <p class="demo-text">Simple</p>
-                <VfNavMenu v-model="activeSimpleMenuValue" :items="docsMenuSimpleItems" />
+                <VfNavMenu
+                  v-model="activeSimpleMenuValue"
+                  :items="docsMenuSimpleItems"
+                />
               </div>
             </div>
           </div>
@@ -422,9 +501,14 @@ const tabContent = computed<Record<string, string>>(() => ({
           <div class="demo-example">
             <p class="demo-label">vf-dialog</p>
             <div class="demo-stack">
-              <p class="demo-text">Modal dialog with focus trap, keyboard support, and semantic actions.</p>
+              <p class="demo-text">
+                Modal dialog with focus trap, keyboard support, and semantic
+                actions.
+              </p>
               <div class="demo-inline">
-                <VfButton data-test="open-dialog" @click="dialogOpen = true">Open Dialog</VfButton>
+                <VfButton data-test="open-dialog" @click="dialogOpen = true"
+                  >Open Dialog</VfButton
+                >
               </div>
             </div>
           </div>
@@ -432,9 +516,16 @@ const tabContent = computed<Record<string, string>>(() => ({
           <div class="demo-example">
             <p class="demo-label">vf-drawer</p>
             <div class="demo-stack">
-              <p class="demo-text">Side sheet for settings, filters, and contextual workflows.</p>
+              <p class="demo-text">
+                Side sheet for settings, filters, and contextual workflows.
+              </p>
               <div class="demo-inline">
-                <VfButton data-test="open-drawer" variant="secondary" @click="drawerOpen = true">Open Drawer</VfButton>
+                <VfButton
+                  data-test="open-drawer"
+                  variant="secondary"
+                  @click="drawerOpen = true"
+                  >Open Drawer</VfButton
+                >
               </div>
             </div>
           </div>
@@ -442,32 +533,30 @@ const tabContent = computed<Record<string, string>>(() => ({
       </section>
     </div>
 
-    <VfDialog
-      v-model:open="dialogOpen"
-      title="Dialog"
-    >
+    <VfDialog v-model:open="dialogOpen" title="Dialog">
       <template #default="{ close }">
         <div class="demo-stack">
           <p>Dialog content.</p>
           <div class="demo-inline">
             <VfButton data-autofocus @click="close">Looks good</VfButton>
-            <VfButton variant="secondary" @click="dialogOpen = false">Close</VfButton>
+            <VfButton variant="secondary" @click="dialogOpen = false"
+              >Close</VfButton
+            >
           </div>
         </div>
       </template>
     </VfDialog>
 
-    <VfDrawer
-      v-model:open="drawerOpen"
-      title="Drawer"
-    >
+    <VfDrawer v-model:open="drawerOpen" title="Drawer">
       <template #default="{ close }">
         <div class="demo-stack">
           <p>Drawer content.</p>
           <VfInput placeholder="Search in drawer" />
           <div class="demo-inline">
             <VfButton data-autofocus @click="close">Apply</VfButton>
-            <VfButton variant="secondary" @click="drawerOpen = false">Close</VfButton>
+            <VfButton variant="secondary" @click="drawerOpen = false"
+              >Close</VfButton
+            >
           </div>
         </div>
       </template>

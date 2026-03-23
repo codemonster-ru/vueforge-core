@@ -1,14 +1,14 @@
-import breakpointValues from './breakpoints.json'
+import breakpointValues from "./breakpoints.json";
 
-export const vfBreakpoints = breakpointValues
+export const vfBreakpoints = breakpointValues;
 
-export type VfBreakpointName = keyof typeof vfBreakpoints
-export type VfBreakpointValue = (typeof vfBreakpoints)[VfBreakpointName]
+export type VfBreakpointName = keyof typeof vfBreakpoints;
+export type VfBreakpointValue = (typeof vfBreakpoints)[VfBreakpointName];
 
 export function toMinWidthQuery(value: number) {
-  return `(min-width: ${value}px)`
+  return `(min-width: ${value}px)`;
 }
 
 export function toMaxWidthQuery(value: number) {
-  return `(max-width: ${value - 0.02}px)`
+  return `(max-width: ${value - 0.02}px)`;
 }

@@ -1,124 +1,147 @@
 <script setup lang="ts">
-import { computed, inject, onBeforeUnmount, onMounted, provide, ref, watch } from 'vue'
-import { themeContextKey } from './themeContext'
-import { vueForgeConfigKey } from './vueForgeConfig'
-import type { VfResolvedTheme, VfThemeMode, VfThemeProviderProps } from '@/types/theme'
-import { DEFAULT_ATTRIBUTE, DEFAULT_STORAGE_KEY, isThemeMode, resolveTheme } from '@/utils/theme'
+import {
+  computed,
+  inject,
+  onBeforeUnmount,
+  onMounted,
+  provide,
+  ref,
+  watch,
+} from "vue";
+import { themeContextKey } from "./themeContext";
+import { vueForgeConfigKey } from "./vueForgeConfig";
+import type {
+  VfResolvedTheme,
+  VfThemeMode,
+  VfThemeProviderProps,
+} from "@/types/theme";
+import {
+  DEFAULT_ATTRIBUTE,
+  DEFAULT_STORAGE_KEY,
+  isThemeMode,
+  resolveTheme,
+} from "@/utils/theme";
 
 const props = withDefaults(defineProps<VfThemeProviderProps>(), {
-  defaultTheme: 'system'
-})
+  defaultTheme: "system",
+});
 
-const mode = ref<VfThemeMode>(props.defaultTheme)
-const systemTheme = ref<VfResolvedTheme>('light')
-const mediaQuery = ref<MediaQueryList | null>(null)
-const config = inject(vueForgeConfigKey, null)
+const mode = ref<VfThemeMode>(props.defaultTheme);
+const systemTheme = ref<VfResolvedTheme>("light");
+const mediaQuery = ref<MediaQueryList | null>(null);
+const config = inject(vueForgeConfigKey, null);
 
-const resolvedTheme = computed(() => resolveTheme(mode.value, systemTheme.value))
+const resolvedTheme = computed(() =>
+  resolveTheme(mode.value, systemTheme.value),
+);
 const storageKey = computed(
-  () => props.storageKey ?? config?.theme.options.storageKey ?? DEFAULT_STORAGE_KEY
-)
+  () =>
+    props.storageKey ?? config?.theme.options.storageKey ?? DEFAULT_STORAGE_KEY,
+);
 const attribute = computed(
-  () => props.attribute ?? config?.theme.options.attribute ?? DEFAULT_ATTRIBUTE
-)
-const hasMounted = ref(false)
-let themeTransitionTimeout: number | null = null
+  () => props.attribute ?? config?.theme.options.attribute ?? DEFAULT_ATTRIBUTE,
+);
+const hasMounted = ref(false);
+let themeTransitionTimeout: number | null = null;
 
 function readStoredTheme() {
-  if (typeof window === 'undefined') {
-    return
+  if (typeof window === "undefined") {
+    return;
   }
 
-  const storedTheme = window.localStorage.getItem(storageKey.value)
+  const storedTheme = window.localStorage.getItem(storageKey.value);
 
   if (isThemeMode(storedTheme)) {
-    mode.value = storedTheme
+    mode.value = storedTheme;
   }
 }
 
 function clearThemeTransitionTimeout() {
   if (themeTransitionTimeout !== null) {
-    window.clearTimeout(themeTransitionTimeout)
-    themeTransitionTimeout = null
+    window.clearTimeout(themeTransitionTimeout);
+    themeTransitionTimeout = null;
   }
 }
 
-function updateDocumentTheme(theme: VfResolvedTheme, options: { animate?: boolean } = {}) {
-  if (typeof document === 'undefined') {
-    return
+function updateDocumentTheme(
+  theme: VfResolvedTheme,
+  options: { animate?: boolean } = {},
+) {
+  if (typeof document === "undefined") {
+    return;
   }
 
-  const root = document.documentElement
+  const root = document.documentElement;
 
   if (options.animate) {
-    clearThemeTransitionTimeout()
-    root.classList.add('vf-theme-transitioning')
+    clearThemeTransitionTimeout();
+    root.classList.add("vf-theme-transitioning");
   }
 
-  root.setAttribute(attribute.value, theme)
+  root.setAttribute(attribute.value, theme);
 
   if (options.animate) {
     themeTransitionTimeout = window.setTimeout(() => {
-      root.classList.remove('vf-theme-transitioning')
-      themeTransitionTimeout = null
-    }, 320)
+      root.classList.remove("vf-theme-transitioning");
+      themeTransitionTimeout = null;
+    }, 320);
   }
 }
 
 function handleSystemThemeChange(event?: MediaQueryListEvent) {
   if (event) {
-    systemTheme.value = event.matches ? 'dark' : 'light'
-    return
+    systemTheme.value = event.matches ? "dark" : "light";
+    return;
   }
 
-  systemTheme.value = mediaQuery.value?.matches ? 'dark' : 'light'
+  systemTheme.value = mediaQuery.value?.matches ? "dark" : "light";
 }
 
 function setTheme(value: VfThemeMode) {
-  mode.value = value
+  mode.value = value;
 }
 
 function toggleTheme() {
-  const nextTheme = resolvedTheme.value === 'dark' ? 'light' : 'dark'
-  mode.value = nextTheme
+  const nextTheme = resolvedTheme.value === "dark" ? "light" : "dark";
+  mode.value = nextTheme;
 }
 
 watch(mode, (value) => {
-  if (typeof window === 'undefined') {
-    return
+  if (typeof window === "undefined") {
+    return;
   }
 
-  window.localStorage.setItem(storageKey.value, value)
-})
+  window.localStorage.setItem(storageKey.value, value);
+});
 
 watch(
   resolvedTheme,
   (value) => {
-    updateDocumentTheme(value, { animate: hasMounted.value })
+    updateDocumentTheme(value, { animate: hasMounted.value });
   },
-  { immediate: true }
-)
+  { immediate: true },
+);
 
 onMounted(() => {
-  readStoredTheme()
+  readStoredTheme();
 
-  mediaQuery.value = window.matchMedia('(prefers-color-scheme: dark)')
-  handleSystemThemeChange()
-  mediaQuery.value.addEventListener('change', handleSystemThemeChange)
-  hasMounted.value = true
-})
+  mediaQuery.value = window.matchMedia("(prefers-color-scheme: dark)");
+  handleSystemThemeChange();
+  mediaQuery.value.addEventListener("change", handleSystemThemeChange);
+  hasMounted.value = true;
+});
 
 onBeforeUnmount(() => {
-  mediaQuery.value?.removeEventListener('change', handleSystemThemeChange)
-  clearThemeTransitionTimeout()
-})
+  mediaQuery.value?.removeEventListener("change", handleSystemThemeChange);
+  clearThemeTransitionTimeout();
+});
 
 provide(themeContextKey, {
   mode,
   resolvedTheme,
   setTheme,
-  toggleTheme
-})
+  toggleTheme,
+});
 </script>
 
 <template>

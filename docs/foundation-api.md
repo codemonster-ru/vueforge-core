@@ -30,8 +30,8 @@ import {
   useBreakpoint,
   useBreakpoints,
   useBreakpointValue,
-  useScrollLock
-} from '@codemonster-ru/vueforge-core/foundation'
+  useScrollLock,
+} from "@codemonster-ru/vueforge-core/foundation";
 ```
 
 ### `vfBreakpoints`
@@ -48,31 +48,31 @@ Canonical breakpoint map:
 ### `toMinWidthQuery`
 
 ```ts
-toMinWidthQuery(vfBreakpoints.md)
+toMinWidthQuery(vfBreakpoints.md);
 // -> "(min-width: 768px)"
 ```
 
 ### `toMaxWidthQuery`
 
 ```ts
-toMaxWidthQuery(vfBreakpoints.md)
+toMaxWidthQuery(vfBreakpoints.md);
 // -> "(max-width: 767.98px)"
 ```
 
 ### `useBreakpoint`
 
 ```ts
-const isLgUp = useBreakpoint('lg')
-const isMdDown = useBreakpoint('md', { direction: 'max' })
+const isLgUp = useBreakpoint("lg");
+const isMdDown = useBreakpoint("md", { direction: "max" });
 ```
 
 ### `useBreakpoints`
 
 ```ts
-const breakpoints = useBreakpoints()
+const breakpoints = useBreakpoints();
 
-breakpoints.value.md
-breakpoints.value.xl
+breakpoints.value.md;
+breakpoints.value.xl;
 ```
 
 ### `useBreakpointValue`
@@ -81,16 +81,16 @@ breakpoints.value.xl
 const columns = useBreakpointValue({
   base: 1,
   md: 2,
-  lg: 3
-})
+  lg: 3,
+});
 ```
 
 ### `useScrollLock`
 
 ```ts
-const open = ref(false)
+const open = ref(false);
 
-useScrollLock(open)
+useScrollLock(open);
 ```
 
 This is generic and can be reused by overlays or layout-level primitives.

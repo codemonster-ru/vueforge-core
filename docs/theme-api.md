@@ -2,6 +2,8 @@
 
 This document describes the current theme runtime for `@codemonster-ru/vueforge-core`.
 
+The shared theme engine now lives in `@codemonster-ru/vueforge-theme`, while `vueforge-core` re-exports the stable preset-facing API that component consumers already use.
+
 ## Current Model
 
 VueForge now has two theme layers:
@@ -21,12 +23,12 @@ These are fallback defaults for consumers who import the package CSS. Runtime th
 ## Installation
 
 ```ts
-import { createApp } from 'vue'
-import VueForge from '@codemonster-ru/vueforge-core'
+import { createApp } from "vue";
+import VueForge from "@codemonster-ru/vueforge-core";
 
-const app = createApp(App)
+const app = createApp(App);
 
-app.use(VueForge)
+app.use(VueForge);
 ```
 
 This installs VueForge with the built-in default preset.
@@ -42,9 +44,9 @@ app.use(VueForge, {
     extend,
     light,
     dark,
-    options
-  }
-})
+    options,
+  },
+});
 ```
 
 ### `preset`
@@ -52,18 +54,21 @@ app.use(VueForge, {
 Base theme definition. For now the default workflow is to start from the built-in preset and extend it inside the same app.
 
 ```ts
-import { createThemePreset, defaultThemePreset } from '@codemonster-ru/vueforge-core'
+import {
+  createThemePreset,
+  defaultThemePreset,
+} from "@codemonster-ru/vueforge-core";
 
 const customPreset = createThemePreset({
-  name: 'custom',
+  name: "custom",
   tokens: {
     ...defaultThemePreset.tokens,
-    colorPrimary: '#0f766e'
+    colorPrimary: "#0f766e",
   },
   dark: {
-    colorPrimary: '#5eead4'
-  }
-})
+    colorPrimary: "#5eead4",
+  },
+});
 ```
 
 ### `extend`
@@ -75,11 +80,11 @@ app.use(VueForge, {
   theme: {
     preset: defaultThemePreset,
     extend: {
-      radius: '0.875rem',
-      controlHeightMd: '2.375rem'
-    }
-  }
-})
+      radius: "0.875rem",
+      controlHeightMd: "2.375rem",
+    },
+  },
+});
 ```
 
 ### `light`
@@ -91,11 +96,11 @@ app.use(VueForge, {
   theme: {
     preset: defaultThemePreset,
     light: {
-      colorSurface: '#ffffff',
-      colorSurfaceMuted: '#f8fafc'
-    }
-  }
-})
+      colorSurface: "#ffffff",
+      colorSurfaceMuted: "#f8fafc",
+    },
+  },
+});
 ```
 
 ### `dark`
@@ -107,11 +112,11 @@ app.use(VueForge, {
   theme: {
     preset: defaultThemePreset,
     dark: {
-      colorSurface: '#111827',
-      colorBorder: '#334155'
-    }
-  }
-})
+      colorSurface: "#111827",
+      colorBorder: "#334155",
+    },
+  },
+});
 ```
 
 ### `options`
@@ -123,15 +128,15 @@ app.use(VueForge, {
   theme: {
     preset: defaultThemePreset,
     options: {
-      prefix: 'vf',
-      rootSelector: ':root',
+      prefix: "vf",
+      rootSelector: ":root",
       darkModeSelector: ":root[data-vf-theme='dark']",
-      attribute: 'data-vf-theme',
-      storageKey: 'vf-theme',
-      styleId: 'vf-theme-preset'
-    }
-  }
-})
+      attribute: "data-vf-theme",
+      storageKey: "vf-theme",
+      styleId: "vf-theme-preset",
+    },
+  },
+});
 ```
 
 ## Theme Mode
@@ -145,7 +150,7 @@ app.use(VueForge, {
 ```
 
 ```ts
-const { theme, resolvedTheme, setTheme, toggleTheme } = useTheme()
+const { theme, resolvedTheme, setTheme, toggleTheme } = useTheme();
 ```
 
 `VfThemeProvider` now respects plugin-level `attribute` and `storageKey` if they are not passed directly as props.

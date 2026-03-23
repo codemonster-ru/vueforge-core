@@ -1,23 +1,25 @@
 <script setup lang="ts">
-import { computed, useAttrs } from 'vue'
-import { cx } from '@/utils/classes'
+import { computed, useAttrs } from "vue";
+import { cx } from "@/utils/classes";
 
 defineOptions({
-  inheritAttrs: false
-})
+  inheritAttrs: false,
+});
 
 interface VfPanelProps {
-  title?: string
-  subtle?: boolean
+  title?: string;
+  subtle?: boolean;
 }
 
 const props = withDefaults(defineProps<VfPanelProps>(), {
   title: undefined,
-  subtle: false
-})
+  subtle: false,
+});
 
-const attrs = useAttrs()
-const classes = computed(() => cx('vf-panel', props.subtle && 'vf-panel--subtle'))
+const attrs = useAttrs();
+const classes = computed(() =>
+  cx("vf-panel", props.subtle && "vf-panel--subtle"),
+);
 </script>
 
 <template>

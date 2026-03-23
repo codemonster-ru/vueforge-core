@@ -1,25 +1,25 @@
 <script setup lang="ts">
-import { computed, useAttrs } from 'vue'
-import { cx } from '@/utils/classes'
-import type { VfFeedbackTone } from '@/types/components'
+import { computed, useAttrs } from "vue";
+import { cx } from "@/utils/classes";
+import type { VfFeedbackTone } from "@/types/components";
 
 defineOptions({
-  inheritAttrs: false
-})
+  inheritAttrs: false,
+});
 
 interface VfTagProps {
-  tone?: VfFeedbackTone
+  tone?: VfFeedbackTone;
 }
 
 const props = withDefaults(defineProps<VfTagProps>(), {
-  tone: 'neutral'
-})
+  tone: "neutral",
+});
 
-const attrs = useAttrs()
+const attrs = useAttrs();
 
 const classes = computed(() =>
-  cx('vf-tag', props.tone !== 'neutral' && `vf-tag--${props.tone}`)
-)
+  cx("vf-tag", props.tone !== "neutral" && `vf-tag--${props.tone}`),
+);
 </script>
 
 <template>
