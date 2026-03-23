@@ -30,7 +30,7 @@ describe("foundation contract", () => {
       "utf8",
     );
 
-    expect(tokensCss).toContain("@import './generated-breakpoints.css';");
+    expect(tokensCss).toMatch(/@import\s+["']\.\/generated-breakpoints\.css["'];/);
     expect(generatedBreakpointsCss).toContain("--vf-breakpoint-xs: 480px;");
     expect(generatedBreakpointsCss).toContain("--vf-breakpoint-md: 768px;");
     expect(generatedBreakpointsCss).toContain("--vf-breakpoint-2xl: 1536px;");
@@ -42,8 +42,8 @@ describe("foundation contract", () => {
       "utf8",
     );
 
-    expect(foundationCss).toContain("@import './tokens.css';");
-    expect(foundationCss).toContain("@import './theme.css';");
+    expect(foundationCss).toMatch(/@import\s+["']\.\/tokens\.css["'];/);
+    expect(foundationCss).toMatch(/@import\s+["']\.\/theme\.css["'];/);
     expect(foundationCss).not.toContain("components/");
   });
 });
