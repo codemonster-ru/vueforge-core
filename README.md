@@ -8,13 +8,14 @@ Stable foundation layer for the VueForge design system.
 
 ## Current scope
 
-Version `1.1.0` focuses on:
+Version `1.3.0` focuses on:
 
 - Vue 3 library build with Vite
 - TypeScript declarations
 - Vitest + Vue Test Utils
 - Theme provider and `useTheme`
 - CSS design tokens and theme variables
+- Built-in default theme preset powered by the shared `@codemonster-ru/vueforge-theme` engine
 
 ## Installation
 
@@ -46,6 +47,22 @@ app.use(VueForge, {
 ```
 
 For the full theme runtime and preset API, see [Theme API](./docs/theme-api.md).
+
+## Theme Architecture
+
+VueForge now has two theme layers:
+
+- `@codemonster-ru/vueforge-theme`
+  - neutral theme engine
+  - token and preset types
+  - preset resolution and CSS variable serialization
+  - mode helpers and shared motion tokens
+- `@codemonster-ru/vueforge-core`
+  - built-in `defaultThemePreset`
+  - Vue plugin and `VfThemeProvider`
+  - component library and package CSS
+
+This means `vueforge-core` is still the easiest way to consume the default VueForge design language, while higher-level packages can share the same engine without depending on `core` runtime helpers.
 
 ## Foundation Usage
 

@@ -2,7 +2,7 @@
 
 This document describes the current theme runtime for `@codemonster-ru/vueforge-core`.
 
-The shared theme engine now lives in `@codemonster-ru/vueforge-theme`, while `vueforge-core` re-exports the stable preset-facing API that component consumers already use.
+The shared theme engine now lives in `@codemonster-ru/vueforge-theme`, while `vueforge-core` owns the built-in default preset and Vue integration layer.
 
 ## Current Model
 
@@ -11,7 +11,21 @@ VueForge now has two theme layers:
 - `theme mode`: `light | dark | system`
 - `theme preset`: the token set that defines colors, radius, spacing, sizes, and semantic values
 
-The canonical source of theme values is the default preset in [src/theme/default-preset.ts](../src/theme/default-preset.ts).
+In package terms:
+
+- `@codemonster-ru/vueforge-theme` provides:
+  - theme types
+  - preset resolution helpers
+  - CSS variable serialization helpers
+  - mode helpers
+  - shared motion tokens
+- `@codemonster-ru/vueforge-core` provides:
+  - `defaultThemePreset`
+  - `VueForge` / `createVueForge`
+  - `VfThemeProvider`
+  - `useTheme()`
+
+The canonical built-in VueForge design language still lives in [src/theme/default-preset.ts](../src/theme/default-preset.ts).
 
 Static CSS files still exist as the package baseline:
 
@@ -51,7 +65,7 @@ app.use(VueForge, {
 
 ### `preset`
 
-Base theme definition. For now the default workflow is to start from the built-in preset and extend it inside the same app.
+Base theme definition. The default workflow in `core` is to start from the built-in preset and extend it inside the same app.
 
 ```ts
 import {
@@ -157,7 +171,7 @@ const { theme, resolvedTheme, setTheme, toggleTheme } = useTheme();
 
 ## Public Theme API
 
-Stable public theme API for `1.0.0`:
+Stable public theme API for `1.x`:
 
 - `VueForge`
 - `createVueForge`
@@ -167,7 +181,7 @@ Stable public theme API for `1.0.0`:
 - `useTheme`
 - theme types such as `VfThemeConfig`, `VfThemePreset`, and `VfThemeTokens`
 
-Lower-level runtime helpers stay internal for now so we do not freeze too much implementation detail in `1.0.0`.
+Lower-level engine helpers live in `@codemonster-ru/vueforge-theme`. `vueforge-core` does not need to re-export every runtime helper just because the engine supports it.
 
 ## Current Boundary
 
@@ -177,9 +191,9 @@ Current behavior:
 - CSS variables are generated at runtime
 - the plugin injects a `<style>` tag with light and dark token values
 
-Current scope for `1.0`:
+Current scope for `core`:
 
 - one built-in default preset inside `@codemonster-ru/vueforge-core`
 - runtime theme configuration through the Vue plugin
-- no separate theme packages required
-- no dedicated Vite plugin required
+- shared neutral engine in `@codemonster-ru/vueforge-theme`
+- higher-level packages may build on the same engine without making `core` aware of them

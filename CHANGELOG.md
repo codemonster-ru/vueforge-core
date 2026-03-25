@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.3.1 - 2026-03-26
+
+Patch release for `@codemonster-ru/vueforge-core`.
+
+### Changed
+
+- Updated `@codemonster-ru/vueforge-theme` dependency to `^1.1.0`
+- Refreshed theme architecture documentation to reflect the split between the neutral theme engine and the built-in core preset
+- Stabilized foundation contract tests against formatting-only CSS import changes
+
 ## 1.3.0 - 2026-03-23
 
 Minor release for `@codemonster-ru/vueforge-core`.
