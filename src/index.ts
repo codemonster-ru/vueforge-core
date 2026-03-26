@@ -1,5 +1,5 @@
-import "./styles/tokens.css";
-import "./styles/theme.css";
+import "../.generated/theme/tokens.css";
+import "../.generated/theme/theme.css";
 import "./styles/components.css";
 
 export { default, VueForge, createVueForge } from "./plugin";

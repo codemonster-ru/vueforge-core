@@ -1,4 +1,7 @@
 import { afterEach, beforeEach, vi } from "vitest";
+import { buildThemeCssArtifacts } from "../../build/theme-css-artifacts";
+
+buildThemeCssArtifacts();
 
 vi.mock("@codemonster-ru/vueiconify", () => ({
   VueIconify: {

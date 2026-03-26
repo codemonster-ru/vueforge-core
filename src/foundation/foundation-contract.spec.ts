@@ -22,11 +22,11 @@ describe("foundation contract", () => {
 
   it("keeps breakpoint tokens in tokens.css", () => {
     const tokensCss = readFileSync(
-      resolve(root, "src/styles/tokens.css"),
+      resolve(root, ".generated/theme/tokens.css"),
       "utf8",
     );
     const generatedBreakpointsCss = readFileSync(
-      resolve(root, "src/styles/generated-breakpoints.css"),
+      resolve(root, ".generated/theme/generated-breakpoints.css"),
       "utf8",
     );
 
@@ -42,8 +42,12 @@ describe("foundation contract", () => {
       "utf8",
     );
 
-    expect(foundationCss).toMatch(/@import\s+["']\.\/tokens\.css["'];/);
-    expect(foundationCss).toMatch(/@import\s+["']\.\/theme\.css["'];/);
+    expect(foundationCss).toMatch(
+      /@import\s+["']\.\.\/\.\.\/\.generated\/theme\/tokens\.css["'];/,
+    );
+    expect(foundationCss).toMatch(
+      /@import\s+["']\.\.\/\.\.\/\.generated\/theme\/theme\.css["'];/,
+    );
     expect(foundationCss).not.toContain("components/");
   });
 });

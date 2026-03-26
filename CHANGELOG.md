@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.3.2 - 2026-03-26
+
+Patch release for `@codemonster-ru/vueforge-core`.
+
+### Changed
+
+- Moved generated theme CSS artifacts out of `src/styles` and into `.generated/theme`
+- Centralized CSS artifact generation in a shared internal build helper used by Vite and Vitest
+- Kept `tokens.css`, `theme.css`, and breakpoint CSS generation aligned across `dev`, `test`, and `build`
+- Simplified the source tree by removing generated CSS files from versioned source directories
+
 ## 1.3.1 - 2026-03-26
 
 Patch release for `@codemonster-ru/vueforge-core`.

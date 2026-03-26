@@ -2,44 +2,22 @@ import type { Plugin } from "vite";
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 import dts from "vite-plugin-dts";
-import { cpSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { cpSync, mkdirSync } from "node:fs";
 import { resolve } from "node:path";
+import { buildThemeCssArtifacts, themeCssArtifactPaths } from "./build/theme-css-artifacts";
 
 const rootDir = __dirname;
 const stylesDir = resolve(rootDir, "src/styles");
-const breakpointsPath = resolve(rootDir, "src/foundation/breakpoints.json");
-const generatedBreakpointsPath = resolve(
-  stylesDir,
-  "generated-breakpoints.css",
-);
-
-function buildBreakpointCss() {
-  const breakpoints = JSON.parse(
-    readFileSync(breakpointsPath, "utf8"),
-  ) as Record<string, number>;
-  const lines = [
-    "/* Generated from src/foundation/breakpoints.json */",
-    ":root {",
-    ...Object.entries(breakpoints).map(
-      ([name, value]) => `  --vf-breakpoint-${name}: ${value}px;`,
-    ),
-    "}",
-    "",
-  ];
-
-  mkdirSync(stylesDir, { recursive: true });
-  writeFileSync(generatedBreakpointsPath, lines.join("\n"));
-}
 
 function vueforgeStyleArtifactsPlugin(): Plugin[] {
   return [
     {
-      name: "vueforge-sync-breakpoints",
+      name: "vueforge-generate-theme-css",
       buildStart() {
-        buildBreakpointCss();
+        buildThemeCssArtifacts();
       },
       configureServer() {
-        buildBreakpointCss();
+        buildThemeCssArtifacts();
       },
     },
     {
@@ -49,18 +27,19 @@ function vueforgeStyleArtifactsPlugin(): Plugin[] {
 
         mkdirSync(distDir, { recursive: true });
 
-        for (const file of [
-          "tokens.css",
-          "theme.css",
-          "foundation.css",
-          "generated-breakpoints.css",
-        ]) {
-          cpSync(resolve(stylesDir, file), resolve(distDir, file));
-        }
+        cpSync(themeCssArtifactPaths.generatedTokensPath, resolve(distDir, "tokens.css"));
+        cpSync(themeCssArtifactPaths.generatedThemePath, resolve(distDir, "theme.css"));
+        cpSync(
+          themeCssArtifactPaths.generatedBreakpointsPath,
+          resolve(distDir, "generated-breakpoints.css"),
+        );
+        cpSync(resolve(stylesDir, "foundation.css"), resolve(distDir, "foundation.css"));
       },
     },
   ];
 }
+
+buildThemeCssArtifacts();
 
 export default defineConfig({
   resolve: {
