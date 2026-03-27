@@ -4,7 +4,10 @@ import vue from "@vitejs/plugin-vue";
 import dts from "vite-plugin-dts";
 import { cpSync, mkdirSync } from "node:fs";
 import { resolve } from "node:path";
-import { buildThemeCssArtifacts, themeCssArtifactPaths } from "./build/theme-css-artifacts";
+import {
+  buildThemeCssArtifacts,
+  themeCssArtifactPaths,
+} from "./build/theme-css-artifacts";
 
 const rootDir = __dirname;
 const stylesDir = resolve(rootDir, "src/styles");
@@ -27,13 +30,22 @@ function vueforgeStyleArtifactsPlugin(): Plugin[] {
 
         mkdirSync(distDir, { recursive: true });
 
-        cpSync(themeCssArtifactPaths.generatedTokensPath, resolve(distDir, "tokens.css"));
-        cpSync(themeCssArtifactPaths.generatedThemePath, resolve(distDir, "theme.css"));
+        cpSync(
+          themeCssArtifactPaths.generatedTokensPath,
+          resolve(distDir, "tokens.css"),
+        );
+        cpSync(
+          themeCssArtifactPaths.generatedThemePath,
+          resolve(distDir, "theme.css"),
+        );
         cpSync(
           themeCssArtifactPaths.generatedBreakpointsPath,
           resolve(distDir, "generated-breakpoints.css"),
         );
-        cpSync(resolve(stylesDir, "foundation.css"), resolve(distDir, "foundation.css"));
+        cpSync(
+          resolve(stylesDir, "foundation.css"),
+          resolve(distDir, "foundation.css"),
+        );
       },
     },
   ];

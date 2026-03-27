@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.3.3 - 2026-03-27
+
+Patch release for `@codemonster-ru/vueforge-core`.
+
+### Changed
+
+- Refined the built-in token scale to use cleaner whole-pixel spacing and sizing steps
+- Kept the stricter token rhythm visually aligned across the demo in both light and dark themes
+- Finalized the generated theme CSS pipeline around `.generated/theme`
+
 ## 1.3.2 - 2026-03-26
 
 Patch release for `@codemonster-ru/vueforge-core`.

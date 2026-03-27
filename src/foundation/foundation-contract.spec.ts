@@ -30,7 +30,9 @@ describe("foundation contract", () => {
       "utf8",
     );
 
-    expect(tokensCss).toMatch(/@import\s+["']\.\/generated-breakpoints\.css["'];/);
+    expect(tokensCss).toMatch(
+      /@import\s+["']\.\/generated-breakpoints\.css["'];/,
+    );
     expect(generatedBreakpointsCss).toContain("--vf-breakpoint-xs: 480px;");
     expect(generatedBreakpointsCss).toContain("--vf-breakpoint-md: 768px;");
     expect(generatedBreakpointsCss).toContain("--vf-breakpoint-2xl: 1536px;");

@@ -6,7 +6,10 @@ import { defaultThemePresetSource } from "../src/theme/default-preset-source";
 const currentDir = dirname(fileURLToPath(import.meta.url));
 const rootDir = resolve(currentDir, "..");
 const generatedStylesDir = resolve(rootDir, ".generated/theme");
-const generatedBreakpointsPath = resolve(generatedStylesDir, "generated-breakpoints.css");
+const generatedBreakpointsPath = resolve(
+  generatedStylesDir,
+  "generated-breakpoints.css",
+);
 const generatedTokensPath = resolve(generatedStylesDir, "tokens.css");
 const generatedThemePath = resolve(generatedStylesDir, "theme.css");
 
@@ -27,7 +30,10 @@ function tokenKeyToCssVar(key: string, prefix = "vf") {
 
 function themeTokensToCssVars(tokens: Record<string, string>, prefix = "vf") {
   return Object.fromEntries(
-    Object.entries(tokens).map(([key, value]) => [tokenKeyToCssVar(key, prefix), value]),
+    Object.entries(tokens).map(([key, value]) => [
+      tokenKeyToCssVar(key, prefix),
+      value,
+    ]),
   );
 }
 
