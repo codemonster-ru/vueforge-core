@@ -21,7 +21,7 @@ In package terms:
   - shared motion tokens
 - `@codemonster-ru/vueforge-core` provides:
   - `defaultThemePreset`
-  - `VueForge` / `createVueForge`
+  - `VueForgeCore` / `createVueForgeCore`
   - `VfThemeProvider`
   - `useTheme()`
 
@@ -29,8 +29,8 @@ The canonical built-in VueForge design language still lives in [src/theme/defaul
 
 Static CSS files still exist as the package baseline:
 
-- [src/styles/tokens.css](../src/styles/tokens.css)
-- [src/styles/theme.css](../src/styles/theme.css)
+- generated token CSS in [.generated/theme](../.generated/theme)
+- the narrow baseline entry in [src/styles/foundation.css](../src/styles/foundation.css)
 
 These are fallback defaults for consumers who import the package CSS. Runtime theme configuration should be treated as the primary API.
 
@@ -38,21 +38,47 @@ These are fallback defaults for consumers who import the package CSS. Runtime th
 
 ```ts
 import { createApp } from "vue";
-import VueForge from "@codemonster-ru/vueforge-core";
+import VueForgeCore from "@codemonster-ru/vueforge-core";
 
 const app = createApp(App);
 
-app.use(VueForge);
+app.use(VueForgeCore);
 ```
 
 This installs VueForge with the built-in default preset.
 
 If you want to customize the design tokens, pass a `theme` object explicitly.
 
+## Recommended Setup
+
+VueForge theme setup is one system with two layers:
+
+- token preset configuration in `app.use(VueForgeCore, { theme })`
+- mode selection in `VfThemeProvider` and `useTheme()`
+
+```ts
+app.use(VueForgeCore, {
+  theme: {
+    preset: defaultThemePreset,
+    extend: {
+      colorPrimary: "#ff5a36",
+    },
+  },
+  defaultTheme: "system",
+  themeStorageKey: "vf-theme",
+});
+```
+
+```vue
+<VfThemeProvider>
+  <App />
+</VfThemeProvider>
+```
+
 ## Theme Config
 
 ```ts
-app.use(VueForge, {
+app.use(VueForgeCore, {
   theme: {
     preset,
     extend,
@@ -90,7 +116,7 @@ const customPreset = createThemePreset({
 Shared overrides applied to both light and dark.
 
 ```ts
-app.use(VueForge, {
+app.use(VueForgeCore, {
   theme: {
     preset: defaultThemePreset,
     extend: {
@@ -106,7 +132,7 @@ app.use(VueForge, {
 Overrides only for the light theme.
 
 ```ts
-app.use(VueForge, {
+app.use(VueForgeCore, {
   theme: {
     preset: defaultThemePreset,
     light: {
@@ -122,7 +148,7 @@ app.use(VueForge, {
 Overrides only for the dark theme.
 
 ```ts
-app.use(VueForge, {
+app.use(VueForgeCore, {
   theme: {
     preset: defaultThemePreset,
     dark: {
@@ -138,7 +164,7 @@ app.use(VueForge, {
 Controls how runtime CSS variables are written.
 
 ```ts
-app.use(VueForge, {
+app.use(VueForgeCore, {
   theme: {
     preset: defaultThemePreset,
     options: {
@@ -167,14 +193,20 @@ app.use(VueForge, {
 const { theme, resolvedTheme, setTheme, toggleTheme } = useTheme();
 ```
 
-`VfThemeProvider` now respects plugin-level `attribute` and `storageKey` if they are not passed directly as props.
+Provider behavior:
+
+- `defaultTheme`, `themeStorageKey`, and `themeAttribute` can be passed through the Vue plugin
+- `VfThemeProvider` uses those plugin defaults when its own props are omitted
+- provider props still win when you need a local override
+- mode state still supports `light`, `dark`, and `system`
+- resolved mode still syncs to `localStorage`, `matchMedia`, and `data-vf-theme`
 
 ## Public Theme API
 
 Stable public theme API for `1.x`:
 
-- `VueForge`
-- `createVueForge`
+- `VueForgeCore`
+- `createVueForgeCore`
 - `defaultThemePreset`
 - `createThemePreset`
 - `VfThemeProvider`

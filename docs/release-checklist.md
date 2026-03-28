@@ -35,8 +35,8 @@
 
 ## Theme
 
-- Verify `app.use(VueForge)` works with the built-in default preset
-- Verify `app.use(VueForge, { theme: { extend: ... } })` overrides tokens correctly
+- Verify `app.use(VueForgeCore)` works with the built-in default preset
+- Verify `app.use(VueForgeCore, { theme: { extend: ... } })` overrides tokens correctly
 - Verify `VfThemeProvider` works with `light`, `dark`, and `system`
 - Verify `storageKey` and `attribute` overrides still work
 
@@ -58,8 +58,8 @@
 ## Release Decision
 
 - If theme API or visual tokens are still changing: release `rc`
-- If API and visual baseline are stable in real usage: release `1.3.3`
-- Current repository target: `1.3.3`
+- If API and visual baseline are stable in real usage: release `1.4.0`
+- Current repository target: `1.4.0`
 
 ## Publish Flow
 

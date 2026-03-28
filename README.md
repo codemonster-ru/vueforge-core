@@ -8,7 +8,7 @@ Stable foundation layer for the VueForge design system.
 
 ## Current scope
 
-Version `1.3.0` focuses on:
+Version `1.3.x` focuses on:
 
 - Vue 3 library build with Vite
 - TypeScript declarations
@@ -21,22 +21,75 @@ Version `1.3.0` focuses on:
 
 ```ts
 import { createApp } from "vue";
-import VueForge from "@codemonster-ru/vueforge-core";
+import VueForgeCore from "@codemonster-ru/vueforge-core";
 
 const app = createApp(App);
 
-app.use(VueForge);
+app.use(VueForgeCore);
+```
+
+## Recommended Theme Setup
+
+VueForge theme setup has two layers that work together:
+
+- token preset configuration through `app.use(VueForgeCore, { theme })`
+- theme mode selection through `VfThemeProvider` and `useTheme()`
+
+```ts
+import { createApp } from "vue";
+import App from "./App.vue";
+import VueForgeCore, {
+  defaultThemePreset,
+} from "@codemonster-ru/vueforge-core";
+
+const app = createApp(App);
+
+app.use(VueForgeCore, {
+  theme: {
+    preset: defaultThemePreset,
+    extend: {
+      colorPrimary: "#ff5a36",
+    },
+  },
+  defaultTheme: "system",
+  themeStorageKey: "vf-theme",
+});
+```
+
+```vue
+<script setup lang="ts">
+import { VfThemeProvider } from "@codemonster-ru/vueforge-core";
+</script>
+
+<template>
+  <VfThemeProvider>
+    <App />
+  </VfThemeProvider>
+</template>
+```
+
+```ts
+import { useTheme } from "@codemonster-ru/vueforge-core";
+
+const { theme, resolvedTheme, setTheme, toggleTheme } = useTheme();
+
+setTheme("dark");
+setTheme("light");
+setTheme("system");
+toggleTheme();
 ```
 
 ## Theme Overrides
 
 ```ts
 import { createApp } from "vue";
-import VueForge, { defaultThemePreset } from "@codemonster-ru/vueforge-core";
+import VueForgeCore, {
+  defaultThemePreset,
+} from "@codemonster-ru/vueforge-core";
 
 const app = createApp(App);
 
-app.use(VueForge, {
+app.use(VueForgeCore, {
   theme: {
     preset: defaultThemePreset,
     extend: {
@@ -45,6 +98,9 @@ app.use(VueForge, {
   },
 });
 ```
+
+`VfThemeProvider` reads theme-mode defaults from the plugin config when its own
+props are not set. Provider props still win when you need local overrides.
 
 For the full theme runtime and preset API, see [Theme API](./docs/theme-api.md).
 
@@ -69,7 +125,7 @@ This means `vueforge-core` is still the easiest way to consume the default VueFo
 Use the full package when you need VueForge components, styles, and theme runtime together.
 
 ```ts
-import VueForge from "@codemonster-ru/vueforge-core";
+import VueForgeCore from "@codemonster-ru/vueforge-core";
 ```
 
 Use foundation-only entry points when another package, such as `vueforge-layouts`, needs shared responsive or platform helpers without depending on the full UI surface.
@@ -96,7 +152,7 @@ Available subpaths:
 ### Stability
 
 - Stable UI API: components exported from the root package
-- Stable theme API: `VueForge`, `createVueForge`, `defaultThemePreset`, `createThemePreset`
+- Stable theme API: `VueForgeCore`, `createVueForgeCore`, `VfThemeProvider`, `useTheme`, `defaultThemePreset`, `createThemePreset`
 - Stable foundation API: breakpoint constants and foundation composables from `./foundation`
 
 For the full foundation contract, see [Foundation API](./docs/foundation-api.md).

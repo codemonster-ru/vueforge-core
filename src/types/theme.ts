@@ -19,6 +19,9 @@ export type {
 
 export interface VfVueForgeOptions {
   theme?: VfThemeConfig;
+  defaultTheme?: VfThemeMode;
+  themeStorageKey?: string;
+  themeAttribute?: string;
 }
 
 export interface VfThemeContext {

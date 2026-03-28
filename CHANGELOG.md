@@ -1,5 +1,20 @@
 # Changelog
 
+## 1.4.0 - 2026-03-28
+
+Minor release for `@codemonster-ru/vueforge-core`.
+
+### Changed
+
+- Unified the theme story so plugin setup, theme mode, persistence, and system sync read as one theme system
+- `VueForgeCore` is now the canonical plugin export name for `@codemonster-ru/vueforge-core`
+- The Vue plugin can now provide theme-mode defaults:
+  - `defaultTheme`
+  - `themeStorageKey`
+  - `themeAttribute`
+- `VfThemeProvider` now reads plugin-level theme-mode defaults when its own props are omitted
+- README and theme documentation were updated to reflect the new recommended theme setup flow
+
 ## 1.3.3 - 2026-03-27
 
 Patch release for `@codemonster-ru/vueforge-core`.

@@ -3,12 +3,19 @@ import { vueForgeConfigKey } from "@/providers/vueForgeConfig";
 import type { VfVueForgeOptions } from "@/types/theme";
 import { applyThemeConfig, resolveThemeConfig } from "@/theme";
 
-export function createVueForge() {
+export function createVueForgeCore() {
   const plugin: Plugin = {
     install(app: App, options: VfVueForgeOptions = {}) {
       const theme = resolveThemeConfig(options.theme);
 
-      app.provide(vueForgeConfigKey, { theme });
+      app.provide(vueForgeConfigKey, {
+        theme,
+        themeMode: {
+          defaultTheme: options.defaultTheme,
+          storageKey: options.themeStorageKey,
+          attribute: options.themeAttribute,
+        },
+      });
 
       if (typeof document !== "undefined") {
         applyThemeConfig(theme);
@@ -19,6 +26,6 @@ export function createVueForge() {
   return plugin;
 }
 
-export const VueForge = createVueForge();
+export const VueForgeCore = createVueForgeCore();
 
-export default VueForge;
+export default VueForgeCore;

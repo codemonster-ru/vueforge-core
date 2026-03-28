@@ -2,7 +2,7 @@ import "../.generated/theme/tokens.css";
 import "../.generated/theme/theme.css";
 import "./styles/components.css";
 
-export { default, VueForge, createVueForge } from "./plugin";
+export { default, VueForgeCore, createVueForgeCore } from "./plugin";
 export { default as VfThemeProvider } from "./providers/VfThemeProvider.vue";
 export {
   VfAccordion,

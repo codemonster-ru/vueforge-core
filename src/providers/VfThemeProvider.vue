@@ -22,24 +22,33 @@ import {
   resolveTheme,
 } from "@/utils/theme";
 
-const props = withDefaults(defineProps<VfThemeProviderProps>(), {
-  defaultTheme: "system",
-});
+const props = defineProps<VfThemeProviderProps>();
+const config = inject(vueForgeConfigKey, null);
 
-const mode = ref<VfThemeMode>(props.defaultTheme);
+const initialTheme = computed<VfThemeMode>(
+  () => props.defaultTheme ?? config?.themeMode.defaultTheme ?? "system",
+);
+
+const mode = ref<VfThemeMode>(initialTheme.value);
 const systemTheme = ref<VfResolvedTheme>("light");
 const mediaQuery = ref<MediaQueryList | null>(null);
-const config = inject(vueForgeConfigKey, null);
 
 const resolvedTheme = computed(() =>
   resolveTheme(mode.value, systemTheme.value),
 );
 const storageKey = computed(
   () =>
-    props.storageKey ?? config?.theme.options.storageKey ?? DEFAULT_STORAGE_KEY,
+    props.storageKey ??
+    config?.themeMode.storageKey ??
+    config?.theme.options.storageKey ??
+    DEFAULT_STORAGE_KEY,
 );
 const attribute = computed(
-  () => props.attribute ?? config?.theme.options.attribute ?? DEFAULT_ATTRIBUTE,
+  () =>
+    props.attribute ??
+    config?.themeMode.attribute ??
+    config?.theme.options.attribute ??
+    DEFAULT_ATTRIBUTE,
 );
 const hasMounted = ref(false);
 let themeTransitionTimeout: number | null = null;
@@ -123,6 +132,7 @@ watch(
 );
 
 onMounted(() => {
+  mode.value = initialTheme.value;
   readStoredTheme();
 
   mediaQuery.value = window.matchMedia("(prefers-color-scheme: dark)");
