@@ -1,5 +1,7 @@
+/* eslint-disable vue/one-component-per-file */
 import { mount } from "@vue/test-utils";
-import { describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it } from "vitest";
+import { defineComponent, nextTick } from "vue";
 import {
   VfAlert,
   VfBadge,
@@ -13,9 +15,46 @@ import {
   VfPanel,
   VfRadio,
   VfSwitch,
+  VfThemeSwitch,
   VfTag,
   VfTextarea,
 } from "@/components";
+import VfThemeProvider from "@/providers/VfThemeProvider.vue";
+
+const SwitchThumbProbe = defineComponent({
+  components: {
+    VfSwitch,
+  },
+  data() {
+    return {
+      value: false,
+    };
+  },
+  template: `
+    <VfSwitch v-model="value">
+      <template #thumb="{ checked }">
+        {{ checked ? 'on' : 'off' }}
+      </template>
+    </VfSwitch>
+  `,
+});
+
+const ThemeSwitchProbe = defineComponent({
+  components: {
+    VfThemeProvider,
+    VfThemeSwitch,
+  },
+  template: `
+    <VfThemeProvider default-theme="system">
+      <VfThemeSwitch />
+    </VfThemeProvider>
+  `,
+});
+
+afterEach(() => {
+  window.localStorage.clear();
+  document.documentElement.removeAttribute("data-vf-theme");
+});
 
 describe("core primitives", () => {
   it("renders button variants and respects native attributes", async () => {
@@ -154,6 +193,48 @@ describe("core primitives", () => {
 
     expect(checkbox.emitted("update:modelValue")).toEqual([[false]]);
     expect(switchControl.emitted("update:modelValue")).toEqual([[true]]);
+  });
+
+  it("supports thumb slot content with checked state", async () => {
+    const wrapper = mount(SwitchThumbProbe);
+
+    expect(wrapper.find(".vf-switch__thumb").text()).toBe("off");
+
+    await wrapper.get("input").setValue(true);
+
+    expect(wrapper.find(".vf-switch__thumb").text()).toBe("on");
+  });
+
+  it("switches explicit theme mode based on resolved theme", async () => {
+    Object.defineProperty(window, "matchMedia", {
+      writable: true,
+      value: () => ({
+        matches: true,
+        media: "(prefers-color-scheme: dark)",
+        addEventListener: () => undefined,
+        removeEventListener: () => undefined,
+      }),
+    });
+
+    const wrapper = mount(ThemeSwitchProbe);
+    await nextTick();
+
+    const input = wrapper.get(".vf-switch__input");
+
+    expect((input.element as HTMLInputElement).checked).toBe(true);
+
+    await input.setValue(false);
+
+    expect(document.documentElement.getAttribute("data-vf-theme")).toBe(
+      "light",
+    );
+    expect(
+      (wrapper.get(".vf-switch__input").element as HTMLInputElement).checked,
+    ).toBe(false);
+
+    await wrapper.get(".vf-switch__input").setValue(true);
+
+    expect(document.documentElement.getAttribute("data-vf-theme")).toBe("dark");
   });
 
   it("emits radio updates and reflects checked state", async () => {

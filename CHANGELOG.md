@@ -1,5 +1,23 @@
 # Changelog
 
+## 1.5.0 - 2026-03-29
+
+Minor release for `@codemonster-ru/vueforge-core`.
+
+### Added
+
+- New convenience theme component:
+  - `VfThemeSwitch`
+- `VfSwitch` now supports a `#thumb` slot with the current `checked` state
+
+### Changed
+
+- `VfThemeSwitch` now uses built-in `sun` / `moon` thumb icons by default
+- Core demo now includes:
+  - `VfThemeSwitch`
+  - `VfSwitch` thumb slot example with icon content
+- Theme-switching patterns are easier to reuse across VueForge packages without introducing extra theme widget variants
+
 ## 1.4.0 - 2026-03-28
 
 Minor release for `@codemonster-ru/vueforge-core`.

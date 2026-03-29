@@ -23,6 +23,7 @@ export {
   VfPopover,
   VfRadio,
   VfSwitch,
+  VfThemeSwitch,
   VfTag,
   VfTabs,
   VfTextarea,

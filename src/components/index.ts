@@ -16,6 +16,7 @@ export { VfPanel } from "./panel";
 export { VfPopover } from "./popover";
 export { VfRadio } from "./radio";
 export { VfSwitch } from "./switch";
+export { VfThemeSwitch } from "./theme-switch";
 export { VfTag } from "./tag";
 export { VfTabs } from "./tabs";
 export { VfTextarea } from "./textarea";

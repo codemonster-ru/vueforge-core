@@ -64,7 +64,9 @@ function handleChange(event: Event) {
       @change="handleChange"
     />
     <span class="vf-switch__control" aria-hidden="true">
-      <span class="vf-switch__thumb" />
+      <span class="vf-switch__thumb">
+        <slot name="thumb" :checked="props.modelValue" />
+      </span>
     </span>
     <span v-if="label || $slots.default" class="vf-switch__content">
       <slot>{{ label }}</slot>

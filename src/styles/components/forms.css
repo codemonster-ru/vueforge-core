@@ -317,6 +317,9 @@
 .vf-switch__thumb {
   position: absolute;
   left: var(--vf-switch-thumb-inset);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   width: var(--vf-switch-thumb-size-md);
   height: var(--vf-switch-thumb-size-md);
   border-radius: 999px;
@@ -329,6 +332,8 @@
   );
   box-shadow: 0 1px 2px
     color-mix(in srgb, var(--vf-color-text) 18%, transparent);
+  color: color-mix(in srgb, var(--vf-color-text) 55%, transparent);
+  line-height: 1;
   transform: translateX(0);
   transition:
     transform var(--vf-motion-duration-normal) var(--vf-motion-ease-standard),
@@ -336,6 +341,11 @@
       var(--vf-motion-ease-standard),
     border-color var(--vf-motion-duration-normal) var(--vf-motion-ease-standard),
     box-shadow var(--vf-motion-duration-normal) var(--vf-motion-ease-standard);
+}
+
+.vf-switch__thumb > .vif-icon {
+  width: 0.625rem;
+  height: 0.625rem;
 }
 
 .vf-switch__input:checked + .vf-switch__control {

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
-import { icons } from "@codemonster-ru/vueiconify";
+import { VueIconify, icons } from "@codemonster-ru/vueiconify";
 import {
   VfAccordion,
   VfAlert,
@@ -20,6 +20,7 @@ import {
   VfPopover,
   VfRadio,
   VfSwitch,
+  VfThemeSwitch,
   VfTag,
   VfTabs,
   VfTextarea,
@@ -38,6 +39,7 @@ const inputValue = ref("");
 const textareaValue = ref("A compact foundation for the ecosystem.");
 const checkboxValue = ref(true);
 const switchValue = ref(true);
+const iconSwitchValue = ref(true);
 const radioValue = ref("pro");
 const activeTab = ref("overview");
 const activeMenuValue = ref("button");
@@ -169,6 +171,12 @@ const tabContent = computed<Record<string, string>>(() => ({
                 >System</VfButton
               >
               <VfButton size="sm" @click="toggleTheme">Toggle</VfButton>
+            </div>
+          </div>
+          <div class="demo-example">
+            <p class="demo-label">vf-theme-switch</p>
+            <div class="demo-inline">
+              <VfThemeSwitch />
             </div>
           </div>
         </div>
@@ -430,6 +438,15 @@ const tabContent = computed<Record<string, string>>(() => ({
               <VfCheckbox v-model="checkboxValue">Accept terms</VfCheckbox>
               <VfCheckbox invalid>Invalid choice</VfCheckbox>
               <VfSwitch v-model="switchValue">Enable notifications</VfSwitch>
+              <VfSwitch v-model="iconSwitchValue">
+                <template #thumb="{ checked }">
+                  <VueIconify
+                    :icon="checked ? icons.check : icons.xmark"
+                    size="0.5rem"
+                  />
+                </template>
+                Icon thumb
+              </VfSwitch>
               <VfSwitch size="sm">Compact toggle</VfSwitch>
               <VfRadio v-model="radioValue" name="demo-plan" value="free"
                 >Free plan</VfRadio
