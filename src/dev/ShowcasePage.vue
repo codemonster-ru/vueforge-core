@@ -12,20 +12,24 @@ import {
   VfDialog,
   VfDivider,
   VfDropdown,
+  VfHeading,
   VfIconButton,
   VfInput,
   VfLink,
   VfNavMenu,
   VfPanel,
   VfPopover,
+  VfProse,
   VfRadio,
   VfSwitch,
   VfTableOfContents,
+  VfText,
   VfThemeSwitch,
   VfTag,
   VfTabs,
   VfTextarea,
   VfTooltip,
+  useTableOfContents,
   useTheme,
 } from "@/index";
 import type { VfNavMenuItem, VfTableOfContentsItem } from "@/index";
@@ -45,7 +49,6 @@ const radioValue = ref("pro");
 const activeTab = ref("overview");
 const activeMenuValue = ref("button");
 const activeSimpleMenuValue = ref("button");
-const activeHeadingId = ref("theme-api");
 
 const releaseTabs = [
   { value: "overview", label: "Overview" },
@@ -205,6 +208,11 @@ const tocItems: VfTableOfContentsItem[] = [
   { id: "release-notes", label: "Release notes", level: 1 },
 ];
 
+const { activeId: activeHeadingId } = useTableOfContents({
+  items: tocItems,
+  offset: 96,
+});
+
 const tabContent = computed<Record<string, string>>(() => ({
   overview: "Overview content.",
   api: "API content.",
@@ -219,6 +227,54 @@ const tabContent = computed<Record<string, string>>(() => ({
         <p class="demo-kicker">VueForge Core Demo</p>
         <h1>Package Components</h1>
       </header>
+
+      <section class="demo-block">
+        <div class="demo-block__header">
+          <h2>Typography</h2>
+        </div>
+
+        <div class="demo-grid demo-grid--three">
+          <div class="demo-item">
+            <p class="demo-label">vf-heading, vf-text</p>
+            <div class="demo-stack">
+              <VfHeading as="h1" size="xl">Page Title</VfHeading>
+              <VfText tone="muted">
+                Semantic heading and text primitives for short-form UI content.
+              </VfText>
+              <VfHeading size="sm">Section Title</VfHeading>
+              <VfText size="label">Form Section Label</VfText>
+              <VfText as="small" size="caption" tone="muted">
+                Caption and metadata text.
+              </VfText>
+            </div>
+          </div>
+
+          <div class="demo-item">
+            <p class="demo-label">vf-prose</p>
+            <VfProse>
+              <h2 id="getting-started">Getting started</h2>
+              <p>
+                VueForge Core now ships with a small prose layer for guides,
+                docs, and other long-form content.
+              </p>
+              <h3 id="installation">Installation</h3>
+              <p>
+                Use <code>@codemonster-ru/vueforge-core</code> together with
+                generated theme tokens for a consistent foundation.
+              </p>
+              <ul>
+                <li>Semantic typography roles</li>
+                <li>Predictable spacing for content</li>
+                <li>Reusable heading rhythm</li>
+              </ul>
+              <blockquote>
+                Keep content typography opt-in, not global.
+              </blockquote>
+            </VfProse>
+          </div>
+
+        </div>
+      </section>
 
       <section class="demo-block">
         <div class="demo-block__header">

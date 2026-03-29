@@ -23,6 +23,9 @@
   border-radius: var(--vf-radius-control);
   background: var(--vf-color-surface);
   color: var(--vf-color-text);
+  font-size: var(--vf-text-body-font-size);
+  font-weight: var(--vf-text-body-font-weight);
+  line-height: var(--vf-text-body-line-height);
   transition: border-color 0.18s ease;
 }
 
@@ -74,6 +77,9 @@
   border-radius: var(--vf-radius-control);
   background: var(--vf-color-surface);
   color: var(--vf-color-text);
+  font-size: var(--vf-text-body-font-size);
+  font-weight: var(--vf-text-body-font-weight);
+  line-height: var(--vf-text-body-line-height);
   resize: vertical;
   transition: border-color 0.18s ease;
 }
@@ -164,7 +170,9 @@
 .vf-radio__content {
   min-width: 0;
   color: currentColor;
-  line-height: var(--vf-text-line-height);
+  font-size: var(--vf-text-label-font-size);
+  font-weight: var(--vf-text-label-font-weight);
+  line-height: var(--vf-text-label-line-height);
 }
 
 .vf-checkbox__control {
@@ -239,11 +247,7 @@
   width: var(--vf-checkbox-size-md);
   height: var(--vf-checkbox-size-md);
   border-radius: 999px;
-  background: color-mix(
-    in srgb,
-    var(--vf-color-border) 12%,
-    var(--vf-color-surface)
-  );
+  background: var(--vf-radio-control-background);
 }
 
 .vf-radio__dot {
@@ -270,7 +274,7 @@
 .vf-radio:hover:not(.vf-radio--disabled)
   .vf-radio__input:not(:checked)
   + .vf-radio__control {
-  border-color: var(--vf-color-primary-border-soft);
+  border-color: var(--vf-radio-hover-border-color);
 }
 
 .vf-radio__input:focus-visible + .vf-radio__control {
@@ -286,7 +290,7 @@
 .vf-radio--invalid:hover:not(.vf-radio--disabled)
   .vf-radio__input:not(:checked)
   + .vf-radio__control {
-  border-color: var(--vf-color-primary-border-soft);
+  border-color: var(--vf-radio-hover-border-color);
 }
 
 .vf-radio--sm .vf-radio__control {
@@ -307,11 +311,7 @@
   width: var(--vf-switch-width-md);
   height: var(--vf-switch-height-md);
   border-radius: 999px;
-  background: color-mix(
-    in srgb,
-    var(--vf-color-text) 10%,
-    var(--vf-color-surface)
-  );
+  background: var(--vf-switch-track-background);
 }
 
 .vf-switch__thumb {
@@ -323,16 +323,10 @@
   width: var(--vf-switch-thumb-size-md);
   height: var(--vf-switch-thumb-size-md);
   border-radius: 999px;
-  border: 1px solid
-    color-mix(in srgb, var(--vf-color-surface) 80%, var(--vf-color-border));
-  background: color-mix(
-    in srgb,
-    var(--vf-color-surface) 88%,
-    var(--vf-color-surface-muted)
-  );
-  box-shadow: 0 1px 2px
-    color-mix(in srgb, var(--vf-color-text) 18%, transparent);
-  color: color-mix(in srgb, var(--vf-color-text) 55%, transparent);
+  border: 1px solid var(--vf-switch-thumb-border-color);
+  background: var(--vf-switch-thumb-background);
+  box-shadow: var(--vf-switch-thumb-shadow);
+  color: var(--vf-switch-thumb-color);
   line-height: 1;
   transform: translateX(0);
   transition:
@@ -344,13 +338,13 @@
 }
 
 .vf-switch__thumb > .vif-icon {
-  width: 0.625rem;
-  height: 0.625rem;
+  width: var(--vf-switch-thumb-icon-size);
+  height: var(--vf-switch-thumb-icon-size);
 }
 
 .vf-switch__input:checked + .vf-switch__control {
   border-color: var(--vf-color-primary);
-  background: var(--vf-color-primary);
+  background: var(--vf-switch-track-checked-background);
 }
 
 .vf-switch__input:checked + .vf-switch__control .vf-switch__thumb {
@@ -360,32 +354,19 @@
         (var(--vf-switch-thumb-inset) * 2)
     )
   );
-  border-color: color-mix(
-    in srgb,
-    var(--vf-color-primary) 12%,
-    var(--vf-color-surface)
-  );
-  background: var(--vf-color-surface);
-  box-shadow: 0 1px 1.5px
-    color-mix(in srgb, var(--vf-color-text) 12%, transparent);
+  border-color: var(--vf-switch-thumb-checked-border-color);
+  background: var(--vf-switch-thumb-checked-background);
+  box-shadow: var(--vf-switch-thumb-checked-shadow);
 }
 
 .vf-switch:hover:not(.vf-switch--disabled) .vf-switch__control {
-  background: color-mix(
-    in srgb,
-    var(--vf-color-text) 12%,
-    var(--vf-color-surface)
-  );
+  background: var(--vf-switch-track-hover-background);
 }
 
 .vf-switch:hover:not(.vf-switch--disabled)
   .vf-switch__input:checked
   + .vf-switch__control {
-  background: color-mix(
-    in srgb,
-    var(--vf-color-primary) 92%,
-    var(--vf-color-surface)
-  );
+  background: var(--vf-switch-track-checked-hover-background);
 }
 
 .vf-switch__input:focus-visible + .vf-switch__control {

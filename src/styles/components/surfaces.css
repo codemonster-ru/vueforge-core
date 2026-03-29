@@ -7,7 +7,7 @@
   border-radius: var(--vf-radius-surface);
   background: var(--vf-color-surface);
   color: var(--vf-color-text);
-  line-height: var(--vf-text-line-height);
+  line-height: var(--vf-text-body-line-height);
 }
 
 .vf-card--compact {
@@ -18,8 +18,9 @@
 .vf-card__title {
   margin: 0;
   font-size: var(--vf-card-title-font-size);
-  font-weight: 600;
-  line-height: var(--vf-heading-line-height);
+  font-family: var(--vf-font-family-heading);
+  font-weight: var(--vf-heading-font-weight);
+  line-height: var(--vf-line-height-tight);
 }
 
 .vf-card__body {
@@ -35,7 +36,7 @@
   border-radius: var(--vf-radius-surface);
   background: var(--vf-color-surface);
   color: var(--vf-color-text);
-  line-height: var(--vf-text-line-height);
+  line-height: var(--vf-text-body-line-height);
 }
 
 .vf-panel--subtle {
@@ -46,6 +47,7 @@
 .vf-panel__title {
   margin: 0;
   font-size: var(--vf-panel-title-font-size);
-  font-weight: 600;
-  line-height: var(--vf-heading-line-height);
+  font-family: var(--vf-font-family-heading);
+  font-weight: var(--vf-heading-font-weight);
+  line-height: var(--vf-line-height-tight);
 }

@@ -54,8 +54,8 @@ CSS fallback baseline: [src/styles/tokens.css](../src/styles/tokens.css)
 
 ## Typography Rhythm
 
-- Titles use `--vf-heading-line-height`.
-- Body content uses `--vf-text-line-height`.
+- Titles use the heading typography layer, typically `--vf-line-height-tight`.
+- Body content uses the body typography layer, typically `--vf-text-body-line-height`.
 - Components should avoid arbitrary line-height values unless there is a clear reason.
 
 ## Semantic Color Contract

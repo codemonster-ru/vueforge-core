@@ -1,5 +1,14 @@
 <script setup lang="ts">
-import { computed, useAttrs, type StyleValue } from "vue";
+import {
+  Comment,
+  Fragment,
+  Text,
+  computed,
+  useAttrs,
+  useSlots,
+  type StyleValue,
+  type VNode,
+} from "vue";
 import { cx } from "@/utils/classes";
 import type { VfControlSize } from "@/types/components";
 
@@ -27,6 +36,7 @@ const emit = defineEmits<{
 }>();
 
 const attrs = useAttrs();
+const slots = useSlots();
 
 const rootClasses = computed(() =>
   cx(
@@ -39,6 +49,31 @@ const rootClasses = computed(() =>
 );
 
 const rootStyles = computed<StyleValue>(() => attrs.style as StyleValue);
+const hasContent = computed(() => {
+  if (props.label) {
+    return true;
+  }
+
+  const nodes: VNode[] = slots.default?.({}) ?? [];
+
+  function hasRenderableNode(node: VNode): boolean {
+    if (node.type === Comment) {
+      return false;
+    }
+
+    if (node.type === Text) {
+      return String(node.children ?? "").trim().length > 0;
+    }
+
+    if (node.type === Fragment && Array.isArray(node.children)) {
+      return node.children.some((child) => hasRenderableNode(child as VNode));
+    }
+
+    return true;
+  }
+
+  return nodes.some((node: VNode) => hasRenderableNode(node));
+});
 const inputAttrs = computed(() =>
   Object.fromEntries(
     Object.entries(attrs).filter(([key]) => key !== "class" && key !== "style"),
@@ -68,7 +103,7 @@ function handleChange(event: Event) {
         <slot name="thumb" :checked="props.modelValue" />
       </span>
     </span>
-    <span v-if="label || $slots.default" class="vf-switch__content">
+    <span v-if="hasContent" class="vf-switch__content">
       <slot>{{ label }}</slot>
     </span>
   </label>

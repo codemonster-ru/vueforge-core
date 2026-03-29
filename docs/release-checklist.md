@@ -50,6 +50,7 @@
 ## Docs
 
 - Review [README.md](../README.md)
+- Review [typography-api.md](./typography-api.md)
 - Review [foundation-api.md](./foundation-api.md)
 - Review [theme-api.md](./theme-api.md)
 - Review [visual-baseline.md](./visual-baseline.md)
@@ -58,8 +59,8 @@
 ## Release Decision
 
 - If theme API or visual tokens are still changing: release `rc`
-- If API and visual baseline are stable in real usage: release `1.6.0`
-- Current repository target: `1.6.0`
+- If API and visual baseline are stable in real usage: release `1.7.0`
+- Current repository target: `1.7.0`
 
 ## Publish Flow
 

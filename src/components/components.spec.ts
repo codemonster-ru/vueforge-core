@@ -10,12 +10,15 @@ import {
   VfCheckbox,
   VfDivider,
   VfIconButton,
+  VfHeading,
   VfInput,
   VfLink,
   VfPanel,
+  VfProse,
   VfRadio,
   VfSwitch,
   VfTableOfContents,
+  VfText,
   VfThemeSwitch,
   VfTag,
   VfTextarea,
@@ -238,6 +241,12 @@ describe("core primitives", () => {
     expect(document.documentElement.getAttribute("data-vf-theme")).toBe("dark");
   });
 
+  it("does not render switch content wrapper for theme switch without label", () => {
+    const wrapper = mount(ThemeSwitchProbe);
+
+    expect(wrapper.find(".vf-switch__content").exists()).toBe(false);
+  });
+
   it("renders table of contents items, hrefs, and active state", () => {
     const wrapper = mount(VfTableOfContents, {
       props: {
@@ -262,6 +271,54 @@ describe("core primitives", () => {
     expect(links[2]?.attributes("aria-current")).toBe("location");
     expect(links[2]?.classes()).toContain("vf-table-of-contents__link--active");
     expect(items[2]?.attributes("style")).toContain("--vf-toc-level: 3");
+  });
+
+  it("renders prose wrapper and content semantics", () => {
+    const wrapper = mount(VfProse, {
+      attrs: {
+        "data-test": "prose",
+      },
+      slots: {
+        default:
+          "<h2>Heading</h2><p>Paragraph with <strong>emphasis</strong>.</p>",
+      },
+    });
+
+    expect(wrapper.element.tagName).toBe("ARTICLE");
+    expect(wrapper.attributes("data-test")).toBe("prose");
+    expect(wrapper.find("h2").text()).toBe("Heading");
+    expect(wrapper.find("strong").text()).toBe("emphasis");
+  });
+
+  it("renders semantic heading and text primitives", () => {
+    const heading = mount(VfHeading, {
+      props: {
+        as: "h1",
+        size: "xl",
+      },
+      slots: {
+        default: "Page title",
+      },
+    });
+
+    const text = mount(VfText, {
+      props: {
+        as: "small",
+        size: "caption",
+        tone: "muted",
+      },
+      slots: {
+        default: "Supporting copy",
+      },
+    });
+
+    expect(heading.element.tagName).toBe("H1");
+    expect(heading.classes()).toContain("vf-heading--xl");
+    expect(heading.text()).toBe("Page title");
+    expect(text.element.tagName).toBe("SMALL");
+    expect(text.classes()).toContain("vf-text--caption");
+    expect(text.classes()).toContain("vf-text--muted");
+    expect(text.text()).toBe("Supporting copy");
   });
 
   it("emits radio updates and reflects checked state", async () => {

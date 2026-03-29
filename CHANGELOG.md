@@ -1,5 +1,46 @@
 # Changelog
 
+## 1.7.0 - 2026-03-29
+
+Minor release for `@codemonster-ru/vueforge-core`.
+
+### Added
+
+- New typography primitives:
+  - `VfHeading`
+  - `VfText`
+  - `VfProse`
+- New typography documentation:
+  - `Typography API`
+
+### Changed
+
+- Added a full typography token layer with:
+  - base font scale
+  - semantic text roles
+  - semantic heading roles
+- `VfTableOfContents` now works as part of a documented docs/content pattern together with:
+  - `VfProse`
+  - `useTableOfContents()`
+- More components now use semantic typography roles, including:
+  - buttons and links
+  - inputs and textareas
+  - tabs and accordion
+  - dropdown and overlay content
+  - badges, tags, alerts, cards, and panels
+- Component customization is now more token-driven for:
+  - switch and radio visuals
+  - prose spacing and inline/code blocks
+  - button hover treatments
+- Token cleanup refined the typography scale further:
+  - `headingFontSizeXl` now maps to the shared scale
+  - `fontSize3xl` was added
+  - legacy line-height aliases remain only as compatibility tokens
+- Demo showcase now includes:
+  - typography primitives
+  - prose/content examples
+  - table-of-contents integration with real scrollspy state
+
 ## 1.6.0 - 2026-03-29
 
 Minor release for `@codemonster-ru/vueforge-core`.

@@ -1,2 +1,2 @@
-export { createThemePreset } from "@codemonster-ru/vueforge-theme";
+export { createThemePreset } from "./utils";
 export { defaultThemePreset } from "./default-preset";

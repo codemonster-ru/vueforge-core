@@ -11,7 +11,10 @@ export type VfButtonVariant =
   | "contrast"
   | "ghost";
 export type VfControlSize = "sm" | "md" | "lg";
+export type VfHeadingSize = "sm" | "md" | "lg" | "xl";
 export type VfLinkTone = "default" | "muted";
+export type VfTextSize = "body" | "label" | "caption";
+export type VfTextTone = "default" | "muted";
 export type VfBadgeTone =
   | "neutral"
   | "primary"

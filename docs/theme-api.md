@@ -215,6 +215,42 @@ Stable public theme API for `1.x`:
 
 Lower-level engine helpers live in `@codemonster-ru/vueforge-theme`. `vueforge-core` does not need to re-export every runtime helper just because the engine supports it.
 
+## Documentation Pattern
+
+`vueforge-core` also provides a small content-navigation stack for docs-style pages:
+
+- `VfProse` for long-form content
+- `VfTableOfContents` for anchor navigation
+- `useTableOfContents()` for active-section tracking
+
+```ts
+const items = [
+  { id: "getting-started", label: "Getting started", level: 1 },
+  { id: "installation", label: "Installation", level: 2 },
+  { id: "theme-api", label: "Theme API", level: 2 },
+];
+
+const { activeId } = useTableOfContents({
+  items,
+  offset: 96,
+});
+```
+
+```vue
+<VfTableOfContents
+  label="On This Page"
+  aria-label="Page navigation"
+  :items="items"
+  :active-id="activeId"
+/>
+
+<VfProse>
+  <h2 id="getting-started">Getting started</h2>
+  <h3 id="installation">Installation</h3>
+  <h3 id="theme-api">Theme API</h3>
+</VfProse>
+```
+
 ## Current Boundary
 
 Current behavior:

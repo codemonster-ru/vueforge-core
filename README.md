@@ -8,7 +8,7 @@ Stable foundation layer for the VueForge design system.
 
 ## Current scope
 
-Version `1.3.x` focuses on:
+Version `1.7.x` focuses on:
 
 - Vue 3 library build with Vite
 - TypeScript declarations
@@ -16,6 +16,7 @@ Version `1.3.x` focuses on:
 - Theme provider and `useTheme`
 - CSS design tokens and theme variables
 - Built-in default theme preset powered by the shared `@codemonster-ru/vueforge-theme` engine
+- Typography primitives and content-navigation patterns for documentation-style pages
 
 ## Installation
 
@@ -120,6 +121,75 @@ VueForge now has two theme layers:
 
 This means `vueforge-core` is still the easiest way to consume the default VueForge design language, while higher-level packages can share the same engine without depending on `core` runtime helpers.
 
+## Documentation Pattern
+
+For long-form docs pages, the recommended pattern is:
+
+- `VfProse` for content typography
+- `VfTableOfContents` for section navigation
+- `useTableOfContents()` for active-section tracking
+
+```vue
+<script setup lang="ts">
+import {
+  VfProse,
+  VfTableOfContents,
+  useTableOfContents,
+} from "@codemonster-ru/vueforge-core";
+
+const items = [
+  { id: "getting-started", label: "Getting started", level: 1 },
+  { id: "installation", label: "Installation", level: 2 },
+  { id: "theme-api", label: "Theme API", level: 2 },
+];
+
+const { activeId } = useTableOfContents({
+  items,
+  offset: 96,
+});
+</script>
+
+<template>
+  <aside>
+    <VfTableOfContents
+      label="On This Page"
+      aria-label="Page navigation"
+      :items="items"
+      :active-id="activeId"
+    />
+  </aside>
+
+  <VfProse>
+    <h2 id="getting-started">Getting started</h2>
+    <p>Intro copy.</p>
+
+    <h3 id="installation">Installation</h3>
+    <p>Install the package.</p>
+
+    <h3 id="theme-api">Theme API</h3>
+    <p>Customize tokens and theme mode behavior.</p>
+  </VfProse>
+</template>
+```
+
+## Typography Usage
+
+Use the typography layers by content shape:
+
+- `VfHeading` for short-form UI headings such as page titles, section headers, and table headers
+- `VfText` for short supporting copy, labels, and captions
+- `VfProse` for long-form content such as documentation, guides, and rich text
+
+```vue
+<VfHeading as="h1" size="xl">Page Title</VfHeading>
+<VfText tone="muted">Short supporting copy.</VfText>
+
+<VfProse>
+  <h2>Getting started</h2>
+  <p>Long-form content goes here.</p>
+</VfProse>
+```
+
 ## Foundation Usage
 
 Use the full package when you need VueForge components, styles, and theme runtime together.
@@ -168,6 +238,7 @@ npm run test
 ## Visual Baseline
 
 - [Visual Baseline 1.0](./docs/visual-baseline.md)
+- [Typography API](./docs/typography-api.md)
 - [Theme API](./docs/theme-api.md)
 - [Foundation API](./docs/foundation-api.md)
 - [Overlay API](./docs/overlay-api.md)

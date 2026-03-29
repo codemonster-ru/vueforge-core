@@ -27,5 +27,8 @@
 .vf-tabs__tab,
 .vf-tabs__panel {
   box-sizing: border-box;
-  font: inherit;
+  font-family: var(--vf-font-family-base);
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
 }
