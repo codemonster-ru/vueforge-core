@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, useAttrs } from "vue";
+import { computed, useAttrs, useSlots } from "vue";
 import { VueIconify, icons } from "@codemonster-ru/vueiconify";
 import { useTheme } from "@/composables";
 import VfSwitch from "@/components/switch/VfSwitch.vue";
@@ -22,7 +22,9 @@ const props = withDefaults(defineProps<VfThemeSwitchProps>(), {
 });
 
 const attrs = useAttrs();
+const slots = useSlots();
 const { resolvedTheme, setTheme } = useTheme();
+const hasContent = computed(() => Boolean(props.label || slots.default));
 
 const checked = computed({
   get: () => resolvedTheme.value === "dark",
@@ -48,6 +50,8 @@ const checked = computed({
         />
       </slot>
     </template>
-    <slot v-if="$slots.default || props.label">{{ props.label }}</slot>
+    <template v-if="hasContent">
+      <slot>{{ props.label }}</slot>
+    </template>
   </VfSwitch>
 </template>

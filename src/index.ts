@@ -23,6 +23,7 @@ export {
   VfPopover,
   VfRadio,
   VfSwitch,
+  VfTableOfContents,
   VfThemeSwitch,
   VfTag,
   VfTabs,
@@ -36,6 +37,7 @@ export {
   useFloating,
   useFocusTrap,
   useId,
+  useTableOfContents,
   useTheme,
 } from "./composables";
 export {
@@ -59,6 +61,7 @@ export type {
   VfFeedbackTone,
   VfNavMenuItem,
   VfTabItem,
+  VfTableOfContentsItem,
   VfTooltipPlacement,
   VfLinkTone,
 } from "./types/components";

@@ -1,5 +1,28 @@
 # Changelog
 
+## 1.6.0 - 2026-03-29
+
+Minor release for `@codemonster-ru/vueforge-core`.
+
+### Added
+
+- New page navigation component:
+  - `VfTableOfContents`
+- New scrollspy composable:
+  - `useTableOfContents`
+
+### Changed
+
+- `VfTableOfContents` now has its own theme-token namespace while staying visually aligned with `VfNavMenu` by default
+- Table of contents navigation was polished for:
+  - indentation by level
+  - active item styling
+  - title sizing and spacing
+- Navigation rhythm was refined further across `VfNavMenu` and `VfTableOfContents`
+- Core demo now includes:
+  - `VfTableOfContents`
+  - deeper navigation examples for `VfNavMenu`
+
 ## 1.5.0 - 2026-03-29
 
 Minor release for `@codemonster-ru/vueforge-core`.

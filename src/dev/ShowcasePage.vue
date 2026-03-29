@@ -20,6 +20,7 @@ import {
   VfPopover,
   VfRadio,
   VfSwitch,
+  VfTableOfContents,
   VfThemeSwitch,
   VfTag,
   VfTabs,
@@ -27,7 +28,7 @@ import {
   VfTooltip,
   useTheme,
 } from "@/index";
-import type { VfNavMenuItem } from "@/index";
+import type { VfNavMenuItem, VfTableOfContentsItem } from "@/index";
 
 const { setTheme, toggleTheme } = useTheme();
 
@@ -44,6 +45,7 @@ const radioValue = ref("pro");
 const activeTab = ref("overview");
 const activeMenuValue = ref("button");
 const activeSimpleMenuValue = ref("button");
+const activeHeadingId = ref("theme-api");
 
 const releaseTabs = [
   { value: "overview", label: "Overview" },
@@ -59,6 +61,8 @@ const docsMenuItems: VfNavMenuItem[] = [
     children: [
       { value: "installation", label: "Installation" },
       { value: "quick-start", label: "Quick Start" },
+      { value: "migration", label: "Migration" },
+      { value: "faq", label: "FAQ" },
     ],
   },
   {
@@ -70,7 +74,11 @@ const docsMenuItems: VfNavMenuItem[] = [
         value: "actions-group",
         kind: "group",
         label: "Actions",
-        children: [{ value: "button", label: "Button" }],
+        children: [
+          { value: "button", label: "Button" },
+          { value: "icon-button", label: "Icon Button" },
+          { value: "link", label: "Link" },
+        ],
       },
       {
         value: "navigation-group",
@@ -81,17 +89,45 @@ const docsMenuItems: VfNavMenuItem[] = [
             value: "tabs",
             label: "Tabs",
             children: [
-              { value: "overview-tab", label: "Overview Tab" },
+              {
+                value: "overview-tab",
+                label: "Overview Tab",
+                children: [
+                  { value: "overview-anatomy", label: "Anatomy" },
+                  { value: "overview-accessibility", label: "Accessibility" },
+                ],
+              },
               { value: "status-tab", label: "Status Tab" },
+              { value: "usage-tab", label: "Usage Tab" },
             ],
           },
+          { value: "accordion", label: "Accordion" },
+          { value: "nav-menu", label: "Nav Menu" },
         ],
       },
       {
         value: "overlay-group",
         kind: "group",
         label: "Overlay",
-        children: [{ value: "dialog", label: "Dialog" }],
+        children: [
+          { value: "dialog", label: "Dialog" },
+          { value: "drawer", label: "Drawer" },
+          { value: "dropdown", label: "Dropdown" },
+          { value: "popover", label: "Popover" },
+          { value: "tooltip", label: "Tooltip" },
+        ],
+      },
+      {
+        value: "forms-group",
+        kind: "group",
+        label: "Forms",
+        children: [
+          { value: "input", label: "Input" },
+          { value: "textarea", label: "Textarea" },
+          { value: "checkbox", label: "Checkbox" },
+          { value: "radio", label: "Radio" },
+          { value: "switch", label: "Switch" },
+        ],
       },
     ],
   },
@@ -102,6 +138,8 @@ const docsMenuItems: VfNavMenuItem[] = [
     children: [
       { value: "tokens", label: "Tokens" },
       { value: "theme", label: "Theme" },
+      { value: "breakpoints", label: "Breakpoints" },
+      { value: "motion", label: "Motion" },
     ],
   },
 ];
@@ -113,6 +151,8 @@ const docsMenuSimpleItems: VfNavMenuItem[] = [
     children: [
       { value: "installation", label: "Installation" },
       { value: "quick-start", label: "Quick Start" },
+      { value: "migration", label: "Migration" },
+      { value: "faq", label: "FAQ" },
     ],
   },
   {
@@ -120,8 +160,27 @@ const docsMenuSimpleItems: VfNavMenuItem[] = [
     label: "Components",
     children: [
       { value: "button", label: "Button" },
-      { value: "tabs", label: "Tabs" },
+      { value: "icon-button", label: "Icon Button" },
+      {
+        value: "tabs",
+        label: "Tabs",
+        children: [
+          {
+            value: "overview-tab",
+            label: "Overview Tab",
+            children: [
+              { value: "overview-anatomy", label: "Anatomy" },
+              { value: "overview-accessibility", label: "Accessibility" },
+            ],
+          },
+          { value: "status-tab", label: "Status Tab" },
+        ],
+      },
+      { value: "accordion", label: "Accordion" },
       { value: "dialog", label: "Dialog" },
+      { value: "drawer", label: "Drawer" },
+      { value: "popover", label: "Popover" },
+      { value: "tooltip", label: "Tooltip" },
     ],
   },
   {
@@ -130,8 +189,20 @@ const docsMenuSimpleItems: VfNavMenuItem[] = [
     children: [
       { value: "tokens", label: "Tokens" },
       { value: "theme", label: "Theme" },
+      { value: "breakpoints", label: "Breakpoints" },
+      { value: "motion", label: "Motion" },
     ],
   },
+];
+
+const tocItems: VfTableOfContentsItem[] = [
+  { id: "getting-started", label: "Getting started", level: 1 },
+  { id: "installation", label: "Installation", level: 2 },
+  { id: "theme-api", label: "Theme API", level: 2 },
+  { id: "theme-provider", label: "Theme provider", level: 3 },
+  { id: "nav-menu", label: "Navigation", level: 2 },
+  { id: "table-of-contents", label: "Table of contents", level: 2 },
+  { id: "release-notes", label: "Release notes", level: 1 },
 ];
 
 const tabContent = computed<Record<string, string>>(() => ({
@@ -505,6 +576,16 @@ const tabContent = computed<Record<string, string>>(() => ({
                 />
               </div>
             </div>
+          </div>
+
+          <div class="demo-item">
+            <p class="demo-label">vf-table-of-contents</p>
+            <VfTableOfContents
+              label="On This Page"
+              aria-label="Page navigation"
+              :items="tocItems"
+              :active-id="activeHeadingId"
+            />
           </div>
         </div>
       </section>

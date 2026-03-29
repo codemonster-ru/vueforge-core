@@ -15,6 +15,7 @@ import {
   VfPanel,
   VfRadio,
   VfSwitch,
+  VfTableOfContents,
   VfThemeSwitch,
   VfTag,
   VfTextarea,
@@ -235,6 +236,32 @@ describe("core primitives", () => {
     await wrapper.get(".vf-switch__input").setValue(true);
 
     expect(document.documentElement.getAttribute("data-vf-theme")).toBe("dark");
+  });
+
+  it("renders table of contents items, hrefs, and active state", () => {
+    const wrapper = mount(VfTableOfContents, {
+      props: {
+        label: "On this page",
+        activeId: "theme-provider",
+        items: [
+          { id: "getting-started", label: "Getting started", level: 1 },
+          { id: "theme-api", label: "Theme API", level: 2 },
+          { id: "theme-provider", label: "Theme provider", level: 3 },
+        ],
+      },
+    });
+
+    const links = wrapper.findAll(".vf-table-of-contents__link");
+    const items = wrapper.findAll(".vf-table-of-contents__item");
+
+    expect(wrapper.find(".vf-table-of-contents__title").text()).toBe(
+      "On this page",
+    );
+    expect(links).toHaveLength(3);
+    expect(links[0]?.attributes("href")).toBe("#getting-started");
+    expect(links[2]?.attributes("aria-current")).toBe("location");
+    expect(links[2]?.classes()).toContain("vf-table-of-contents__link--active");
+    expect(items[2]?.attributes("style")).toContain("--vf-toc-level: 3");
   });
 
   it("emits radio updates and reflects checked state", async () => {

@@ -8,6 +8,29 @@ import { useDisclosure } from "./useDisclosure";
 import { useEscapeKey } from "./useEscapeKey";
 import { useFloating } from "./useFloating";
 import { useId } from "./useId";
+import { useTableOfContents } from "./useTableOfContents";
+
+const TableOfContentsProbe = defineComponent({
+  setup() {
+    const { activeId } = useTableOfContents({
+      items: [
+        { id: "section-1", label: "Section 1" },
+        { id: "section-2", label: "Section 2" },
+        { id: "section-3", label: "Section 3" },
+      ],
+      offset: 96,
+    });
+
+    return { activeId };
+  },
+  render() {
+    return h("div", [
+      h("section", { id: "section-1" }, "One"),
+      h("section", { id: "section-2" }, "Two"),
+      h("section", { id: "section-3" }, "Three"),
+    ]);
+  },
+});
 
 describe("interaction composables", () => {
   it("manages uncontrolled and controlled disclosure state", async () => {
@@ -144,5 +167,66 @@ describe("interaction composables", () => {
     expect(wrapper.vm.styles.left).toContain("px");
     expect(wrapper.vm.styles.top).toContain("px");
     expect(wrapper.vm.placement).toBeTypeOf("string");
+  });
+
+  it("tracks the active heading for table of contents items", async () => {
+    const wrapper = mount(TableOfContentsProbe, {
+      attachTo: document.body,
+    });
+
+    const sections = wrapper.findAll("section");
+    const positions = [40, 120, 420];
+
+    for (const [index, section] of sections.entries()) {
+      const top = positions[index] ?? 0;
+      (section.element as HTMLElement).getBoundingClientRect = () =>
+        ({
+          top,
+          bottom: top + 80,
+          left: 0,
+          right: 0,
+          width: 0,
+          height: 80,
+          x: 0,
+          y: top,
+          toJSON: () => ({}),
+        }) as DOMRect;
+    }
+
+    window.dispatchEvent(new Event("scroll"));
+    await wrapper.vm.$nextTick();
+
+    expect(wrapper.vm.activeId).toBe("section-1");
+
+    (sections[0]!.element as HTMLElement).getBoundingClientRect = () =>
+      ({
+        top: -120,
+        bottom: -40,
+        left: 0,
+        right: 0,
+        width: 0,
+        height: 80,
+        x: 0,
+        y: -120,
+        toJSON: () => ({}),
+      }) as DOMRect;
+
+    (sections[1]!.element as HTMLElement).getBoundingClientRect = () =>
+      ({
+        top: 24,
+        bottom: 104,
+        left: 0,
+        right: 0,
+        width: 0,
+        height: 80,
+        x: 0,
+        y: 24,
+        toJSON: () => ({}),
+      }) as DOMRect;
+
+    window.dispatchEvent(new Event("scroll"));
+    await wrapper.vm.$nextTick();
+
+    expect(wrapper.vm.activeId).toBe("section-2");
   });
 });

@@ -54,3 +54,10 @@ export interface VfNavMenuItem {
   disabled?: boolean;
   children?: VfNavMenuItem[];
 }
+
+export interface VfTableOfContentsItem {
+  id: string;
+  label: string;
+  level?: number;
+  href?: string;
+}
