@@ -100,7 +100,11 @@ const arrowData = computed(() => {
   };
 });
 
-const arrowClasses = computed(() => ["vf-tooltip__arrow"]);
+const arrowClasses = computed(() => [
+  "vf-tooltip__arrow",
+  floatingPlacement.value.startsWith("bottom") && "vf-tooltip__arrow--bottom",
+  floatingPlacement.value.startsWith("top") && "vf-tooltip__arrow--top",
+]);
 
 const arrowStyles = computed(() => ({
   left: `${arrowData.value.x}px`,

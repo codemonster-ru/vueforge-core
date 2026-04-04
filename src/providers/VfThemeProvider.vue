@@ -28,14 +28,6 @@ const config = inject(vueForgeConfigKey, null);
 const initialTheme = computed<VfThemeMode>(
   () => props.defaultTheme ?? config?.themeMode.defaultTheme ?? "system",
 );
-
-const mode = ref<VfThemeMode>(initialTheme.value);
-const systemTheme = ref<VfResolvedTheme>("light");
-const mediaQuery = ref<MediaQueryList | null>(null);
-
-const resolvedTheme = computed(() =>
-  resolveTheme(mode.value, systemTheme.value),
-);
 const storageKey = computed(
   () =>
     props.storageKey ??
@@ -50,20 +42,40 @@ const attribute = computed(
     config?.theme.options.attribute ??
     DEFAULT_ATTRIBUTE,
 );
-const hasMounted = ref(false);
-let themeTransitionTimeout: number | null = null;
 
-function readStoredTheme() {
+function getInitialMode(): VfThemeMode {
   if (typeof window === "undefined") {
-    return;
+    return initialTheme.value;
   }
 
   const storedTheme = window.localStorage.getItem(storageKey.value);
 
   if (isThemeMode(storedTheme)) {
-    mode.value = storedTheme;
+    return storedTheme;
   }
+
+  return initialTheme.value;
 }
+
+function getInitialSystemTheme(): VfResolvedTheme {
+  if (typeof window === "undefined") {
+    return "light";
+  }
+
+  return window.matchMedia("(prefers-color-scheme: dark)").matches
+    ? "dark"
+    : "light";
+}
+
+const mode = ref<VfThemeMode>(getInitialMode());
+const systemTheme = ref<VfResolvedTheme>(getInitialSystemTheme());
+const mediaQuery = ref<MediaQueryList | null>(null);
+
+const resolvedTheme = computed(() =>
+  resolveTheme(mode.value, systemTheme.value),
+);
+const hasMounted = ref(false);
+let themeTransitionTimeout: number | null = null;
 
 function clearThemeTransitionTimeout() {
   if (themeTransitionTimeout !== null) {
@@ -132,9 +144,6 @@ watch(
 );
 
 onMounted(() => {
-  mode.value = initialTheme.value;
-  readStoredTheme();
-
   mediaQuery.value = window.matchMedia("(prefers-color-scheme: dark)");
   handleSystemThemeChange();
   mediaQuery.value.addEventListener("change", handleSystemThemeChange);

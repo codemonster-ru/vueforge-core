@@ -26,6 +26,9 @@ const isExpanded = computed(() =>
   props.expandedValues.includes(props.item.value),
 );
 const isActive = computed(() => props.activeValue === props.item.value);
+const isAncestorActive = computed(
+  () => !isActive.value && hasDescendantValue(props.item, props.activeValue),
+);
 const isLink = computed(
   () => props.item.href !== undefined || props.item.to !== undefined,
 );
@@ -79,6 +82,20 @@ function onLeafClick(event?: MouseEvent) {
   }
 
   emit("select", props.item);
+}
+
+function hasDescendantValue(
+  item: VfNavMenuItem,
+  targetValue?: string,
+): boolean {
+  if (!targetValue || !item.children?.length) {
+    return false;
+  }
+
+  return item.children.some(
+    (child) =>
+      child.value === targetValue || hasDescendantValue(child, targetValue),
+  );
 }
 
 function setNestedListTransition(element: Element) {
@@ -154,6 +171,8 @@ function onNestedListAfterLeave(element: Element) {
       :class="[
         'vf-nav-menu__item',
         'vf-nav-menu__item--branch',
+        !item.leadingIcon && 'vf-nav-menu__item--icon-offset',
+        isAncestorActive && 'vf-nav-menu__item--ancestor-active',
         isExpanded && 'vf-nav-menu__item--expanded',
       ]"
       :style="{ '--vf-nav-menu-level': String(level) }"
@@ -186,7 +205,9 @@ function onNestedListAfterLeave(element: Element) {
       v-bind="linkProps"
       :class="[
         'vf-nav-menu__item',
+        !item.leadingIcon && 'vf-nav-menu__item--icon-offset',
         isActive && 'vf-nav-menu__item--active',
+        isAncestorActive && 'vf-nav-menu__item--ancestor-active',
         item.disabled && 'vf-nav-menu__item--disabled',
       ]"
       :style="{ '--vf-nav-menu-level': String(level) }"
@@ -209,7 +230,9 @@ function onNestedListAfterLeave(element: Element) {
       v-else
       :class="[
         'vf-nav-menu__item',
+        !item.leadingIcon && 'vf-nav-menu__item--icon-offset',
         isActive && 'vf-nav-menu__item--active',
+        isAncestorActive && 'vf-nav-menu__item--ancestor-active',
         item.disabled && 'vf-nav-menu__item--disabled',
       ]"
       :style="{ '--vf-nav-menu-level': String(level) }"

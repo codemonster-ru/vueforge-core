@@ -26,7 +26,7 @@ const attrs = useAttrs();
 const classes = computed(() =>
   cx(
     "vf-icon-button",
-    props.variant !== "ghost" && `vf-icon-button--${props.variant}`,
+    `vf-icon-button--${props.variant}`,
     props.size !== "md" && `vf-icon-button--${props.size}`,
   ),
 );

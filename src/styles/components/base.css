@@ -1,7 +1,12 @@
 .vf-button,
 .vf-link,
 .vf-input,
+.vf-select,
 .vf-card,
+.vf-table,
+.vf-table-wrap,
+.vf-menu-bar,
+.vf-menu-bar__item,
 .vf-textarea,
 .vf-panel,
 .vf-badge,
@@ -19,6 +24,8 @@
 .vf-accordion__trigger,
 .vf-nav-menu,
 .vf-nav-menu__item,
+.vf-table-of-contents,
+.vf-table-of-contents__link,
 .vf-tooltip,
 .vf-tooltip__trigger,
 .vf-tooltip__content,
@@ -27,7 +34,6 @@
 .vf-tabs__tab,
 .vf-tabs__panel {
   box-sizing: border-box;
-  font-family: var(--vf-font-family-base);
   font-size: inherit;
   font-weight: inherit;
   line-height: inherit;

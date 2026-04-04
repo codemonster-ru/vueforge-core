@@ -6,8 +6,9 @@
   padding: var(--vf-badge-padding);
   border-radius: var(--vf-badge-radius);
   font-size: var(--vf-badge-font-size);
-  font-weight: var(--vf-text-caption-font-weight);
+  font-weight: var(--vf-font-weight-regular);
   line-height: var(--vf-badge-line-height);
+  letter-spacing: 0.01em;
   white-space: nowrap;
   background: var(--vf-color-surface-muted);
   border: 1px solid var(--vf-color-border);
@@ -63,11 +64,16 @@
   padding: var(--vf-tag-padding);
   border: 1px solid var(--vf-color-border);
   border-radius: var(--vf-radius-control-tight);
-  background: var(--vf-color-surface);
+  background: color-mix(
+    in srgb,
+    var(--vf-color-surface) 94%,
+    var(--vf-color-surface-muted)
+  );
   color: var(--vf-color-text);
   font-size: var(--vf-tag-font-size);
-  font-weight: var(--vf-text-caption-font-weight);
+  font-weight: var(--vf-font-weight-regular);
   line-height: var(--vf-tag-line-height);
+  letter-spacing: 0.01em;
   white-space: nowrap;
 }
 
@@ -107,6 +113,7 @@
 }
 
 .vf-alert {
+  position: relative;
   display: grid;
   grid-template-columns: auto 1fr;
   gap: var(--vf-section-gap);
@@ -116,6 +123,8 @@
   background: var(--vf-alert-primary-soft);
   color: var(--vf-color-text);
   line-height: var(--vf-text-body-line-height);
+  overflow: hidden;
+  box-shadow: 0 1px 2px color-mix(in srgb, var(--vf-color-text) 4%, transparent);
 }
 
 .vf-alert--success {
@@ -154,6 +163,11 @@
   justify-content: center;
   align-self: start;
   color: var(--vf-color-primary);
+  width: 1.75rem;
+  height: 1.75rem;
+  border: 1px solid color-mix(in srgb, currentColor 18%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, currentColor 10%, var(--vf-color-surface));
 }
 
 .vf-alert--success .vf-alert__icon {
@@ -183,18 +197,20 @@
 .vf-alert__content {
   display: grid;
   gap: var(--vf-alert-content-gap);
+  align-content: start;
 }
 
 .vf-alert__title {
   margin: 0;
   font-size: var(--vf-alert-title-font-size);
-  font-weight: var(--vf-heading-font-weight);
-  line-height: var(--vf-line-height-tight);
+  font-weight: var(--vf-text-body-font-weight);
+  line-height: var(--vf-text-body-line-height);
 }
 
 .vf-alert__body {
-  color: var(--vf-color-muted);
+  color: color-mix(in srgb, var(--vf-color-muted) 92%, var(--vf-color-text));
   line-height: var(--vf-text-body-line-height);
+  max-width: 68ch;
 }
 
 .vf-divider {

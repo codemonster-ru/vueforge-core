@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, useAttrs, useSlots } from "vue";
+import { computed, onBeforeUnmount, ref, useAttrs, useSlots, watch } from "vue";
 import { VueIconify, icons } from "@codemonster-ru/vueiconify";
 import { useTheme } from "@/composables";
 import VfSwitch from "@/components/switch/VfSwitch.vue";
@@ -25,22 +25,50 @@ const attrs = useAttrs();
 const slots = useSlots();
 const { resolvedTheme, setTheme } = useTheme();
 const hasContent = computed(() => Boolean(props.label || slots.default));
+const checked = ref(false);
+let pendingThemeFrame: number | null = null;
 
-const checked = computed({
-  get: () => resolvedTheme.value === "dark",
-  set: (value: boolean) => {
-    setTheme(value ? "dark" : "light");
+watch(
+  resolvedTheme,
+  (value) => {
+    checked.value = value === "dark";
   },
+  { immediate: true },
+);
+
+function handleCheckedChange(value: boolean) {
+  checked.value = value;
+
+  if (typeof window === "undefined") {
+    setTheme(value ? "dark" : "light");
+    return;
+  }
+
+  if (pendingThemeFrame !== null) {
+    window.cancelAnimationFrame(pendingThemeFrame);
+  }
+
+  pendingThemeFrame = window.requestAnimationFrame(() => {
+    setTheme(value ? "dark" : "light");
+    pendingThemeFrame = null;
+  });
+}
+
+onBeforeUnmount(() => {
+  if (pendingThemeFrame !== null && typeof window !== "undefined") {
+    window.cancelAnimationFrame(pendingThemeFrame);
+  }
 });
 </script>
 
 <template>
   <VfSwitch
     v-bind="attrs"
-    v-model="checked"
+    :model-value="checked"
     :size="props.size"
     :disabled="props.disabled"
     :label="props.label"
+    @update:model-value="handleCheckedChange"
   >
     <template #thumb="{ checked: thumbChecked }">
       <slot name="thumb" :checked="thumbChecked">

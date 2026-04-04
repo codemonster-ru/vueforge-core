@@ -125,14 +125,12 @@ This means `vueforge-core` is still the easiest way to consume the default VueFo
 
 For long-form docs pages, the recommended pattern is:
 
-- `VfProse` for content typography
 - `VfTableOfContents` for section navigation
 - `useTableOfContents()` for active-section tracking
 
 ```vue
 <script setup lang="ts">
 import {
-  VfProse,
   VfTableOfContents,
   useTableOfContents,
 } from "@codemonster-ru/vueforge-core";
@@ -151,15 +149,17 @@ const { activeId } = useTableOfContents({
 
 <template>
   <aside>
+    <p>On This Page</p>
     <VfTableOfContents
-      label="On This Page"
       aria-label="Page navigation"
+      smooth
+      :scroll-offset="96"
       :items="items"
       :active-id="activeId"
     />
   </aside>
 
-  <VfProse>
+  <article>
     <h2 id="getting-started">Getting started</h2>
     <p>Intro copy.</p>
 
@@ -168,27 +168,35 @@ const { activeId } = useTableOfContents({
 
     <h3 id="theme-api">Theme API</h3>
     <p>Customize tokens and theme mode behavior.</p>
-  </VfProse>
+  </article>
 </template>
 ```
 
+If your page has a sticky header, handle anchor offset in the consuming app with
+`scroll-margin-top` on the target headings:
+
+```css
+.docs-content h2,
+.docs-content h3,
+.docs-content h4 {
+  scroll-margin-top: 5rem;
+}
+```
+
+Use `offset` in `useTableOfContents()` for active-section tracking,
+`scroll-margin-top` for native anchor scrolling, and the optional
+`smooth` / `scrollOffset` props on `VfTableOfContents` when you want the
+component itself to handle anchor scrolling.
+
 ## Typography Usage
 
-Use the typography layers by content shape:
+VueForge typography is now body-first:
 
-- `VfHeading` for short-form UI headings such as page titles, section headers, and table headers
-- `VfText` for short supporting copy, labels, and captions
-- `VfProse` for long-form content such as documentation, guides, and rich text
+- application `body` styles define the baseline font family and text rhythm
+- components inherit that baseline and size around it
+- theme tokens remain the source of truth for scale, weights, and semantic text roles
 
-```vue
-<VfHeading as="h1" size="xl">Page Title</VfHeading>
-<VfText tone="muted">Short supporting copy.</VfText>
-
-<VfProse>
-  <h2>Getting started</h2>
-  <p>Long-form content goes here.</p>
-</VfProse>
-```
+Use regular HTML elements in app code and docs content, and rely on tokens when you need CSS-level typography control.
 
 ## Foundation Usage
 
@@ -238,7 +246,6 @@ npm run test
 ## Visual Baseline
 
 - [Visual Baseline 1.0](./docs/visual-baseline.md)
-- [Typography API](./docs/typography-api.md)
 - [Theme API](./docs/theme-api.md)
 - [Foundation API](./docs/foundation-api.md)
 - [Overlay API](./docs/overlay-api.md)

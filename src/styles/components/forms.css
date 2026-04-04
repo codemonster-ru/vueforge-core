@@ -1,6 +1,11 @@
 .vf-input,
+.vf-select-wrap,
 .vf-textarea {
   width: 100%;
+}
+
+.vf-select-wrap {
+  position: relative;
 }
 
 .vf-checkbox,
@@ -23,10 +28,154 @@
   border-radius: var(--vf-radius-control);
   background: var(--vf-color-surface);
   color: var(--vf-color-text);
-  font-size: var(--vf-text-body-font-size);
+  font-size: var(--vf-control-font-size-md);
   font-weight: var(--vf-text-body-font-weight);
   line-height: var(--vf-text-body-line-height);
-  transition: border-color 0.18s ease;
+  transition:
+    background-color 0.18s ease,
+    border-color 0.18s ease,
+    color 0.18s ease;
+}
+
+.vf-select {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--vf-spacing-sm);
+  width: 100%;
+  min-height: var(--vf-control-height-md);
+  padding: var(--vf-field-padding-md);
+  border: 1px solid var(--vf-color-border);
+  border-radius: var(--vf-radius-control);
+  background: var(--vf-color-surface);
+  color: var(--vf-color-text);
+  font-size: var(--vf-control-font-size-md);
+  font-weight: var(--vf-text-body-font-weight);
+  line-height: var(--vf-text-body-line-height);
+  appearance: none;
+  cursor: pointer;
+  transition:
+    background-color 0.18s ease,
+    border-color 0.18s ease,
+    color 0.18s ease;
+  text-align: left;
+}
+
+.vf-select:hover:not(:disabled):not(.vf-select--invalid):not(:focus):not(
+    :focus-visible
+  ) {
+  border-color: var(--vf-color-primary-border-soft);
+}
+
+.vf-select:focus,
+.vf-select:focus-visible {
+  border-color: var(--vf-color-primary);
+}
+
+.vf-select:focus-visible {
+  outline: none;
+  border-radius: var(--vf-radius-control);
+  box-shadow: 0 0 0 var(--vf-focus-ring-width) var(--vf-color-focus-ring);
+}
+
+.vf-select--sm {
+  min-height: var(--vf-control-height-sm);
+  padding: var(--vf-field-padding-sm);
+  font-size: var(--vf-control-font-size-sm);
+}
+
+.vf-select--lg {
+  min-height: var(--vf-control-height-lg);
+  padding: var(--vf-field-padding-lg);
+  font-size: var(--vf-control-font-size-lg);
+}
+
+.vf-select--invalid {
+  border-color: var(--vf-color-danger);
+}
+
+.vf-select--invalid:hover:not(:disabled):not(:focus):not(:focus-visible) {
+  border-color: var(--vf-color-danger-border-soft);
+}
+
+.vf-select:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.vf-select--open {
+  border-color: var(--vf-color-primary);
+  box-shadow: 0 0 0 var(--vf-focus-ring-width) var(--vf-color-focus-ring);
+}
+
+.vf-select--placeholder .vf-select__value {
+  color: var(--vf-color-muted);
+}
+
+.vf-select__value {
+  min-width: 0;
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.vf-select__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 1rem;
+  height: 1rem;
+  color: var(--vf-color-muted);
+  pointer-events: none;
+  transition: transform var(--vf-motion-duration-normal)
+    var(--vf-motion-ease-standard);
+}
+
+.vf-select--open .vf-select__icon {
+  transform: rotate(180deg);
+}
+
+.vf-select__menu {
+  min-width: var(--vf-menu-min-width);
+  max-height: min(13rem, 38vh);
+  overflow: auto;
+  overscroll-behavior: contain;
+}
+
+.vf-select__option:hover:not(:disabled):not(.vf-select__option--selected):not(
+    [aria-selected="true"]
+  ) {
+  border-color: transparent;
+  background: var(--vf-selectable-hover-background);
+  color: var(--vf-selectable-hover-color);
+}
+
+.vf-select__option:focus-visible {
+  outline: none;
+  border-color: var(--vf-color-primary);
+  box-shadow: 0 0 0 var(--vf-focus-ring-width) var(--vf-color-focus-ring);
+  background: var(--vf-selectable-hover-background);
+  color: var(--vf-color-primary);
+}
+
+.vf-select__option--selected,
+.vf-select__option[aria-selected="true"] {
+  color: var(--vf-selectable-active-color);
+  font-weight: var(--vf-font-weight-medium);
+  border-color: transparent;
+  background: var(--vf-selectable-active-background);
+}
+
+.vf-select__option--selected:hover,
+.vf-select__option--selected:focus-visible,
+.vf-select__option[aria-selected="true"]:hover,
+.vf-select__option[aria-selected="true"]:focus-visible {
+  color: var(--vf-selectable-active-color);
+  font-weight: var(--vf-font-weight-medium);
+  border-color: transparent;
+  background: var(--vf-selectable-active-background);
 }
 
 .vf-input::placeholder {
@@ -60,6 +209,7 @@
 .vf-input--lg {
   min-height: var(--vf-control-height-lg);
   padding: var(--vf-field-padding-lg);
+  font-size: var(--vf-control-font-size-lg);
 }
 
 .vf-input--invalid {
@@ -67,7 +217,7 @@
 }
 
 .vf-input--invalid:hover:not(:disabled):not(:focus):not(:focus-visible) {
-  border-color: var(--vf-color-primary-border-soft);
+  border-color: var(--vf-color-danger-border-soft);
 }
 
 .vf-textarea {
@@ -77,11 +227,14 @@
   border-radius: var(--vf-radius-control);
   background: var(--vf-color-surface);
   color: var(--vf-color-text);
-  font-size: var(--vf-text-body-font-size);
+  font-size: var(--vf-control-font-size-md);
   font-weight: var(--vf-text-body-font-weight);
   line-height: var(--vf-text-body-line-height);
   resize: vertical;
-  transition: border-color 0.18s ease;
+  transition:
+    background-color 0.18s ease,
+    border-color 0.18s ease,
+    color 0.18s ease;
 }
 
 .vf-textarea::placeholder {
@@ -108,6 +261,7 @@
 .vf-textarea--lg {
   min-height: var(--vf-textarea-min-height-lg);
   padding: var(--vf-field-padding-lg);
+  font-size: var(--vf-control-font-size-lg);
 }
 
 .vf-textarea--invalid {
@@ -115,10 +269,11 @@
 }
 
 .vf-textarea--invalid:hover:not(:disabled):not(:focus):not(:focus-visible) {
-  border-color: var(--vf-color-primary-border-soft);
+  border-color: var(--vf-color-danger-border-soft);
 }
 
 .vf-input:disabled,
+.vf-select:disabled,
 .vf-textarea:disabled {
   opacity: 0.65;
   cursor: not-allowed;
@@ -170,15 +325,16 @@
 .vf-radio__content {
   min-width: 0;
   color: currentColor;
-  font-size: var(--vf-text-label-font-size);
-  font-weight: var(--vf-text-label-font-weight);
-  line-height: var(--vf-text-label-line-height);
+  font-size: var(--vf-control-font-size-md);
+  font-weight: var(--vf-text-body-font-weight);
+  line-height: var(--vf-text-body-line-height);
 }
 
 .vf-checkbox__control {
   width: var(--vf-checkbox-size-md);
   height: var(--vf-checkbox-size-md);
   border-radius: calc(var(--vf-radius-control-tight) - 0.0625rem);
+  background: var(--vf-radio-control-background);
 }
 
 .vf-checkbox__mark {
@@ -226,7 +382,7 @@
 .vf-checkbox--invalid:hover:not(.vf-checkbox--disabled)
   .vf-checkbox__input:not(:checked)
   + .vf-checkbox__control {
-  border-color: var(--vf-color-primary-border-soft);
+  border-color: var(--vf-color-danger-border-soft);
 }
 
 .vf-checkbox--sm .vf-checkbox__control {
@@ -241,6 +397,10 @@
 .vf-checkbox--lg .vf-checkbox__control {
   width: var(--vf-checkbox-size-lg);
   height: var(--vf-checkbox-size-lg);
+}
+
+.vf-checkbox--lg .vf-checkbox__content {
+  font-size: var(--vf-control-font-size-lg);
 }
 
 .vf-radio__control {
@@ -290,7 +450,7 @@
 .vf-radio--invalid:hover:not(.vf-radio--disabled)
   .vf-radio__input:not(:checked)
   + .vf-radio__control {
-  border-color: var(--vf-radio-hover-border-color);
+  border-color: var(--vf-color-danger-border-soft);
 }
 
 .vf-radio--sm .vf-radio__control {
@@ -305,6 +465,10 @@
 .vf-radio--lg .vf-radio__control {
   width: var(--vf-checkbox-size-lg);
   height: var(--vf-checkbox-size-lg);
+}
+
+.vf-radio--lg .vf-radio__content {
+  font-size: var(--vf-control-font-size-lg);
 }
 
 .vf-switch__control {
@@ -342,12 +506,33 @@
   height: var(--vf-switch-thumb-icon-size);
 }
 
-.vf-switch__input:checked + .vf-switch__control {
+:root.vf-theme-transitioning .vf-switch__control {
+  transition:
+    background-color var(--vf-motion-duration-normal)
+      var(--vf-motion-ease-standard),
+    border-color var(--vf-motion-duration-normal) var(--vf-motion-ease-standard),
+    box-shadow var(--vf-motion-duration-normal) var(--vf-motion-ease-standard),
+    color var(--vf-motion-duration-normal) var(--vf-motion-ease-standard),
+    transform var(--vf-motion-duration-normal) var(--vf-motion-ease-standard);
+}
+
+:root.vf-theme-transitioning .vf-switch__thumb {
+  transition:
+    transform var(--vf-motion-duration-normal) var(--vf-motion-ease-standard),
+    background-color var(--vf-motion-duration-normal)
+      var(--vf-motion-ease-standard),
+    border-color var(--vf-motion-duration-normal) var(--vf-motion-ease-standard),
+    box-shadow var(--vf-motion-duration-normal) var(--vf-motion-ease-standard);
+}
+
+.vf-switch__input:checked + .vf-switch__control,
+.vf-switch--checked .vf-switch__control {
   border-color: var(--vf-color-primary);
   background: var(--vf-switch-track-checked-background);
 }
 
-.vf-switch__input:checked + .vf-switch__control .vf-switch__thumb {
+.vf-switch__input:checked + .vf-switch__control .vf-switch__thumb,
+.vf-switch--checked .vf-switch__thumb {
   transform: translateX(
     calc(
       var(--vf-switch-width-md) - var(--vf-switch-thumb-size-md) -
@@ -360,12 +545,15 @@
 }
 
 .vf-switch:hover:not(.vf-switch--disabled) .vf-switch__control {
+  border-color: var(--vf-color-primary-border-soft);
   background: var(--vf-switch-track-hover-background);
 }
 
 .vf-switch:hover:not(.vf-switch--disabled)
   .vf-switch__input:checked
-  + .vf-switch__control {
+  + .vf-switch__control,
+.vf-switch--checked:hover:not(.vf-switch--disabled) .vf-switch__control {
+  border-color: var(--vf-color-primary);
   background: var(--vf-switch-track-checked-hover-background);
 }
 
@@ -389,7 +577,8 @@
 .vf-switch--sm
   .vf-switch__input:checked
   + .vf-switch__control
-  .vf-switch__thumb {
+  .vf-switch__thumb,
+.vf-switch--sm.vf-switch--checked .vf-switch__thumb {
   transform: translateX(
     calc(
       var(--vf-switch-width-sm) - var(--vf-switch-thumb-size-sm) -
@@ -416,11 +605,16 @@
 .vf-switch--lg
   .vf-switch__input:checked
   + .vf-switch__control
-  .vf-switch__thumb {
+  .vf-switch__thumb,
+.vf-switch--lg.vf-switch--checked .vf-switch__thumb {
   transform: translateX(
     calc(
       var(--vf-switch-width-lg) - var(--vf-switch-thumb-size-lg) -
         (var(--vf-switch-thumb-inset) * 2)
     )
   );
+}
+
+.vf-switch--lg .vf-switch__content {
+  font-size: var(--vf-control-font-size-lg);
 }

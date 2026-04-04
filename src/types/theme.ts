@@ -15,7 +15,12 @@ export type VfResolvedTheme = BaseVfResolvedTheme;
 export type VfThemeMode = BaseVfThemeMode;
 export type { VfResolvedThemePresetOptions, VfThemePresetOptions };
 
-export interface VfThemeTokens extends BaseVfThemeTokens {
+type BaseVfThemeTokensWithoutLegacyTypography = Omit<
+  BaseVfThemeTokens,
+  "textLineHeight" | "headingLineHeight" | "tabsLineHeight"
+>;
+
+export interface VfThemeTokens extends BaseVfThemeTokensWithoutLegacyTypography {
   fontFamilyBase: string;
   fontFamilyHeading: string;
   fontFamilyMono: string;
@@ -33,6 +38,10 @@ export interface VfThemeTokens extends BaseVfThemeTokens {
   lineHeightTight: string;
   lineHeightNormal: string;
   lineHeightRelaxed: string;
+  selectableHoverColor: string;
+  selectableHoverBackground: string;
+  selectableActiveColor: string;
+  selectableActiveBackground: string;
   textBodyFontSize: string;
   textBodyLineHeight: string;
   textBodyFontWeight: string;
@@ -49,15 +58,14 @@ export interface VfThemeTokens extends BaseVfThemeTokens {
   headingFontWeight: string;
   buttonSecondaryHoverBackground: string;
   buttonSecondaryHoverBorderColor: string;
+  buttonSecondaryActiveBackground: string;
+  buttonSecondaryActiveBorderColor: string;
   buttonGhostHoverBackground: string;
   buttonGhostHoverBorderColor: string;
-  buttonPrimaryHoverFilter: string;
-  buttonSuccessHoverFilter: string;
-  buttonInfoHoverFilter: string;
-  buttonWarnHoverFilter: string;
-  buttonHelpHoverFilter: string;
-  buttonDangerHoverFilter: string;
-  buttonContrastHoverFilter: string;
+  buttonGhostActiveBackground: string;
+  buttonGhostActiveBorderColor: string;
+  buttonSolidHoverFilter: string;
+  buttonSolidActiveFilter: string;
   radioControlBackground: string;
   radioHoverBorderColor: string;
   switchTrackBackground: string;

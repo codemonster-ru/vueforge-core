@@ -5,6 +5,7 @@ import {
   VfAccordion,
   VfAlert,
   VfBadge,
+  VfBreadcrumbs,
   VfButton,
   VfCard,
   VfCheckbox,
@@ -12,18 +13,18 @@ import {
   VfDialog,
   VfDivider,
   VfDropdown,
-  VfHeading,
   VfIconButton,
   VfInput,
   VfLink,
+  VfMenuBar,
   VfNavMenu,
   VfPanel,
   VfPopover,
-  VfProse,
   VfRadio,
+  VfSelect,
   VfSwitch,
+  VfTable,
   VfTableOfContents,
-  VfText,
   VfThemeSwitch,
   VfTag,
   VfTabs,
@@ -32,9 +33,13 @@ import {
   useTableOfContents,
   useTheme,
 } from "@/index";
-import type { VfNavMenuItem, VfTableOfContentsItem } from "@/index";
+import type {
+  VfBreadcrumbItem,
+  VfNavMenuItem,
+  VfTableOfContentsItem,
+} from "@/index";
 
-const { setTheme, toggleTheme } = useTheme();
+const { theme, resolvedTheme, setTheme, toggleTheme } = useTheme();
 
 const dialogOpen = ref(false);
 const drawerOpen = ref(false);
@@ -46,7 +51,9 @@ const checkboxValue = ref(true);
 const switchValue = ref(true);
 const iconSwitchValue = ref(true);
 const radioValue = ref("pro");
+const selectValue = ref("");
 const activeTab = ref("overview");
+const activeAccordion = ref<string | null>("section-one");
 const activeMenuValue = ref("button");
 const activeSimpleMenuValue = ref("button");
 
@@ -54,6 +61,24 @@ const releaseTabs = [
   { value: "overview", label: "Overview" },
   { value: "api", label: "API" },
   { value: "status", label: "Status" },
+];
+
+const selectOptions = [
+  { value: "starter", label: "Starter" },
+  { value: "pro", label: "Pro" },
+  { value: "enterprise", label: "Enterprise" },
+  { value: "team", label: "Team" },
+  { value: "business", label: "Business" },
+  { value: "growth", label: "Growth" },
+  { value: "scale", label: "Scale" },
+  { value: "plus", label: "Plus" },
+  { value: "advanced", label: "Advanced" },
+  { value: "premium", label: "Premium" },
+  { value: "ultimate", label: "Ultimate" },
+  { value: "startup", label: "Startup" },
+  { value: "agency", label: "Agency" },
+  { value: "platform", label: "Platform" },
+  { value: "custom", label: "Custom" },
 ];
 
 const docsMenuItems: VfNavMenuItem[] = [
@@ -198,14 +223,67 @@ const docsMenuSimpleItems: VfNavMenuItem[] = [
   },
 ];
 
+const topMenuItems: VfNavMenuItem[] = [
+  {
+    value: "products",
+    label: "Products",
+    children: [
+      {
+        value: "foundations",
+        label: "Foundations",
+        children: [
+          { value: "tokens", label: "Tokens" },
+          { value: "theme", label: "Theme" },
+          { value: "motion", label: "Motion" },
+        ],
+      },
+      {
+        value: "components-suite",
+        label: "Components",
+        children: [
+          { value: "actions", label: "Actions" },
+          { value: "forms-menu", label: "Forms" },
+          { value: "navigation-menu", label: "Navigation" },
+        ],
+      },
+    ],
+  },
+  {
+    value: "docs-top",
+    label: "Docs",
+    children: [
+      { value: "getting-started-top", label: "Getting Started" },
+      { value: "api-top", label: "API Reference" },
+      {
+        value: "guides-top",
+        label: "Guides",
+        children: [
+          { value: "theming-guide", label: "Theming" },
+          { value: "composition-guide", label: "Composition" },
+        ],
+      },
+    ],
+  },
+  { value: "pricing", label: "Pricing" },
+  { value: "about", label: "About" },
+];
+
+const breadcrumbItems: VfBreadcrumbItem[] = [
+  { label: "Docs", href: "#demo-navigation" },
+  { label: "Components", href: "#demo-navigation" },
+  { label: "Navigation", href: "#demo-navigation" },
+  { label: "Menu Bar", current: true },
+];
+
 const tocItems: VfTableOfContentsItem[] = [
-  { id: "getting-started", label: "Getting started", level: 1 },
-  { id: "installation", label: "Installation", level: 2 },
-  { id: "theme-api", label: "Theme API", level: 2 },
-  { id: "theme-provider", label: "Theme provider", level: 3 },
-  { id: "nav-menu", label: "Navigation", level: 2 },
-  { id: "table-of-contents", label: "Table of contents", level: 2 },
-  { id: "release-notes", label: "Release notes", level: 1 },
+  { id: "demo-theme", label: "Theme", level: 1 },
+  { id: "demo-actions", label: "Actions and Links", level: 1 },
+  { id: "demo-overlay", label: "Overlay", level: 1 },
+  { id: "demo-surfaces", label: "Surface Components", level: 1 },
+  { id: "demo-feedback", label: "Feedback", level: 1 },
+  { id: "demo-forms", label: "Forms", level: 1 },
+  { id: "demo-navigation", label: "Navigation and Disclosure", level: 1 },
+  { id: "demo-dialog", label: "Dialog", level: 1 },
 ];
 
 const { activeId: activeHeadingId } = useTableOfContents({
@@ -223,87 +301,52 @@ const tabContent = computed<Record<string, string>>(() => ({
 <template>
   <div class="demo-page">
     <div class="demo-container">
-      <header class="demo-header">
-        <p class="demo-kicker">VueForge Core Demo</p>
-        <h1>Package Components</h1>
-      </header>
-
       <section class="demo-block">
         <div class="demo-block__header">
-          <h2>Typography</h2>
-        </div>
-
-        <div class="demo-grid demo-grid--three">
-          <div class="demo-item">
-            <p class="demo-label">vf-heading, vf-text</p>
-            <div class="demo-stack">
-              <VfHeading as="h1" size="xl">Page Title</VfHeading>
-              <VfText tone="muted">
-                Semantic heading and text primitives for short-form UI content.
-              </VfText>
-              <VfHeading size="sm">Section Title</VfHeading>
-              <VfText size="label">Form Section Label</VfText>
-              <VfText as="small" size="caption" tone="muted">
-                Caption and metadata text.
-              </VfText>
-            </div>
-          </div>
-
-          <div class="demo-item">
-            <p class="demo-label">vf-prose</p>
-            <VfProse>
-              <h2 id="getting-started">Getting started</h2>
-              <p>
-                VueForge Core now ships with a small prose layer for guides,
-                docs, and other long-form content.
-              </p>
-              <h3 id="installation">Installation</h3>
-              <p>
-                Use <code>@codemonster-ru/vueforge-core</code> together with
-                generated theme tokens for a consistent foundation.
-              </p>
-              <ul>
-                <li>Semantic typography roles</li>
-                <li>Predictable spacing for content</li>
-                <li>Reusable heading rhythm</li>
-              </ul>
-              <blockquote>
-                Keep content typography opt-in, not global.
-              </blockquote>
-            </VfProse>
-          </div>
-
-        </div>
-      </section>
-
-      <section class="demo-block">
-        <div class="demo-block__header">
-          <h2>Theme</h2>
+          <h2 id="demo-theme">Theme</h2>
         </div>
 
         <div class="demo-grid demo-grid--three">
           <div class="demo-example">
             <p class="demo-label">vf-theme-provider</p>
-            <div class="demo-inline">
-              <VfButton size="sm" variant="secondary" @click="setTheme('light')"
-                >Light</VfButton
-              >
-              <VfButton size="sm" variant="secondary" @click="setTheme('dark')"
-                >Dark</VfButton
-              >
-              <VfButton
-                size="sm"
-                variant="secondary"
-                @click="setTheme('system')"
-                >System</VfButton
-              >
-              <VfButton size="sm" @click="toggleTheme">Toggle</VfButton>
+            <div class="demo-stack">
+              <div class="demo-inline">
+                <VfButton
+                  size="sm"
+                  variant="secondary"
+                  @click="setTheme('light')"
+                  >Light</VfButton
+                >
+                <VfButton
+                  size="sm"
+                  variant="secondary"
+                  @click="setTheme('dark')"
+                  >Dark</VfButton
+                >
+                <VfButton
+                  size="sm"
+                  variant="secondary"
+                  @click="setTheme('system')"
+                  >System</VfButton
+                >
+                <VfButton size="sm" @click="toggleTheme">Toggle</VfButton>
+              </div>
+              <div class="demo-inline">
+                <VfTag tone="primary">mode: {{ theme }}</VfTag>
+                <VfTag tone="contrast">resolved: {{ resolvedTheme }}</VfTag>
+              </div>
             </div>
           </div>
           <div class="demo-example">
             <p class="demo-label">vf-theme-switch</p>
-            <div class="demo-inline">
-              <VfThemeSwitch />
+            <div class="demo-stack">
+              <div class="demo-inline">
+                <VfThemeSwitch />
+              </div>
+              <p class="demo-text">
+                The switch reflects the resolved theme and turns system mode
+                into an explicit light or dark choice after interaction.
+              </p>
             </div>
           </div>
         </div>
@@ -311,7 +354,7 @@ const tabContent = computed<Record<string, string>>(() => ({
 
       <section class="demo-block">
         <div class="demo-block__header">
-          <h2>Actions and Links</h2>
+          <h2 id="demo-actions">Actions and Links</h2>
         </div>
 
         <div class="demo-grid demo-grid--three">
@@ -390,7 +433,15 @@ const tabContent = computed<Record<string, string>>(() => ({
           <div class="demo-example">
             <p class="demo-label">vf-link</p>
             <div class="demo-stack">
-              <VfLink href="https://example.com" target="_blank" underline>
+              <VfLink href="https://example.com">Quiet Product Link</VfLink>
+              <VfLink href="https://example.com" underline="hover">
+                Hover Underline Link
+              </VfLink>
+              <VfLink
+                href="https://example.com"
+                target="_blank"
+                underline="always"
+              >
                 External Docs Link
               </VfLink>
               <p class="demo-text">
@@ -404,7 +455,7 @@ const tabContent = computed<Record<string, string>>(() => ({
 
       <section class="demo-block">
         <div class="demo-block__header">
-          <h2>Overlay</h2>
+          <h2 id="demo-overlay">Overlay</h2>
         </div>
 
         <div class="demo-grid demo-grid--three">
@@ -459,7 +510,7 @@ const tabContent = computed<Record<string, string>>(() => ({
 
       <section class="demo-block">
         <div class="demo-block__header">
-          <h2>Surface Components</h2>
+          <h2 id="demo-surfaces">Surface Components</h2>
         </div>
 
         <div class="demo-grid demo-grid--three">
@@ -482,12 +533,94 @@ const tabContent = computed<Record<string, string>>(() => ({
               <p>Panel content.</p>
             </VfPanel>
           </div>
+
+          <div class="demo-item">
+            <p class="demo-label">vf-divider</p>
+            <div class="demo-stack">
+              <VfDivider />
+              <div class="demo-inline">
+                <span class="demo-text">Start</span>
+                <VfDivider orientation="vertical" />
+                <span class="demo-text">Middle</span>
+                <VfDivider orientation="vertical" />
+                <span class="demo-text">End</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="demo-item">
+            <p class="demo-label">vf-table</p>
+            <VfTable>
+              <template #header>
+                <tr>
+                  <th>Prop</th>
+                  <th>Type</th>
+                  <th>Default</th>
+                </tr>
+              </template>
+
+              <tr>
+                <td>size</td>
+                <td><code>"sm" | "md" | "lg"</code></td>
+                <td><code>"md"</code></td>
+              </tr>
+              <tr>
+                <td>disabled</td>
+                <td><code>boolean</code></td>
+                <td><code>false</code></td>
+              </tr>
+              <tr>
+                <td>invalid</td>
+                <td><code>boolean</code></td>
+                <td><code>false</code></td>
+              </tr>
+              <tr>
+                <td>placeholder</td>
+                <td><code>string</code></td>
+                <td><code>undefined</code></td>
+              </tr>
+            </VfTable>
+          </div>
+
+          <div class="demo-item">
+            <p class="demo-label">vf-table striped</p>
+            <VfTable striped>
+              <template #header>
+                <tr>
+                  <th>Prop</th>
+                  <th>Type</th>
+                  <th>Default</th>
+                </tr>
+              </template>
+
+              <tr>
+                <td>size</td>
+                <td><code>"sm" | "md" | "lg"</code></td>
+                <td><code>"md"</code></td>
+              </tr>
+              <tr>
+                <td>disabled</td>
+                <td><code>boolean</code></td>
+                <td><code>false</code></td>
+              </tr>
+              <tr>
+                <td>invalid</td>
+                <td><code>boolean</code></td>
+                <td><code>false</code></td>
+              </tr>
+              <tr>
+                <td>placeholder</td>
+                <td><code>string</code></td>
+                <td><code>undefined</code></td>
+              </tr>
+            </VfTable>
+          </div>
         </div>
       </section>
 
       <section class="demo-block">
         <div class="demo-block__header">
-          <h2>Feedback</h2>
+          <h2 id="demo-feedback">Feedback</h2>
         </div>
 
         <div class="demo-grid demo-grid--two">
@@ -537,14 +670,19 @@ const tabContent = computed<Record<string, string>>(() => ({
 
       <section class="demo-block">
         <div class="demo-block__header">
-          <h2>Forms</h2>
+          <h2 id="demo-forms">Forms</h2>
         </div>
 
         <div class="demo-grid demo-grid--three">
           <div class="demo-item">
-            <p class="demo-label">vf-input</p>
+            <p class="demo-label">vf-input, vf-select</p>
             <div class="demo-stack">
               <VfInput v-model="inputValue" placeholder="Project name" />
+              <VfSelect
+                v-model="selectValue"
+                placeholder="Choose a plan"
+                :options="selectOptions"
+              />
               <VfInput invalid placeholder="Invalid input" />
             </div>
           </div>
@@ -588,10 +726,15 @@ const tabContent = computed<Record<string, string>>(() => ({
 
       <section class="demo-block">
         <div class="demo-block__header">
-          <h2>Navigation and Disclosure</h2>
+          <h2 id="demo-navigation">Navigation and Disclosure</h2>
         </div>
 
         <div class="demo-grid demo-grid--three">
+          <div class="demo-item">
+            <p class="demo-label">vf-breadcrumbs</p>
+            <VfBreadcrumbs :items="breadcrumbItems" />
+          </div>
+
           <div class="demo-item">
             <p class="demo-label">vf-tabs</p>
             <VfTabs v-model="activeTab" :items="releaseTabs">
@@ -604,11 +747,34 @@ const tabContent = computed<Record<string, string>>(() => ({
           <div class="demo-item">
             <p class="demo-label">vf-accordion</p>
             <div class="demo-stack">
-              <VfAccordion title="Section One" default-open
+              <VfAccordion
+                title="Section One"
+                :open="activeAccordion === 'section-one'"
+                @update:open="
+                  (open) => {
+                    activeAccordion = open ? 'section-one' : null;
+                  }
+                "
                 >Accordion content.</VfAccordion
               >
-              <VfAccordion title="Section Two">Accordion content.</VfAccordion>
-              <VfAccordion title="Section Three"
+              <VfAccordion
+                title="Section Two"
+                :open="activeAccordion === 'section-two'"
+                @update:open="
+                  (open) => {
+                    activeAccordion = open ? 'section-two' : null;
+                  }
+                "
+                >Accordion content.</VfAccordion
+              >
+              <VfAccordion
+                title="Section Three"
+                :open="activeAccordion === 'section-three'"
+                @update:open="
+                  (open) => {
+                    activeAccordion = open ? 'section-three' : null;
+                  }
+                "
                 >Accordion content.</VfAccordion
               >
             </div>
@@ -635,10 +801,16 @@ const tabContent = computed<Record<string, string>>(() => ({
           </div>
 
           <div class="demo-item">
+            <p class="demo-label">vf-menu-bar</p>
+            <VfMenuBar :items="topMenuItems" />
+          </div>
+
+          <div class="demo-item">
             <p class="demo-label">vf-table-of-contents</p>
             <VfTableOfContents
-              label="On This Page"
               aria-label="Page navigation"
+              smooth
+              :scroll-offset="32"
               :items="tocItems"
               :active-id="activeHeadingId"
             />
@@ -648,7 +820,7 @@ const tabContent = computed<Record<string, string>>(() => ({
 
       <section class="demo-block">
         <div class="demo-block__header">
-          <h2>Dialog</h2>
+          <h2 id="demo-dialog">Dialog</h2>
         </div>
 
         <div class="demo-grid demo-grid--two">

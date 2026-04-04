@@ -50,7 +50,6 @@
 ## Docs
 
 - Review [README.md](../README.md)
-- Review [typography-api.md](./typography-api.md)
 - Review [foundation-api.md](./foundation-api.md)
 - Review [theme-api.md](./theme-api.md)
 - Review [visual-baseline.md](./visual-baseline.md)

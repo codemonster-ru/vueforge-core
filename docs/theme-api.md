@@ -217,9 +217,9 @@ Lower-level engine helpers live in `@codemonster-ru/vueforge-theme`. `vueforge-c
 
 ## Documentation Pattern
 
-`vueforge-core` also provides a small content-navigation stack for docs-style pages:
+`vueforge-core` also provides a small docs-navigation stack for docs-style pages:
 
-- `VfProse` for long-form content
+- semantic HTML content
 - `VfTableOfContents` for anchor navigation
 - `useTableOfContents()` for active-section tracking
 
@@ -237,18 +237,18 @@ const { activeId } = useTableOfContents({
 ```
 
 ```vue
+<p>On This Page</p>
 <VfTableOfContents
-  label="On This Page"
   aria-label="Page navigation"
   :items="items"
   :active-id="activeId"
 />
 
-<VfProse>
+<article>
   <h2 id="getting-started">Getting started</h2>
   <h3 id="installation">Installation</h3>
   <h3 id="theme-api">Theme API</h3>
-</VfProse>
+</article>
 ```
 
 ## Current Boundary

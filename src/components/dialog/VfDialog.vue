@@ -244,6 +244,7 @@ onBeforeUnmount(() => {
                 :icon="icons.xmark"
                 aria-label="Close dialog"
                 size="sm"
+                variant="ghost"
                 @click="close"
               />
             </div>

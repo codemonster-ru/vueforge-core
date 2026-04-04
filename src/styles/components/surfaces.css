@@ -18,9 +18,8 @@
 .vf-card__title {
   margin: 0;
   font-size: var(--vf-card-title-font-size);
-  font-family: var(--vf-font-family-heading);
-  font-weight: var(--vf-heading-font-weight);
-  line-height: var(--vf-line-height-tight);
+  font-weight: var(--vf-text-body-font-weight);
+  line-height: var(--vf-text-body-line-height);
 }
 
 .vf-card__body {
@@ -47,7 +46,91 @@
 .vf-panel__title {
   margin: 0;
   font-size: var(--vf-panel-title-font-size);
-  font-family: var(--vf-font-family-heading);
-  font-weight: var(--vf-heading-font-weight);
-  line-height: var(--vf-line-height-tight);
+  font-weight: var(--vf-text-body-font-weight);
+  line-height: var(--vf-text-body-line-height);
+}
+
+.vf-table-wrap {
+  display: flex;
+  width: 100%;
+  min-width: 0;
+  border: 1px solid var(--vf-color-border);
+  border-radius: var(--vf-radius-surface);
+  background: var(--vf-color-surface);
+  color: var(--vf-color-text);
+  overflow: hidden;
+}
+
+.vf-table-scroll {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.vf-table {
+  width: 100%;
+  min-width: 36rem;
+  border-collapse: separate;
+  border-spacing: 0;
+  color: var(--vf-color-text);
+  font-size: var(--vf-text-body-font-size);
+  font-weight: var(--vf-text-body-font-weight);
+  line-height: var(--vf-text-body-line-height);
+}
+
+.vf-table__caption {
+  padding: 0.875rem 1rem 0;
+  text-align: left;
+  color: var(--vf-color-muted);
+}
+
+.vf-table :where(th, td) {
+  padding: 0.625rem 0.875rem;
+  text-align: left;
+  vertical-align: top;
+}
+
+.vf-table :where(th) {
+  font-weight: var(--vf-font-weight-medium);
+  color: var(--vf-color-text);
+  background: var(--vf-color-surface-muted);
+}
+
+.vf-table :where(td) {
+  color: var(--vf-color-text);
+}
+
+.vf-table thead th {
+  border-bottom: 1px solid var(--vf-color-border);
+}
+
+.vf-table tbody tr + tr td,
+.vf-table tfoot tr:first-child td {
+  border-top: 1px solid var(--vf-color-border);
+}
+
+.vf-table tfoot td {
+  color: var(--vf-color-muted);
+  background: color-mix(
+    in srgb,
+    var(--vf-color-surface) 88%,
+    var(--vf-color-surface-muted)
+  );
+}
+
+.vf-table--striped tbody tr:nth-child(even) td {
+  background: color-mix(
+    in srgb,
+    var(--vf-color-surface) 78%,
+    var(--vf-color-surface-muted)
+  );
+}
+
+.vf-table--compact :where(th, td) {
+  padding: 0.5rem 0.75rem;
+}
+
+.vf-table--sticky-header thead th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
 }

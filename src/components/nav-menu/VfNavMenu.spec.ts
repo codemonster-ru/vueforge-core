@@ -66,6 +66,26 @@ describe("VfNavMenu", () => {
     );
   });
 
+  it("marks ancestor branches when a descendant is active", () => {
+    const wrapper = mount(VfNavMenu, {
+      props: {
+        items,
+        defaultValue: "button",
+      },
+    });
+
+    const ancestorBranch = wrapper
+      .findAll(".vf-nav-menu__item--branch")
+      .find((node) => node.text().includes("Components"));
+
+    expect(ancestorBranch?.classes()).toContain(
+      "vf-nav-menu__item--ancestor-active",
+    );
+    expect(ancestorBranch?.classes()).not.toContain(
+      "vf-nav-menu__item--active",
+    );
+  });
+
   it("toggles branches and emits selection for leaf buttons", async () => {
     const wrapper = mount(VfNavMenu, {
       props: {
@@ -249,5 +269,33 @@ describe("VfNavMenu", () => {
     expect(wrapper.find(".vf-nav-menu").classes()).not.toContain(
       "vf-nav-menu--simple",
     );
+  });
+
+  it("reserves icon column for iconless items in complex menus", async () => {
+    const wrapper = mount(VfNavMenu, {
+      props: {
+        items: [
+          {
+            value: "components",
+            label: "Components",
+            leadingIcon: "gear",
+            children: [
+              { value: "with-icon", label: "With Icon", leadingIcon: "info" },
+              { value: "without-icon", label: "Without Icon" },
+            ],
+          },
+        ],
+      },
+    });
+
+    await wrapper.find(".vf-nav-menu__item--branch").trigger("click");
+    await nextTick();
+
+    const items = wrapper.findAll(".vf-nav-menu__item");
+    const withIcon = items.find((node) => node.text() === "With Icon");
+    const withoutIcon = items.find((node) => node.text() === "Without Icon");
+
+    expect(withIcon?.classes()).not.toContain("vf-nav-menu__item--icon-offset");
+    expect(withoutIcon?.classes()).toContain("vf-nav-menu__item--icon-offset");
   });
 });

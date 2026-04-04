@@ -56,6 +56,30 @@ describe("VfDrawer", () => {
     expect(content?.className).toContain("vf-drawer__content--lg");
   });
 
+  it("is square by default and can opt into rounded corners", async () => {
+    const wrapper = mount(VfDrawer, {
+      attachTo: document.body,
+      props: {
+        open: true,
+        title: "Navigation",
+      },
+      slots: {
+        default: "Drawer body",
+      },
+    });
+
+    await nextTick();
+
+    let root = document.body.querySelector(".vf-drawer");
+    expect(root?.classList.contains("vf-drawer--rounded")).toBe(false);
+
+    await wrapper.setProps({ rounded: true });
+    await nextTick();
+
+    root = document.body.querySelector(".vf-drawer");
+    expect(root?.classList.contains("vf-drawer--rounded")).toBe(true);
+  });
+
   it("emits close requests for overlay clicks and escape", async () => {
     const wrapper = mount(VfDrawer, {
       attachTo: document.body,

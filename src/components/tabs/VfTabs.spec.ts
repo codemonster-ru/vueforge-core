@@ -103,4 +103,31 @@ describe("VfTabs", () => {
     );
     expect(wrapper.get('[role="tabpanel"]').text()).toBe("active:settings");
   });
+
+  it("renders a moving indicator for the active tab", async () => {
+    const wrapper = mount(VfTabs, {
+      attachTo: document.body,
+      props: {
+        items,
+        defaultValue: "overview",
+      },
+      slots: {
+        panel: ({ activeValue }: { activeValue: string }) =>
+          h("div", activeValue),
+      },
+    });
+
+    await nextTick();
+
+    const indicator = wrapper.get(".vf-tabs__indicator");
+    expect(indicator.attributes("aria-hidden")).toBe("true");
+
+    await wrapper.findAll('[role="tab"]')[1].trigger("click");
+    await nextTick();
+
+    expect(wrapper.get('[role="tab"][aria-selected="true"]').text()).toBe(
+      "Settings",
+    );
+    expect(wrapper.find(".vf-tabs__indicator").element).toBeTruthy();
+  });
 });

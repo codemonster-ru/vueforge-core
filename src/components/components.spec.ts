@@ -5,20 +5,20 @@ import { defineComponent, nextTick } from "vue";
 import {
   VfAlert,
   VfBadge,
+  VfBreadcrumbs,
   VfButton,
   VfCard,
   VfCheckbox,
   VfDivider,
   VfIconButton,
-  VfHeading,
   VfInput,
   VfLink,
   VfPanel,
-  VfProse,
   VfRadio,
+  VfSelect,
   VfSwitch,
+  VfTable,
   VfTableOfContents,
-  VfText,
   VfThemeSwitch,
   VfTag,
   VfTextarea,
@@ -85,7 +85,7 @@ describe("core primitives", () => {
       props: {
         href: "https://example.com",
         target: "_blank",
-        underline: true,
+        underline: "always",
       },
       slots: {
         default: "Docs",
@@ -93,14 +93,14 @@ describe("core primitives", () => {
     });
 
     expect(wrapper.attributes("rel")).toBe("noopener noreferrer");
-    expect(wrapper.classes()).toContain("vf-link--underline");
+    expect(wrapper.classes()).toContain("vf-link--underline-always");
   });
 
   it("supports router-style links via to prop", () => {
     const wrapper = mount(VfLink, {
       props: {
         to: "/docs",
-        underline: true,
+        underline: "hover",
       },
       slots: {
         default: "Docs",
@@ -116,7 +116,7 @@ describe("core primitives", () => {
     });
 
     expect(wrapper.attributes("data-to")).toBe("/docs");
-    expect(wrapper.classes()).toContain("vf-link--underline");
+    expect(wrapper.classes()).toContain("vf-link--underline-hover");
   });
 
   it("renders card title and slots", () => {
@@ -133,6 +133,58 @@ describe("core primitives", () => {
     expect(wrapper.find(".vf-card__title").text()).toBe("Overview");
     expect(wrapper.text()).toContain("Body copy");
     expect(wrapper.text()).toContain("Footer");
+  });
+
+  it("renders breadcrumbs with current item and links", () => {
+    const wrapper = mount(VfBreadcrumbs, {
+      props: {
+        items: [
+          { label: "Docs", href: "/docs" },
+          { label: "Components", href: "/components" },
+          { label: "Breadcrumbs", current: true },
+        ],
+      },
+    });
+
+    const links = wrapper.findAll(".vf-breadcrumbs__link");
+    expect(links).toHaveLength(2);
+    expect(links[0].attributes("href")).toBe("/docs");
+    expect(wrapper.find('[aria-current="page"]').text()).toBe("Breadcrumbs");
+  });
+
+  it("renders table structure with caption, head, body, and footer", () => {
+    const wrapper = mount(VfTable, {
+      props: {
+        caption: "API surface",
+        striped: true,
+      },
+      slots: {
+        header: `
+          <tr>
+            <th>Prop</th>
+            <th>Type</th>
+          </tr>
+        `,
+        default: `
+          <tr>
+            <td>size</td>
+            <td>string</td>
+          </tr>
+        `,
+        footer: `
+          <tr>
+            <td colspan="2">End</td>
+          </tr>
+        `,
+      },
+    });
+
+    expect(wrapper.classes()).toContain("vf-table-wrap");
+    expect(wrapper.find("caption").text()).toBe("API surface");
+    expect(wrapper.findAll("thead th")).toHaveLength(2);
+    expect(wrapper.find("tbody td").text()).toBe("size");
+    expect(wrapper.find(".vf-table").classes()).toContain("vf-table--striped");
+    expect(wrapper.find("tfoot td").text()).toBe("End");
   });
 
   it("emits input updates and invalid state", async () => {
@@ -165,6 +217,40 @@ describe("core primitives", () => {
     await wrapper.setValue("published");
 
     expect(wrapper.emitted("update:modelValue")).toEqual([["published"]]);
+  });
+
+  it("emits select updates and renders options through dropdown", async () => {
+    const wrapper = mount(VfSelect, {
+      props: {
+        modelValue: "",
+        invalid: true,
+        placeholder: "Choose a plan",
+        options: [
+          { value: "starter", label: "Starter" },
+          { value: "pro", label: "Pro" },
+        ],
+      },
+    });
+
+    expect(wrapper.find("button.vf-select").attributes("aria-invalid")).toBe(
+      "true",
+    );
+    expect(wrapper.find(".vf-select__value").text()).toBe("Choose a plan");
+
+    await wrapper.find("button.vf-select").trigger("click");
+    await nextTick();
+
+    expect(document.body.textContent).toContain("Starter");
+    expect(document.body.textContent).toContain("Pro");
+
+    const options = Array.from(
+      document.body.querySelectorAll<HTMLButtonElement>(".vf-select__option"),
+    );
+
+    options[1]?.click();
+    await nextTick();
+
+    expect(wrapper.emitted("update:modelValue")).toEqual([["pro"]]);
   });
 
   it("emits checkbox and switch updates", async () => {
@@ -228,6 +314,9 @@ describe("core primitives", () => {
     expect((input.element as HTMLInputElement).checked).toBe(true);
 
     await input.setValue(false);
+    await new Promise((resolve) =>
+      window.requestAnimationFrame(() => resolve(undefined)),
+    );
 
     expect(document.documentElement.getAttribute("data-vf-theme")).toBe(
       "light",
@@ -237,6 +326,9 @@ describe("core primitives", () => {
     ).toBe(false);
 
     await wrapper.get(".vf-switch__input").setValue(true);
+    await new Promise((resolve) =>
+      window.requestAnimationFrame(() => resolve(undefined)),
+    );
 
     expect(document.documentElement.getAttribute("data-vf-theme")).toBe("dark");
   });
@@ -250,7 +342,6 @@ describe("core primitives", () => {
   it("renders table of contents items, hrefs, and active state", () => {
     const wrapper = mount(VfTableOfContents, {
       props: {
-        label: "On this page",
         activeId: "theme-provider",
         items: [
           { id: "getting-started", label: "Getting started", level: 1 },
@@ -263,9 +354,6 @@ describe("core primitives", () => {
     const links = wrapper.findAll(".vf-table-of-contents__link");
     const items = wrapper.findAll(".vf-table-of-contents__item");
 
-    expect(wrapper.find(".vf-table-of-contents__title").text()).toBe(
-      "On this page",
-    );
     expect(links).toHaveLength(3);
     expect(links[0]?.attributes("href")).toBe("#getting-started");
     expect(links[2]?.attributes("aria-current")).toBe("location");
@@ -273,52 +361,49 @@ describe("core primitives", () => {
     expect(items[2]?.attributes("style")).toContain("--vf-toc-level: 3");
   });
 
-  it("renders prose wrapper and content semantics", () => {
-    const wrapper = mount(VfProse, {
-      attrs: {
-        "data-test": "prose",
-      },
-      slots: {
-        default:
-          "<h2>Heading</h2><p>Paragraph with <strong>emphasis</strong>.</p>",
-      },
+  it("supports opt-in smooth scrolling with offset for table of contents links", async () => {
+    const target = document.createElement("h2");
+    target.id = "theme-api";
+    target.getBoundingClientRect = vi.fn(() => ({
+      x: 0,
+      y: 240,
+      top: 240,
+      left: 0,
+      right: 0,
+      bottom: 280,
+      width: 0,
+      height: 40,
+      toJSON: () => ({}),
+    })) as typeof target.getBoundingClientRect;
+    document.body.appendChild(target);
+
+    const scrollToSpy = vi
+      .spyOn(window, "scrollTo")
+      .mockImplementation(() => undefined);
+
+    Object.defineProperty(window, "scrollY", {
+      value: 120,
+      configurable: true,
     });
 
-    expect(wrapper.element.tagName).toBe("ARTICLE");
-    expect(wrapper.attributes("data-test")).toBe("prose");
-    expect(wrapper.find("h2").text()).toBe("Heading");
-    expect(wrapper.find("strong").text()).toBe("emphasis");
-  });
-
-  it("renders semantic heading and text primitives", () => {
-    const heading = mount(VfHeading, {
+    const wrapper = mount(VfTableOfContents, {
       props: {
-        as: "h1",
-        size: "xl",
-      },
-      slots: {
-        default: "Page title",
+        smooth: true,
+        scrollOffset: 96,
+        items: [{ id: "theme-api", label: "Theme API", level: 1 }],
       },
     });
 
-    const text = mount(VfText, {
-      props: {
-        as: "small",
-        size: "caption",
-        tone: "muted",
-      },
-      slots: {
-        default: "Supporting copy",
-      },
-    });
+    await wrapper.get(".vf-table-of-contents__link").trigger("click");
 
-    expect(heading.element.tagName).toBe("H1");
-    expect(heading.classes()).toContain("vf-heading--xl");
-    expect(heading.text()).toBe("Page title");
-    expect(text.element.tagName).toBe("SMALL");
-    expect(text.classes()).toContain("vf-text--caption");
-    expect(text.classes()).toContain("vf-text--muted");
-    expect(text.text()).toBe("Supporting copy");
+    expect(scrollToSpy).toHaveBeenCalledWith({
+      top: 264,
+      behavior: "smooth",
+    });
+    expect(window.location.hash).toBe("#theme-api");
+
+    scrollToSpy.mockRestore();
+    target.remove();
   });
 
   it("emits radio updates and reflects checked state", async () => {
@@ -396,6 +481,17 @@ describe("core primitives", () => {
     expect(wrapper.attributes("aria-label")).toBe("Open settings");
     expect(wrapper.classes()).toContain("vf-icon-button--help");
     expect(wrapper.find(".vif-icon").exists()).toBe(true);
+  });
+
+  it("uses ghost variant class by default for icon buttons", () => {
+    const wrapper = mount(VfIconButton, {
+      props: {
+        icon: "gear",
+        "aria-label": "Open settings",
+      },
+    });
+
+    expect(wrapper.classes()).toContain("vf-icon-button--ghost");
   });
 
   it("renders alert and tag tones", () => {

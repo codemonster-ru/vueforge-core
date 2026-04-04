@@ -1,5 +1,68 @@
 # Changelog
 
+## 1.8.0 - 2026-04-04
+
+Minor release for `@codemonster-ru/vueforge-core`.
+
+### Added
+
+- New navigation components:
+  - `VfMenuBar`
+  - `VfBreadcrumbs`
+- New form component:
+  - `VfSelect`
+- New data-display component:
+  - `VfTable`
+- New docs-oriented primitives in the demo and navigation flow:
+  - smoother `VfTableOfContents` anchor scrolling
+  - initial hash handling for table-of-contents pages
+
+### Changed
+
+- VueForge typography is now body-first:
+  - application `body` styles define the baseline font family and text rhythm
+  - components inherit that baseline and size around it
+  - control sizing is now driven by the shared typography scale
+- Navigation and selection patterns were unified across:
+  - `VfNavMenu`
+  - `VfTableOfContents`
+  - `VfMenuBar`
+  - `VfSelect`
+  - `VfDropdown`
+- `VfTabs` was redesigned as an underline-style tabs component with:
+  - animated active indicator
+  - calmer hover and active states
+  - improved reload behavior without first-render indicator flicker
+- Theme switching and theme-mode persistence were refined:
+  - no-flash initial theme setup in `index.html`
+  - `VfThemeProvider` now resolves stored/system theme synchronously
+  - `VfThemeSwitch` interaction was stabilized during theme changes
+- Visual language was simplified and made more consistent across:
+  - buttons and links
+  - cards and panels
+  - dropdown, popover, tooltip, dialog, and drawer surfaces
+  - alerts, badges, tags, forms, and navigation states
+- Demo was refocused into a utilitarian component test surface instead of a showcase layout
+- Updated docs guidance for docs pages to prefer semantic HTML content with:
+  - `VfTableOfContents`
+  - `useTableOfContents()`
+
+### Removed
+
+- Removed typography primitives from `core`:
+  - `VfHeading`
+  - `VfText`
+  - `VfProse`
+- Removed bundled typography/content styling layer tied to those primitives
+
+### Migration Notes
+
+- `VfHeading`, `VfText`, and `VfProse` are no longer exported from `@codemonster-ru/vueforge-core`
+- Typography usage now assumes semantic HTML and app-level/body typography as the default baseline
+- Docs/content integrations should migrate away from `VfProse` and render long-form content with normal HTML markup
+- Consumers relying on the old typography primitive exports should migrate before upgrading
+- Updated dependency on `@codemonster-ru/vueforge-theme` to `^1.2.0`
+
 ## 1.7.0 - 2026-03-29
 
 Minor release for `@codemonster-ru/vueforge-core`.
@@ -11,7 +74,6 @@ Minor release for `@codemonster-ru/vueforge-core`.
   - `VfText`
   - `VfProse`
 - New typography documentation:
-  - `Typography API`
 
 ### Changed
 

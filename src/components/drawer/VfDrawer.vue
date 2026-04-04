@@ -34,6 +34,7 @@ interface VfDrawerProps {
   title?: string;
   size?: VfDialogSize;
   placement?: VfDrawerPlacement;
+  rounded?: boolean;
   offsetTop?: string | number;
   bodyPadding?: string | number;
   teleportTo?: string | HTMLElement | null | false;
@@ -50,6 +51,7 @@ const props = withDefaults(defineProps<VfDrawerProps>(), {
   title: undefined,
   size: "md",
   placement: "right",
+  rounded: false,
   offsetTop: undefined,
   bodyPadding: undefined,
   teleportTo: undefined,
@@ -116,6 +118,7 @@ const rootClasses = computed(() =>
   cx(
     "vf-drawer",
     `vf-drawer--${props.placement}`,
+    props.rounded && "vf-drawer--rounded",
     props.offsetTop != null && "vf-drawer--offset-top",
   ),
 );
@@ -294,6 +297,7 @@ onBeforeUnmount(() => {
                 :icon="icons.xmark"
                 aria-label="Close drawer"
                 size="sm"
+                variant="ghost"
                 @click="close"
               />
             </div>

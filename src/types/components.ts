@@ -11,10 +11,8 @@ export type VfButtonVariant =
   | "contrast"
   | "ghost";
 export type VfControlSize = "sm" | "md" | "lg";
-export type VfHeadingSize = "sm" | "md" | "lg" | "xl";
 export type VfLinkTone = "default" | "muted";
-export type VfTextSize = "body" | "label" | "caption";
-export type VfTextTone = "default" | "muted";
+export type VfLinkUnderline = "none" | "hover" | "always";
 export type VfBadgeTone =
   | "neutral"
   | "primary"
@@ -38,6 +36,22 @@ export type VfDialogSize = "sm" | "md" | "lg";
 export type VfDrawerPlacement = "left" | "right" | "top" | "bottom";
 export type VfDropdownPlacement = "bottom-start" | "bottom-end";
 export type VfTooltipPlacement = "top" | "bottom";
+
+export interface VfSelectOption {
+  value: string;
+  label: string;
+  disabled?: boolean;
+}
+
+export interface VfBreadcrumbItem {
+  label: string;
+  href?: string;
+  to?: string | Record<string, unknown>;
+  target?: string;
+  rel?: string;
+  disabled?: boolean;
+  current?: boolean;
+}
 
 export interface VfTabItem {
   value: string;

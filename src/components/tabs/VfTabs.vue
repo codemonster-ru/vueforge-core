@@ -1,5 +1,13 @@
 <script setup lang="ts">
-import { computed, ref, watch } from "vue";
+import {
+  computed,
+  nextTick,
+  onBeforeUnmount,
+  onMounted,
+  ref,
+  watch,
+  type CSSProperties,
+} from "vue";
 import { useId } from "@/composables";
 import type { VfTabItem } from "@/types/components";
 
@@ -20,7 +28,14 @@ const emit = defineEmits<{
 }>();
 
 const baseId = useId({ prefix: "vf-tabs" });
+const listRef = ref<HTMLElement | null>(null);
 const tabRefs = ref<Array<HTMLElement | null>>([]);
+const indicatorReady = ref(false);
+const indicatorStyle = ref<CSSProperties>({
+  opacity: "0",
+  transform: "translateX(0)",
+  width: "0px",
+});
 
 const fallbackValue = computed(
   () => props.items.find((item) => !item.disabled)?.value,
@@ -30,6 +45,8 @@ const isControlled = computed(() => props.modelValue !== undefined);
 const activeValue = computed(
   () => props.modelValue ?? internalValue.value ?? fallbackValue.value,
 );
+
+let listResizeObserver: ResizeObserver | null = null;
 
 watch(
   () => props.items,
@@ -121,11 +138,74 @@ function tabId(value: string) {
 function panelId(value: string) {
   return `${baseId.value}-panel-${value}`;
 }
+
+function updateIndicator() {
+  const activeIndex = props.items.findIndex(
+    (item) => item.value === activeValue.value,
+  );
+  const activeTab = activeIndex >= 0 ? tabRefs.value[activeIndex] : null;
+
+  if (!activeTab) {
+    indicatorStyle.value = {
+      opacity: "0",
+      transform: "translateX(0)",
+      width: "0px",
+    };
+    return;
+  }
+
+  indicatorStyle.value = {
+    opacity: "1",
+    transform: `translateX(${activeTab.offsetLeft}px)`,
+    width: `${activeTab.offsetWidth}px`,
+  };
+}
+
+watch(
+  () => [activeValue.value, props.items],
+  async () => {
+    await nextTick();
+    updateIndicator();
+  },
+  { deep: true, immediate: true },
+);
+
+onMounted(async () => {
+  await nextTick();
+  updateIndicator();
+  requestAnimationFrame(() => {
+    indicatorReady.value = true;
+  });
+
+  if (typeof ResizeObserver !== "undefined" && listRef.value) {
+    listResizeObserver = new ResizeObserver(() => {
+      updateIndicator();
+    });
+    listResizeObserver.observe(listRef.value);
+  }
+
+  if (typeof window !== "undefined") {
+    window.addEventListener("resize", updateIndicator);
+  }
+});
+
+onBeforeUnmount(() => {
+  listResizeObserver?.disconnect();
+
+  if (typeof window !== "undefined") {
+    window.removeEventListener("resize", updateIndicator);
+  }
+});
 </script>
 
 <template>
   <div class="vf-tabs">
-    <div class="vf-tabs__list" role="tablist" aria-orientation="horizontal">
+    <div
+      ref="listRef"
+      class="vf-tabs__list"
+      role="tablist"
+      aria-orientation="horizontal"
+    >
       <button
         v-for="(item, index) in items"
         :id="tabId(item.value)"
@@ -147,6 +227,13 @@ function panelId(value: string) {
       >
         {{ item.label }}
       </button>
+
+      <span
+        aria-hidden="true"
+        class="vf-tabs__indicator"
+        :class="indicatorReady && 'vf-tabs__indicator--ready'"
+        :style="indicatorStyle"
+      />
     </div>
 
     <div

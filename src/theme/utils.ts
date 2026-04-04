@@ -8,6 +8,10 @@ import {
   themeTokensToCssVars as themeTokensToCssVarsBase,
 } from "@codemonster-ru/vueforge-theme";
 import type {
+  VfResolvedThemeConfig as BaseVfResolvedThemeConfig,
+  VfThemePreset as BaseVfThemePreset,
+} from "@codemonster-ru/vueforge-theme";
+import type {
   VfResolvedThemeConfig,
   VfResolvedThemePreset,
   VfThemeConfig,
@@ -17,7 +21,9 @@ import type {
 import { defaultThemePreset } from "./default-preset";
 
 export function createThemePreset(preset: VfThemePreset): VfThemePreset {
-  return createThemePresetBase(preset) as VfThemePreset;
+  return createThemePresetBase(
+    preset as unknown as BaseVfThemePreset,
+  ) as unknown as VfThemePreset;
 }
 
 export function themeTokensToCssVars(
@@ -28,7 +34,9 @@ export function themeTokensToCssVars(
 }
 
 export function themePresetToCssText(config: VfResolvedThemeConfig) {
-  return themePresetToCssTextBase(config);
+  return themePresetToCssTextBase(
+    config as unknown as BaseVfResolvedThemeConfig,
+  );
 }
 
 export function resolveThemePreset(
@@ -36,8 +44,9 @@ export function resolveThemePreset(
 ): VfResolvedThemePreset {
   return resolveThemePresetBase({
     ...config,
-    preset: config.preset ?? defaultThemePreset,
-  }) as VfResolvedThemePreset;
+    preset: (config.preset ??
+      defaultThemePreset) as unknown as BaseVfThemePreset,
+  }) as unknown as VfResolvedThemePreset;
 }
 
 export function resolveThemeConfig(
@@ -45,13 +54,17 @@ export function resolveThemeConfig(
 ): VfResolvedThemeConfig {
   return resolveThemeConfigBase({
     ...config,
-    preset: config.preset ?? defaultThemePreset,
-  }) as VfResolvedThemeConfig;
+    preset: (config.preset ??
+      defaultThemePreset) as unknown as BaseVfThemePreset,
+  }) as unknown as VfResolvedThemeConfig;
 }
 
 export function applyThemeConfig(
   config: VfResolvedThemeConfig,
   targetDocument?: Document,
 ) {
-  return applyThemeConfigBase(config, targetDocument);
+  return applyThemeConfigBase(
+    config as unknown as BaseVfResolvedThemeConfig,
+    targetDocument,
+  );
 }

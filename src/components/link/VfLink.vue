@@ -2,7 +2,7 @@
 import { computed, resolveDynamicComponent, useAttrs } from "vue";
 import type { Component } from "vue";
 import { cx } from "@/utils/classes";
-import type { VfLinkTone } from "@/types/components";
+import type { VfLinkTone, VfLinkUnderline } from "@/types/components";
 
 defineOptions({
   inheritAttrs: false,
@@ -13,7 +13,7 @@ interface VfLinkProps {
   to?: string | Record<string, unknown>;
   target?: string;
   rel?: string;
-  underline?: boolean;
+  underline?: VfLinkUnderline;
   tone?: VfLinkTone;
   component?: string | Component;
 }
@@ -23,7 +23,7 @@ const props = withDefaults(defineProps<VfLinkProps>(), {
   to: undefined,
   target: undefined,
   rel: undefined,
-  underline: false,
+  underline: "none",
   tone: "default",
   component: undefined,
 });
@@ -49,7 +49,8 @@ const resolvedRel = computed(() => {
 const classes = computed(() =>
   cx(
     "vf-link",
-    props.underline && "vf-link--underline",
+    props.underline === "hover" && "vf-link--underline-hover",
+    props.underline === "always" && "vf-link--underline-always",
     props.tone === "muted" && "vf-link--muted",
   ),
 );
