@@ -20,6 +20,7 @@ interface VfTableOfContentsProps {
   ariaLabel?: string;
   smooth?: boolean;
   scrollOffset?: number;
+  variant?: "default" | "pills";
 }
 
 const props = withDefaults(defineProps<VfTableOfContentsProps>(), {
@@ -27,6 +28,7 @@ const props = withDefaults(defineProps<VfTableOfContentsProps>(), {
   ariaLabel: "Table of contents",
   smooth: false,
   scrollOffset: 0,
+  variant: "default",
 });
 
 const attrs = useAttrs();
@@ -35,6 +37,7 @@ const isReady = ref(false);
 const rootClasses = computed(() =>
   cx(
     "vf-table-of-contents",
+    `vf-table-of-contents--${props.variant}`,
     isReady.value && "vf-table-of-contents--ready",
     attrs.class as string | undefined,
   ),

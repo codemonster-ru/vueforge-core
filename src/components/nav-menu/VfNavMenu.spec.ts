@@ -62,7 +62,26 @@ describe("VfNavMenu", () => {
     expect(wrapper.find('[aria-current="page"]').text()).toBe("Button");
     expect(wrapper.findAll(".vf-nav-menu__list--nested")).toHaveLength(1);
     expect(wrapper.find(".vf-nav-menu").classes()).toContain(
+      "vf-nav-menu--default",
+    );
+    expect(wrapper.find(".vf-nav-menu").classes()).toContain(
       "vf-nav-menu--simple",
+    );
+  });
+
+  it("uses pills variant class when requested", () => {
+    const wrapper = mount(VfNavMenu, {
+      props: {
+        items,
+        variant: "pills",
+      },
+    });
+
+    expect(wrapper.find(".vf-nav-menu").classes()).toContain(
+      "vf-nav-menu--pills",
+    );
+    expect(wrapper.find(".vf-nav-menu").classes()).not.toContain(
+      "vf-nav-menu--default",
     );
   });
 

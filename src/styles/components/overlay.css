@@ -492,6 +492,32 @@
   background: var(--vf-selectable-hover-background);
 }
 
+.vf-dropdown__menu--default .vf-dropdown__item:hover {
+  color: var(--vf-nav-menu-item-hover-color);
+  border-color: transparent;
+  background: var(--vf-nav-menu-item-hover-background);
+}
+
+.vf-dropdown__menu--default .vf-dropdown__item--active {
+  color: var(--vf-nav-menu-item-active-color);
+  font-weight: var(--vf-font-weight-medium);
+  border-color: transparent;
+  background: var(--vf-nav-menu-item-active-background);
+}
+
+.vf-dropdown__menu--pills .vf-dropdown__item:hover {
+  color: var(--vf-nav-menu-pills-item-hover-color);
+  border-color: transparent;
+  background: var(--vf-nav-menu-pills-item-hover-background);
+}
+
+.vf-dropdown__menu--pills .vf-dropdown__item--active {
+  color: var(--vf-nav-menu-pills-item-active-color);
+  font-weight: var(--vf-font-weight-medium);
+  border-color: transparent;
+  background: var(--vf-nav-menu-pills-item-active-background);
+}
+
 .vf-dropdown__item:focus-visible {
   outline: none;
   border-color: var(--vf-color-primary);

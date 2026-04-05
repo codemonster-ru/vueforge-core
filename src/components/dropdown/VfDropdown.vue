@@ -25,6 +25,7 @@ interface VfDropdownProps {
   teleportTo?: string | HTMLElement | null | false;
   disableTeleport?: boolean;
   closeOnSelect?: boolean;
+  variant?: "default" | "pills";
 }
 
 const props = withDefaults(defineProps<VfDropdownProps>(), {
@@ -34,6 +35,7 @@ const props = withDefaults(defineProps<VfDropdownProps>(), {
   teleportTo: undefined,
   disableTeleport: false,
   closeOnSelect: true,
+  variant: "default",
 });
 
 const emit = defineEmits<{
@@ -84,6 +86,7 @@ const isOpen = disclosure.isOpen;
 
 const menuClasses = computed(() => [
   "vf-dropdown__menu",
+  `vf-dropdown__menu--${props.variant}`,
   floatingPlacement.value.startsWith("top") && "vf-dropdown__menu--top",
 ]);
 

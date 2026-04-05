@@ -9,6 +9,7 @@ interface VfNavMenuProps {
   defaultValue?: string;
   ariaLabel?: string;
   expandMode?: "multiple" | "single";
+  variant?: "default" | "pills";
 }
 
 const props = withDefaults(defineProps<VfNavMenuProps>(), {
@@ -16,6 +17,7 @@ const props = withDefaults(defineProps<VfNavMenuProps>(), {
   defaultValue: undefined,
   ariaLabel: "Navigation",
   expandMode: "multiple",
+  variant: "default",
 });
 
 const emit = defineEmits<{
@@ -172,7 +174,11 @@ watch(
 
 <template>
   <nav
-    :class="['vf-nav-menu', isSimpleMenu && 'vf-nav-menu--simple']"
+    :class="[
+      'vf-nav-menu',
+      `vf-nav-menu--${variant}`,
+      isSimpleMenu && 'vf-nav-menu--simple',
+    ]"
     :aria-label="ariaLabel"
   >
     <ul class="vf-nav-menu__list">

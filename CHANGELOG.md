@@ -1,5 +1,46 @@
 # Changelog
 
+## 1.9.0 - 2026-04-06
+
+Minor release for `@codemonster-ru/vueforge-core`.
+
+### Added
+
+- New `variant` support for docs and navigation components:
+  - `VfNavMenu`: `default | pills`
+  - `VfTableOfContents`: `default | pills`
+  - `VfMenuBar`: `default | pills`
+  - `VfDropdown`: `default | pills`
+- Expanded theme-token coverage for:
+  - `VfNavMenu`
+  - `VfTableOfContents`
+  - `VfMenuBar`
+  - dropdown menu-item states
+
+### Changed
+
+- Navigation state semantics are now aligned across:
+  - `VfNavMenu`
+  - `VfTableOfContents`
+  - `VfMenuBar`
+  - `VfDropdown`
+- `VfNavMenu` now uses a calmer default presentation:
+  - tighter vertical rhythm
+  - no filled hover or active background in `default`
+  - pill-like styling moved into the `pills` variant
+- `VfTableOfContents` now mirrors the same variant model as `VfNavMenu`:
+  - compact text-first `default`
+  - accent background states in `pills`
+- `VfMenuBar` variants now separate top-level and submenu behavior:
+  - top-level items stay text-first in both variants
+  - submenu items gain filled hover and active states in `pills`
+- `VfDropdown` can now opt into the same state-color semantics as the navigation system while keeping its overlay layout intact
+- Demo coverage was reorganized and expanded for:
+  - navigation variants
+  - dropdown variants
+  - form controls with separate cards per component
+  - invalid `VfSelect` and `VfTextarea` examples
+
 ## 1.8.0 - 2026-04-04
 
 Minor release for `@codemonster-ru/vueforge-core`.

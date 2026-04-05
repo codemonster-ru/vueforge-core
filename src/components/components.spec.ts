@@ -361,6 +361,19 @@ describe("core primitives", () => {
     expect(items[2]?.attributes("style")).toContain("--vf-toc-level: 3");
   });
 
+  it("supports pills variant for table of contents", () => {
+    const wrapper = mount(VfTableOfContents, {
+      props: {
+        variant: "pills",
+        items: [{ id: "getting-started", label: "Getting started", level: 1 }],
+      },
+    });
+
+    expect(wrapper.find(".vf-table-of-contents").classes()).toContain(
+      "vf-table-of-contents--pills",
+    );
+  });
+
   it("supports opt-in smooth scrolling with offset for table of contents links", async () => {
     const target = document.createElement("h2");
     target.id = "theme-api";

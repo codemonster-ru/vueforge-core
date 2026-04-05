@@ -51,6 +51,19 @@ describe("VfMenuBar", () => {
     expect(wrapper.find(".vf-menu-bar__submenu").exists()).toBe(true);
   });
 
+  it("supports pills variant", () => {
+    const wrapper = mount(VfMenuBar, {
+      props: {
+        items,
+        variant: "pills",
+      },
+    });
+
+    expect(wrapper.find(".vf-menu-bar").classes()).toContain(
+      "vf-menu-bar--pills",
+    );
+  });
+
   it("does not open top-level branches on hover before menu is activated", async () => {
     const wrapper = mount(VfMenuBar, {
       props: {

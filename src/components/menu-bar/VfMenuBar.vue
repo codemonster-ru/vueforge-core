@@ -9,12 +9,14 @@ interface VfMenuBarProps {
   modelValue?: string;
   defaultValue?: string;
   ariaLabel?: string;
+  variant?: "default" | "pills";
 }
 
 const props = withDefaults(defineProps<VfMenuBarProps>(), {
   modelValue: undefined,
   defaultValue: undefined,
   ariaLabel: "Menu bar",
+  variant: "default",
 });
 
 const emit = defineEmits<{
@@ -106,7 +108,7 @@ onBeforeUnmount(() => {
 <template>
   <nav
     ref="rootRef"
-    class="vf-menu-bar"
+    :class="['vf-menu-bar', `vf-menu-bar--${variant}`]"
     :aria-label="ariaLabel"
     @mouseenter="cancelCloseMenu"
     @mouseleave="scheduleCloseMenu"

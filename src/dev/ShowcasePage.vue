@@ -54,8 +54,8 @@ const radioValue = ref("pro");
 const selectValue = ref("");
 const activeTab = ref("overview");
 const activeAccordion = ref<string | null>("section-one");
-const activeMenuValue = ref("button");
-const activeSimpleMenuValue = ref("button");
+const activeMenuValue = ref("");
+const activeSimpleMenuValue = ref("");
 
 const releaseTabs = [
   { value: "overview", label: "Overview" },
@@ -471,20 +471,51 @@ const tabContent = computed<Record<string, string>>(() => ({
 
           <div class="demo-example">
             <p class="demo-label">vf-dropdown</p>
-            <VfDropdown v-model:open="dropdownControlled">
-              <template #trigger="{ open }">
-                <VfButton tabindex="-1" variant="secondary">{{
-                  open ? "Close menu" : "Open menu"
-                }}</VfButton>
-              </template>
+            <div class="demo-stack">
+              <div class="demo-stack">
+                <p class="demo-text">Default</p>
+                <VfDropdown v-model:open="dropdownControlled">
+                  <template #trigger="{ open }">
+                    <VfButton tabindex="-1" variant="secondary">{{
+                      open ? "Close menu" : "Open menu"
+                    }}</VfButton>
+                  </template>
 
-              <button class="vf-dropdown__item" role="menuitem">
-                Action one
-              </button>
-              <button class="vf-dropdown__item" role="menuitem">
-                Action two
-              </button>
-            </VfDropdown>
+                  <button class="vf-dropdown__item" role="menuitem">
+                    Action one
+                  </button>
+                  <button
+                    class="vf-dropdown__item vf-dropdown__item--active"
+                    role="menuitem"
+                  >
+                    Action two
+                  </button>
+                </VfDropdown>
+              </div>
+
+              <VfDivider />
+
+              <div class="demo-stack">
+                <p class="demo-text">Pills</p>
+                <VfDropdown variant="pills">
+                  <template #trigger="{ open }">
+                    <VfButton tabindex="-1" variant="secondary">{{
+                      open ? "Close menu" : "Open menu"
+                    }}</VfButton>
+                  </template>
+
+                  <button class="vf-dropdown__item" role="menuitem">
+                    Action one
+                  </button>
+                  <button
+                    class="vf-dropdown__item vf-dropdown__item--active"
+                    role="menuitem"
+                  >
+                    Action two
+                  </button>
+                </VfDropdown>
+              </div>
+            </div>
           </div>
 
           <div class="demo-example">
@@ -675,14 +706,9 @@ const tabContent = computed<Record<string, string>>(() => ({
 
         <div class="demo-grid demo-grid--three">
           <div class="demo-item">
-            <p class="demo-label">vf-input, vf-select</p>
+            <p class="demo-label">vf-input</p>
             <div class="demo-stack">
               <VfInput v-model="inputValue" placeholder="Project name" />
-              <VfSelect
-                v-model="selectValue"
-                placeholder="Choose a plan"
-                :options="selectOptions"
-              />
               <VfInput invalid placeholder="Invalid input" />
             </div>
           </div>
@@ -694,14 +720,37 @@ const tabContent = computed<Record<string, string>>(() => ({
                 v-model="textareaValue"
                 placeholder="Describe the release..."
               />
+              <VfTextarea invalid placeholder="Invalid textarea" />
             </div>
           </div>
 
           <div class="demo-item">
-            <p class="demo-label">vf-checkbox, vf-switch, vf-radio</p>
+            <p class="demo-label">vf-select</p>
+            <div class="demo-stack">
+              <VfSelect
+                v-model="selectValue"
+                placeholder="Choose a plan"
+                :options="selectOptions"
+              />
+              <VfSelect
+                invalid
+                placeholder="Invalid select"
+                :options="selectOptions"
+              />
+            </div>
+          </div>
+
+          <div class="demo-item">
+            <p class="demo-label">vf-checkbox</p>
             <div class="demo-stack">
               <VfCheckbox v-model="checkboxValue">Accept terms</VfCheckbox>
               <VfCheckbox invalid>Invalid choice</VfCheckbox>
+            </div>
+          </div>
+
+          <div class="demo-item">
+            <p class="demo-label">vf-switch</p>
+            <div class="demo-stack">
               <VfSwitch v-model="switchValue">Enable notifications</VfSwitch>
               <VfSwitch v-model="iconSwitchValue">
                 <template #thumb="{ checked }">
@@ -713,6 +762,12 @@ const tabContent = computed<Record<string, string>>(() => ({
                 Icon thumb
               </VfSwitch>
               <VfSwitch size="sm">Compact toggle</VfSwitch>
+            </div>
+          </div>
+
+          <div class="demo-item">
+            <p class="demo-label">vf-radio</p>
+            <div class="demo-stack">
               <VfRadio v-model="radioValue" name="demo-plan" value="free"
                 >Free plan</VfRadio
               >
@@ -797,23 +852,76 @@ const tabContent = computed<Record<string, string>>(() => ({
                   :items="docsMenuSimpleItems"
                 />
               </div>
+
+              <VfDivider />
+
+              <div class="demo-stack">
+                <p class="demo-text">Complex Pills</p>
+                <VfNavMenu
+                  v-model="activeMenuValue"
+                  :items="docsMenuItems"
+                  variant="pills"
+                />
+              </div>
+
+              <VfDivider />
+
+              <div class="demo-stack">
+                <p class="demo-text">Simple Pills</p>
+                <VfNavMenu
+                  v-model="activeSimpleMenuValue"
+                  :items="docsMenuSimpleItems"
+                  variant="pills"
+                />
+              </div>
             </div>
           </div>
 
           <div class="demo-item">
             <p class="demo-label">vf-menu-bar</p>
-            <VfMenuBar :items="topMenuItems" />
+            <div class="demo-stack">
+              <div class="demo-stack">
+                <p class="demo-text">Default</p>
+                <VfMenuBar :items="topMenuItems" />
+              </div>
+
+              <VfDivider />
+
+              <div class="demo-stack">
+                <p class="demo-text">Pills</p>
+                <VfMenuBar :items="topMenuItems" variant="pills" />
+              </div>
+            </div>
           </div>
 
           <div class="demo-item">
             <p class="demo-label">vf-table-of-contents</p>
-            <VfTableOfContents
-              aria-label="Page navigation"
-              smooth
-              :scroll-offset="32"
-              :items="tocItems"
-              :active-id="activeHeadingId"
-            />
+            <div class="demo-stack">
+              <div class="demo-stack">
+                <p class="demo-text">Default</p>
+                <VfTableOfContents
+                  aria-label="Page navigation"
+                  smooth
+                  :scroll-offset="32"
+                  :items="tocItems"
+                  :active-id="activeHeadingId"
+                />
+              </div>
+
+              <VfDivider />
+
+              <div class="demo-stack">
+                <p class="demo-text">Pills</p>
+                <VfTableOfContents
+                  aria-label="Page navigation pills"
+                  smooth
+                  :scroll-offset="32"
+                  :items="tocItems"
+                  :active-id="activeHeadingId"
+                  variant="pills"
+                />
+              </div>
+            </div>
           </div>
         </div>
       </section>

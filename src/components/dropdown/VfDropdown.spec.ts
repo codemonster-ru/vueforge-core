@@ -37,6 +37,32 @@ describe("VfDropdown", () => {
     expect(wrapper.find(".vf-dropdown__arrow").exists()).toBe(true);
   });
 
+  it("supports pills variant", async () => {
+    const wrapper = mount(VfDropdown, {
+      attachTo: document.body,
+      global: {
+        stubs: {
+          teleport: true,
+        },
+      },
+      props: {
+        defaultOpen: true,
+        variant: "pills",
+      },
+      slots: {
+        trigger: '<button type="button">More</button>',
+        default:
+          '<button class="vf-dropdown__item" role="menuitem">Edit</button>',
+      },
+    });
+
+    await nextTick();
+
+    expect(wrapper.find(".vf-dropdown__menu").classes()).toContain(
+      "vf-dropdown__menu--pills",
+    );
+  });
+
   it("supports keyboard navigation and closes on escape", async () => {
     const wrapper = mount(VfDropdown, {
       attachTo: document.body,
