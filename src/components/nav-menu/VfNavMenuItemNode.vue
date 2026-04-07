@@ -48,6 +48,10 @@ const resolvedRel = computed(() => {
   return props.item.target === "_blank" ? "noopener noreferrer" : undefined;
 });
 
+const showsExternalLinkIcon = computed(
+  () => isLink.value && props.item.target === "_blank",
+);
+
 const linkProps = computed(() => {
   if (props.item.to !== undefined) {
     return {
@@ -223,6 +227,13 @@ function onNestedListAfterLeave(element: Element) {
           <VueIconify :icon="item.leadingIcon" size="1rem" />
         </span>
         <span class="vf-nav-menu__label">{{ item.label }}</span>
+      </span>
+      <span
+        v-if="showsExternalLinkIcon"
+        class="vf-nav-menu__icon vf-nav-menu__icon--external"
+        aria-hidden="true"
+      >
+        <VueIconify :icon="icons.externalLink" size="0.875rem" />
       </span>
     </component>
 

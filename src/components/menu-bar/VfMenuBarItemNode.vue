@@ -53,6 +53,10 @@ const resolvedRel = computed(() => {
   return props.item.target === "_blank" ? "noopener noreferrer" : undefined;
 });
 
+const showsExternalLinkIcon = computed(
+  () => isLink.value && props.item.target === "_blank",
+);
+
 const linkProps = computed(() => {
   if (props.item.to !== undefined) {
     return {
@@ -228,6 +232,13 @@ function onPointerEnter() {
           <VueIconify :icon="item.leadingIcon" size="1rem" />
         </span>
         <span class="vf-menu-bar__label">{{ item.label }}</span>
+      </span>
+      <span
+        v-if="showsExternalLinkIcon"
+        class="vf-menu-bar__icon vf-menu-bar__icon--external"
+        aria-hidden="true"
+      >
+        <VueIconify :icon="icons.externalLink" size="0.875rem" />
       </span>
     </component>
 

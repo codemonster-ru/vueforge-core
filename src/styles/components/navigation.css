@@ -101,6 +101,18 @@
 
 .vf-menu-bar--pills {
   --vf-menu-bar-current-list-gap: var(--vf-menu-bar-pills-list-gap);
+  --vf-menu-bar-current-top-hover-color: var(
+    --vf-nav-menu-pills-item-hover-color
+  );
+  --vf-menu-bar-current-top-hover-background: var(
+    --vf-nav-menu-pills-item-hover-background
+  );
+  --vf-menu-bar-current-top-active-color: var(
+    --vf-nav-menu-pills-item-active-color
+  );
+  --vf-menu-bar-current-top-active-background: var(
+    --vf-nav-menu-pills-item-active-background
+  );
   --vf-menu-bar-current-submenu-hover-color: var(
     --vf-nav-menu-pills-item-hover-color
   );
@@ -176,6 +188,7 @@
 
 .vf-menu-bar__item--top {
   width: auto;
+  padding-inline: 0.5rem;
   white-space: nowrap;
 }
 
@@ -195,13 +208,11 @@
 
 .vf-menu-bar__item--top.vf-menu-bar__item--active {
   color: var(--vf-menu-bar-current-top-active-color);
-  font-weight: var(--vf-font-weight-medium);
   background: var(--vf-menu-bar-current-top-active-background);
 }
 
 .vf-menu-bar__item:not(.vf-menu-bar__item--top).vf-menu-bar__item--active {
   color: var(--vf-menu-bar-current-submenu-active-color);
-  font-weight: var(--vf-font-weight-medium);
   background: var(--vf-menu-bar-current-submenu-active-background);
 }
 
@@ -696,14 +707,12 @@
 
 .vf-nav-menu__item--active {
   color: var(--vf-nav-menu-current-item-active-color);
-  font-weight: var(--vf-font-weight-medium);
   border-color: transparent;
   background: var(--vf-nav-menu-current-item-active-background);
 }
 
 .vf-table-of-contents__link--active {
   color: var(--vf-table-of-contents-current-active-color);
-  font-weight: var(--vf-font-weight-medium);
   border-color: transparent;
   background: var(--vf-table-of-contents-current-active-background);
 }
@@ -823,6 +832,7 @@
   width: auto;
   min-height: var(--vf-table-of-contents-current-item-min-height);
   padding: var(--vf-table-of-contents-current-item-padding);
+  font-size: var(--vf-text-label-font-size);
   color: var(--vf-table-of-contents-color);
   text-decoration: none;
   overflow-wrap: anywhere;

@@ -63,8 +63,8 @@ export const defaultThemePresetSource = {
     navMenuBranchAncestorActiveColor:
       "var(--vf-nav-menu-item-ancestor-active-color)",
     tableOfContentsPillsListGap: "var(--vf-table-of-contents-list-gap)",
-    tableOfContentsPillsItemPadding: "var(--vf-field-padding-md)",
-    tableOfContentsPillsItemMinHeight: "var(--vf-control-height-md)",
+    tableOfContentsPillsItemPadding: "0.25rem 0.625rem",
+    tableOfContentsPillsItemMinHeight: "2rem",
     tableOfContentsPillsHoverColor: "var(--vf-table-of-contents-hover-color)",
     tableOfContentsPillsHoverBackground:
       "color-mix(in srgb, var(--vf-color-primary) 5%, transparent)",

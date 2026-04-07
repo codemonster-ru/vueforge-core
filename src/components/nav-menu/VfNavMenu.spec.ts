@@ -238,6 +238,40 @@ describe("VfNavMenu", () => {
     ).toBe(false);
   });
 
+  it("shows an external-link indicator for leaf links opened in a new tab", async () => {
+    const wrapper = mount(VfNavMenu, {
+      props: {
+        items: [
+          {
+            value: "resources",
+            label: "Resources",
+            children: [
+              {
+                value: "storybook",
+                label: "Storybook",
+                href: "https://storybook.js.org",
+                target: "_blank",
+              },
+              {
+                value: "components",
+                label: "Components",
+                href: "/components",
+              },
+            ],
+          },
+        ],
+      },
+    });
+
+    await wrapper.find(".vf-nav-menu__item--branch").trigger("click");
+    await nextTick();
+
+    const items = wrapper.findAll(".vf-nav-menu__item");
+
+    expect(items[1].find(".vf-nav-menu__icon--external").exists()).toBe(true);
+    expect(items[2].find(".vf-nav-menu__icon--external").exists()).toBe(false);
+  });
+
   it("supports single expand mode for sibling branches on the same level", async () => {
     const wrapper = mount(VfNavMenu, {
       props: {

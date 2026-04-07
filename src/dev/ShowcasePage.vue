@@ -131,6 +131,12 @@ const docsMenuItems: VfNavMenuItem[] = [
           },
           { value: "accordion", label: "Accordion" },
           { value: "nav-menu", label: "Nav Menu" },
+          {
+            value: "storybook-nav",
+            label: "Storybook",
+            href: "https://storybook.js.org",
+            target: "_blank",
+          },
         ],
       },
       {
@@ -244,6 +250,12 @@ const topMenuItems: VfNavMenuItem[] = [
           { value: "actions", label: "Actions" },
           { value: "forms-menu", label: "Forms" },
           { value: "navigation-menu", label: "Navigation" },
+          {
+            value: "storybook-menu",
+            label: "Storybook",
+            href: "https://storybook.js.org",
+            target: "_blank",
+          },
         ],
       },
     ],
@@ -265,6 +277,12 @@ const topMenuItems: VfNavMenuItem[] = [
     ],
   },
   { value: "pricing", label: "Pricing" },
+  {
+    value: "github",
+    label: "GitHub",
+    href: "https://github.com/codemonster-ru",
+    target: "_blank",
+  },
   { value: "about", label: "About" },
 ];
 

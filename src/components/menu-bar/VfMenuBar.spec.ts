@@ -237,6 +237,39 @@ describe("VfMenuBar", () => {
     );
   });
 
+  it("shows an external-link indicator for leaf links opened in a new tab", () => {
+    const wrapper = mount(VfMenuBar, {
+      props: {
+        items: [
+          {
+            value: "docs",
+            label: "Docs",
+            href: "https://example.com/docs",
+            target: "_blank",
+          },
+          {
+            value: "pricing",
+            label: "Pricing",
+            href: "/pricing",
+          },
+        ],
+      },
+    });
+
+    expect(
+      wrapper
+        .findAll(".vf-menu-bar__item")[0]
+        ?.find(".vf-menu-bar__icon--external")
+        .exists(),
+    ).toBe(true);
+    expect(
+      wrapper
+        .findAll(".vf-menu-bar__item")[1]
+        ?.find(".vf-menu-bar__icon--external")
+        .exists(),
+    ).toBe(false);
+  });
+
   it("marks parent branches when a descendant is active", () => {
     const wrapper = mount(VfMenuBar, {
       props: {

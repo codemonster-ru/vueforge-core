@@ -1,5 +1,35 @@
 # Changelog
 
+## 1.10.0 - 2026-04-07
+
+Minor release for `@codemonster-ru/vueforge-core`.
+
+### Added
+
+- External-link indicators for leaf items with `target="_blank"` in:
+  - `VfMenuBar`
+  - `VfNavMenu`
+- Expanded demo coverage for external links on:
+  - top-level menu-bar items
+  - nested menu-bar submenu items
+  - nested nav-menu items
+
+### Changed
+
+- Refined navigation spacing and interaction polish across:
+  - `VfMenuBar`
+  - `VfNavMenu`
+  - `VfTableOfContents`
+  - `VfDropdown`
+  - `VfSelect`
+- Active and selected states no longer shift layout by increasing font weight in:
+  - `VfMenuBar`
+  - `VfNavMenu`
+  - `VfDropdown`
+  - `VfSelect`
+- `VfMenuBar` top-level items are now more compact, and the `pills` variant now uses filled hover and active states on the top level to better match the rest of the navigation system
+- `VfTableOfContents` `pills` variant now uses a denser item height and padding balance for a less button-like presentation
+
 ## 1.9.0 - 2026-04-06
 
 Minor release for `@codemonster-ru/vueforge-core`.
