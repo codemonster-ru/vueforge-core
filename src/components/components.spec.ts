@@ -534,4 +534,30 @@ describe("core primitives", () => {
     expect(tag.classes()).toContain("vf-tag--contrast");
     expect(tag.text()).toBe("Preview");
   });
+
+  it("supports custom and hidden alert icons", () => {
+    const customIconAlert = mount(VfAlert, {
+      props: {
+        title: "Custom icon",
+        icon: "gear",
+      },
+      slots: {
+        default: "Alert content",
+      },
+    });
+
+    const hiddenIconAlert = mount(VfAlert, {
+      props: {
+        title: "No icon",
+        hideIcon: true,
+      },
+      slots: {
+        default: "Alert content",
+      },
+    });
+
+    expect(customIconAlert.find(".vf-alert__icon").exists()).toBe(true);
+    expect(customIconAlert.find(".vif-icon").exists()).toBe(true);
+    expect(hiddenIconAlert.find(".vf-alert__icon").exists()).toBe(false);
+  });
 });

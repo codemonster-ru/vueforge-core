@@ -685,6 +685,13 @@ const tabContent = computed<Record<string, string>>(() => ({
               <VfAlert tone="contrast" title="Contrast"
                 >Contrast content.</VfAlert
               >
+              <VfDivider />
+              <VfAlert title="Custom icon" icon="gear"
+                >Custom icon content.</VfAlert
+              >
+              <VfAlert title="Without icon" hide-icon
+                >Text-first alert content.</VfAlert
+              >
             </div>
           </div>
 

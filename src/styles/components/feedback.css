@@ -163,11 +163,6 @@
   justify-content: center;
   align-self: start;
   color: var(--vf-color-primary);
-  width: 1.75rem;
-  height: 1.75rem;
-  border: 1px solid color-mix(in srgb, currentColor 18%, transparent);
-  border-radius: 999px;
-  background: color-mix(in srgb, currentColor 10%, var(--vf-color-surface));
 }
 
 .vf-alert--success .vf-alert__icon {

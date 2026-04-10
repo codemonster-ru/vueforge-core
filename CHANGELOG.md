@@ -1,5 +1,28 @@
 # Changelog
 
+## 1.11.0 - 2026-04-11
+
+Minor release for `@codemonster-ru/vueforge-core`.
+
+### Added
+
+- `VfAlert` now supports icon customization through:
+  - `icon` prop
+  - `hideIcon` prop
+  - `icon` slot override
+
+### Changed
+
+- Updated `@codemonster-ru/vueiconify` to `^1.1.0`
+- Refined `VfAlert` icon semantics and visuals:
+  - tone-based default icons now use a more consistent circular icon set
+  - warning alerts now use `alertCircle`
+  - danger alerts now use `xCircle`
+  - decorative icon rings were removed so custom icons render cleanly
+- Expanded alert demo coverage for:
+  - custom icon usage
+  - text-first alerts without an icon
+
 ## 1.10.0 - 2026-04-07
 
 Minor release for `@codemonster-ru/vueforge-core`.

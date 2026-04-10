@@ -2,6 +2,7 @@
 import { computed, useAttrs } from "vue";
 import { VueIconify, icons } from "@codemonster-ru/vueiconify";
 import { cx } from "@/utils/classes";
+import type { IconName } from "@codemonster-ru/vueiconify";
 import type { VfFeedbackTone } from "@/types/components";
 
 defineOptions({
@@ -11,11 +12,15 @@ defineOptions({
 interface VfAlertProps {
   tone?: VfFeedbackTone;
   title?: string;
+  icon?: IconName | string;
+  hideIcon?: boolean;
 }
 
 const props = withDefaults(defineProps<VfAlertProps>(), {
   tone: "primary",
   title: undefined,
+  icon: undefined,
+  hideIcon: false,
 });
 
 const attrs = useAttrs();
@@ -24,17 +29,17 @@ const classes = computed(() =>
   cx("vf-alert", props.tone !== "primary" && `vf-alert--${props.tone}`),
 );
 
-const iconName = computed(() => {
+const defaultIconName = computed(() => {
   if (props.tone === "success") {
     return icons.checkCircle;
   }
 
   if (props.tone === "info") {
-    return icons.info;
+    return icons.infoCircle;
   }
 
   if (props.tone === "warn") {
-    return icons.warning;
+    return icons.alertCircle;
   }
 
   if (props.tone === "help") {
@@ -42,21 +47,26 @@ const iconName = computed(() => {
   }
 
   if (props.tone === "danger") {
-    return icons.warning;
+    return icons.xCircle;
   }
 
   if (props.tone === "contrast") {
-    return icons.info;
+    return icons.infoCircle;
   }
 
-  return icons.info;
+  return icons.infoCircle;
 });
+
+const iconName = computed(() => props.icon ?? defaultIconName.value);
+const showsIcon = computed(() => !props.hideIcon);
 </script>
 
 <template>
   <section :class="classes" role="alert" v-bind="attrs">
-    <div class="vf-alert__icon" aria-hidden="true">
-      <VueIconify :icon="iconName" size="2rem" />
+    <div v-if="showsIcon" class="vf-alert__icon" aria-hidden="true">
+      <slot name="icon">
+        <VueIconify :icon="iconName" size="2rem" />
+      </slot>
     </div>
 
     <div class="vf-alert__content">
