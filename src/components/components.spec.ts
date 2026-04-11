@@ -285,6 +285,72 @@ describe("core primitives", () => {
     expect(switchControl.emitted("update:modelValue")).toEqual([[true]]);
   });
 
+  it("supports static switch track variant", () => {
+    const wrapper = mount(VfSwitch, {
+      props: {
+        static: true,
+      },
+    });
+
+    expect(wrapper.classes()).toContain("vf-switch--static");
+  });
+
+  it("supports invalid switch state", () => {
+    const wrapper = mount(VfSwitch, {
+      props: {
+        invalid: true,
+      },
+    });
+
+    expect(wrapper.classes()).toContain("vf-switch--invalid");
+    expect(wrapper.get("input").attributes("aria-invalid")).toBe("true");
+  });
+
+  it("supports disabled states across form controls", () => {
+    const input = mount(VfInput, {
+      attrs: {
+        disabled: true,
+      },
+    });
+    const textarea = mount(VfTextarea, {
+      attrs: {
+        disabled: true,
+      },
+    });
+    const select = mount(VfSelect, {
+      props: {
+        disabled: true,
+        options: [{ value: "starter", label: "Starter" }],
+      },
+    });
+    const checkbox = mount(VfCheckbox, {
+      props: {
+        disabled: true,
+      },
+    });
+    const switchControl = mount(VfSwitch, {
+      props: {
+        disabled: true,
+      },
+    });
+    const radio = mount(VfRadio, {
+      props: {
+        disabled: true,
+        value: "starter",
+      },
+    });
+
+    expect(input.attributes("disabled")).toBeDefined();
+    expect(textarea.attributes("disabled")).toBeDefined();
+    expect(select.get("button.vf-select").attributes("disabled")).toBeDefined();
+    expect(checkbox.classes()).toContain("vf-checkbox--disabled");
+    expect(checkbox.get("input").attributes("disabled")).toBeDefined();
+    expect(switchControl.classes()).toContain("vf-switch--disabled");
+    expect(switchControl.get("input").attributes("disabled")).toBeDefined();
+    expect(radio.classes()).toContain("vf-radio--disabled");
+    expect(radio.get("input").attributes("disabled")).toBeDefined();
+  });
+
   it("supports thumb slot content with checked state", async () => {
     const wrapper = mount(SwitchThumbProbe);
 

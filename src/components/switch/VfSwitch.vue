@@ -19,6 +19,8 @@ defineOptions({
 interface VfSwitchProps {
   modelValue?: boolean;
   size?: VfControlSize;
+  static?: boolean;
+  invalid?: boolean;
   disabled?: boolean;
   label?: string;
 }
@@ -26,6 +28,8 @@ interface VfSwitchProps {
 const props = withDefaults(defineProps<VfSwitchProps>(), {
   modelValue: false,
   size: "md",
+  static: false,
+  invalid: false,
   disabled: false,
   label: undefined,
 });
@@ -42,7 +46,9 @@ const rootClasses = computed(() =>
   cx(
     "vf-switch",
     `vf-switch--${props.size}`,
+    props.static && "vf-switch--static",
     props.modelValue && "vf-switch--checked",
+    props.invalid && "vf-switch--invalid",
     props.disabled && "vf-switch--disabled",
     attrs.class as string | undefined,
   ),
@@ -95,6 +101,7 @@ function handleChange(event: Event) {
       role="switch"
       :checked="props.modelValue"
       :disabled="props.disabled"
+      :aria-invalid="props.invalid || undefined"
       v-bind="inputAttrs"
       @change="handleChange"
     />

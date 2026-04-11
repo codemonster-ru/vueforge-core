@@ -72,10 +72,7 @@ onBeforeUnmount(() => {
   >
     <template #thumb="{ checked: thumbChecked }">
       <slot name="thumb" :checked="thumbChecked">
-        <VueIconify
-          :icon="thumbChecked ? icons.moon : icons.sun"
-          size="0.5rem"
-        />
+        <VueIconify :icon="thumbChecked ? icons.moon : icons.sun" />
       </slot>
     </template>
     <template v-if="hasContent">

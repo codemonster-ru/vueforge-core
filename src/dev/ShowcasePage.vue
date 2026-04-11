@@ -735,6 +735,7 @@ const tabContent = computed<Record<string, string>>(() => ({
             <div class="demo-stack">
               <VfInput v-model="inputValue" placeholder="Project name" />
               <VfInput invalid placeholder="Invalid input" />
+              <VfInput disabled placeholder="Disabled input" />
             </div>
           </div>
 
@@ -746,6 +747,7 @@ const tabContent = computed<Record<string, string>>(() => ({
                 placeholder="Describe the release..."
               />
               <VfTextarea invalid placeholder="Invalid textarea" />
+              <VfTextarea disabled placeholder="Disabled textarea" />
             </div>
           </div>
 
@@ -762,6 +764,11 @@ const tabContent = computed<Record<string, string>>(() => ({
                 placeholder="Invalid select"
                 :options="selectOptions"
               />
+              <VfSelect
+                disabled
+                placeholder="Disabled select"
+                :options="selectOptions"
+              />
             </div>
           </div>
 
@@ -770,6 +777,10 @@ const tabContent = computed<Record<string, string>>(() => ({
             <div class="demo-stack">
               <VfCheckbox v-model="checkboxValue">Accept terms</VfCheckbox>
               <VfCheckbox invalid>Invalid choice</VfCheckbox>
+              <VfCheckbox :model-value="true" disabled>
+                Disabled active choice
+              </VfCheckbox>
+              <VfCheckbox disabled>Disabled choice</VfCheckbox>
             </div>
           </div>
 
@@ -777,16 +788,20 @@ const tabContent = computed<Record<string, string>>(() => ({
             <p class="demo-label">vf-switch</p>
             <div class="demo-stack">
               <VfSwitch v-model="switchValue">Enable notifications</VfSwitch>
+              <VfSwitch static>Static track</VfSwitch>
               <VfSwitch v-model="iconSwitchValue">
                 <template #thumb="{ checked }">
-                  <VueIconify
-                    :icon="checked ? icons.check : icons.xmark"
-                    size="0.5rem"
-                  />
+                  <VueIconify :icon="checked ? icons.check : icons.xmark" />
                 </template>
                 Icon thumb
               </VfSwitch>
               <VfSwitch size="sm">Compact toggle</VfSwitch>
+              <VfSwitch static invalid>Invalid static toggle</VfSwitch>
+              <VfSwitch invalid>Invalid toggle</VfSwitch>
+              <VfSwitch :model-value="true" disabled>
+                Disabled active toggle
+              </VfSwitch>
+              <VfSwitch disabled>Disabled toggle</VfSwitch>
             </div>
           </div>
 
@@ -798,6 +813,20 @@ const tabContent = computed<Record<string, string>>(() => ({
               >
               <VfRadio v-model="radioValue" name="demo-plan" value="pro"
                 >Pro plan</VfRadio
+              >
+              <VfRadio name="demo-invalid-plan" value="enterprise" invalid
+                >Invalid option</VfRadio
+              >
+              <VfRadio
+                :model-value="'team'"
+                name="demo-disabled-active-plan"
+                value="team"
+                disabled
+              >
+                Disabled active option
+              </VfRadio>
+              <VfRadio name="demo-disabled-plan" value="team" disabled
+                >Disabled option</VfRadio
               >
             </div>
           </div>

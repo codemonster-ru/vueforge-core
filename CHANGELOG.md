@@ -1,5 +1,32 @@
 # Changelog
 
+## 1.12.0 - 2026-04-11
+
+Minor release for `@codemonster-ru/vueforge-core`.
+
+### Added
+
+- Expanded theme-token coverage so styles can now be customized independently for:
+  - form controls
+  - navigation and menu components
+  - overlays and surfaces
+  - feedback and disclosure components
+- Expanded demo coverage for form states, including:
+  - disabled inputs and selection controls
+  - disabled active states for `VfCheckbox`, `VfSwitch`, and `VfRadio`
+  - invalid static-state coverage for `VfSwitch`
+
+### Changed
+
+- Refactored form, navigation, surface, overlay, and feedback styling to use component-specific tokens that still default to shared semantic tokens
+- Updated `VfSwitch` API so `static` is now a dedicated boolean prop instead of a `variant`
+- Refined `VfSwitch` state behavior across:
+  - `static`
+  - `invalid`
+  - `disabled`
+  - light and dark themes
+- Disabled form states now preserve neutral border colors and rely on muted backgrounds for clearer blocked-state presentation
+
 ## 1.11.0 - 2026-04-11
 
 Minor release for `@codemonster-ru/vueforge-core`.

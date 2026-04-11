@@ -3,10 +3,10 @@
   flex-direction: column;
   gap: var(--vf-surface-gap);
   padding: var(--vf-surface-padding);
-  border: 1px solid var(--vf-color-border);
+  border: 1px solid var(--vf-card-border-color);
   border-radius: var(--vf-radius-surface);
-  background: var(--vf-color-surface);
-  color: var(--vf-color-text);
+  background: var(--vf-card-background);
+  color: var(--vf-card-color);
   line-height: var(--vf-text-body-line-height);
 }
 
@@ -23,7 +23,7 @@
 }
 
 .vf-card__body {
-  color: var(--vf-color-muted);
+  color: var(--vf-card-body-color);
 }
 
 .vf-panel {
@@ -31,15 +31,15 @@
   flex-direction: column;
   gap: var(--vf-surface-gap);
   padding: var(--vf-surface-padding);
-  border: 1px solid var(--vf-color-border);
+  border: 1px solid var(--vf-panel-border-color);
   border-radius: var(--vf-radius-surface);
-  background: var(--vf-color-surface);
-  color: var(--vf-color-text);
+  background: var(--vf-panel-background);
+  color: var(--vf-panel-color);
   line-height: var(--vf-text-body-line-height);
 }
 
 .vf-panel--subtle {
-  background: transparent;
+  background: var(--vf-panel-subtle-background);
   box-shadow: none;
 }
 
@@ -54,10 +54,10 @@
   display: flex;
   width: 100%;
   min-width: 0;
-  border: 1px solid var(--vf-color-border);
+  border: 1px solid var(--vf-table-border-color);
   border-radius: var(--vf-radius-surface);
-  background: var(--vf-color-surface);
-  color: var(--vf-color-text);
+  background: var(--vf-table-background);
+  color: var(--vf-table-color);
   overflow: hidden;
 }
 
@@ -71,7 +71,7 @@
   min-width: 36rem;
   border-collapse: separate;
   border-spacing: 0;
-  color: var(--vf-color-text);
+  color: var(--vf-table-color);
   font-size: var(--vf-text-body-font-size);
   font-weight: var(--vf-text-body-font-weight);
   line-height: var(--vf-text-body-line-height);
@@ -80,7 +80,7 @@
 .vf-table__caption {
   padding: 0.875rem 1rem 0;
   text-align: left;
-  color: var(--vf-color-muted);
+  color: var(--vf-table-caption-color);
 }
 
 .vf-table :where(th, td) {
@@ -91,38 +91,30 @@
 
 .vf-table :where(th) {
   font-weight: var(--vf-font-weight-medium);
-  color: var(--vf-color-text);
-  background: var(--vf-color-surface-muted);
+  color: var(--vf-table-head-color);
+  background: var(--vf-table-head-background);
 }
 
 .vf-table :where(td) {
-  color: var(--vf-color-text);
+  color: var(--vf-table-color);
 }
 
 .vf-table thead th {
-  border-bottom: 1px solid var(--vf-color-border);
+  border-bottom: 1px solid var(--vf-table-border-color);
 }
 
 .vf-table tbody tr + tr td,
 .vf-table tfoot tr:first-child td {
-  border-top: 1px solid var(--vf-color-border);
+  border-top: 1px solid var(--vf-table-border-color);
 }
 
 .vf-table tfoot td {
-  color: var(--vf-color-muted);
-  background: color-mix(
-    in srgb,
-    var(--vf-color-surface) 88%,
-    var(--vf-color-surface-muted)
-  );
+  color: var(--vf-table-foot-color);
+  background: var(--vf-table-foot-background);
 }
 
 .vf-table--striped tbody tr:nth-child(even) td {
-  background: color-mix(
-    in srgb,
-    var(--vf-color-surface) 78%,
-    var(--vf-color-surface-muted)
-  );
+  background: var(--vf-table-stripe-background);
 }
 
 .vf-table--compact :where(th, td) {

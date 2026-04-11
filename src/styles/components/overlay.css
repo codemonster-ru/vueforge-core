@@ -67,10 +67,10 @@
   max-height: var(--vf-dialog-max-height);
   overflow: auto;
   padding: var(--vf-overlay-padding);
-  border: 1px solid var(--vf-color-border);
+  border: 1px solid var(--vf-dialog-content-border-color);
   border-radius: var(--vf-radius-overlay);
-  background: var(--vf-color-surface);
-  color: var(--vf-color-text);
+  background: var(--vf-dialog-content-background);
+  color: var(--vf-dialog-content-color);
   line-height: var(--vf-text-body-line-height);
   opacity: 1;
   transform: translate3d(0, 0, 0);
@@ -87,10 +87,10 @@
   gap: var(--vf-overlay-gap);
   overflow: hidden;
   padding: 0;
-  border: 1px solid var(--vf-color-border);
+  border: 1px solid var(--vf-drawer-content-border-color);
   border-radius: var(--vf-radius-overlay);
-  background: var(--vf-color-surface);
-  color: var(--vf-color-text);
+  background: var(--vf-drawer-content-background);
+  color: var(--vf-drawer-content-color);
   line-height: var(--vf-text-body-line-height);
   transform: translate3d(0, 0, 0);
   transition: transform var(--vf-motion-duration-normal)
@@ -134,13 +134,13 @@
 
 .vf-dialog__content:focus-visible {
   outline: none;
-  border-color: var(--vf-color-primary);
+  border-color: var(--vf-dialog-content-focus-border-color);
   box-shadow: 0 0 0 var(--vf-focus-ring-width) var(--vf-color-focus-ring);
 }
 
 .vf-drawer__content:focus-visible {
   outline: none;
-  border-color: var(--vf-color-primary);
+  border-color: var(--vf-drawer-content-focus-border-color);
   box-shadow: 0 0 0 var(--vf-focus-ring-width) var(--vf-color-focus-ring);
 }
 
@@ -369,7 +369,7 @@
 .vf-dropdown__trigger:focus-visible,
 .vf-popover__trigger:focus-visible {
   outline: none;
-  border-color: var(--vf-color-primary);
+  border-color: var(--vf-popover-trigger-focus-border-color);
   box-shadow: 0 0 0 var(--vf-focus-ring-width) var(--vf-color-focus-ring);
 }
 
@@ -424,10 +424,10 @@
   z-index: var(--vf-z-popover);
   width: var(--vf-popover-width);
   padding: var(--vf-section-padding);
-  border: 1px solid var(--vf-color-border);
+  border: 1px solid var(--vf-popover-content-border-color);
   border-radius: var(--vf-radius-surface);
-  background: var(--vf-color-surface);
-  color: var(--vf-color-text);
+  background: var(--vf-popover-content-background);
+  color: var(--vf-popover-content-color);
   font-size: var(--vf-text-body-font-size);
   font-weight: var(--vf-text-body-font-weight);
   line-height: var(--vf-text-body-line-height);
@@ -446,9 +446,9 @@
   position: absolute;
   width: var(--vf-floating-arrow-size);
   height: var(--vf-floating-arrow-size);
-  background: var(--vf-color-surface);
-  border-left: 1px solid var(--vf-color-border);
-  border-top: 1px solid var(--vf-color-border);
+  background: var(--vf-popover-content-background);
+  border-left: 1px solid var(--vf-popover-content-border-color);
+  border-top: 1px solid var(--vf-popover-content-border-color);
   transform: rotate(45deg);
   pointer-events: none;
 }
@@ -472,7 +472,7 @@
   border: 1px solid transparent;
   border-radius: var(--vf-radius-control-tight);
   background: transparent;
-  color: var(--vf-color-text);
+  color: var(--vf-dropdown-item-color);
   font-size: var(--vf-text-body-font-size);
   font-weight: var(--vf-text-body-font-weight);
   line-height: var(--vf-text-body-line-height);
@@ -493,34 +493,34 @@
 }
 
 .vf-dropdown__menu--default .vf-dropdown__item:hover {
-  color: var(--vf-nav-menu-item-hover-color);
+  color: var(--vf-dropdown-item-default-hover-color);
   border-color: transparent;
-  background: var(--vf-nav-menu-item-hover-background);
+  background: var(--vf-dropdown-item-default-hover-background);
 }
 
 .vf-dropdown__menu--default .vf-dropdown__item--active {
-  color: var(--vf-nav-menu-item-active-color);
+  color: var(--vf-dropdown-item-default-active-color);
   border-color: transparent;
-  background: var(--vf-nav-menu-item-active-background);
+  background: var(--vf-dropdown-item-default-active-background);
 }
 
 .vf-dropdown__menu--pills .vf-dropdown__item:hover {
-  color: var(--vf-nav-menu-pills-item-hover-color);
+  color: var(--vf-dropdown-item-pills-hover-color);
   border-color: transparent;
-  background: var(--vf-nav-menu-pills-item-hover-background);
+  background: var(--vf-dropdown-item-pills-hover-background);
 }
 
 .vf-dropdown__menu--pills .vf-dropdown__item--active {
-  color: var(--vf-nav-menu-pills-item-active-color);
+  color: var(--vf-dropdown-item-pills-active-color);
   border-color: transparent;
-  background: var(--vf-nav-menu-pills-item-active-background);
+  background: var(--vf-dropdown-item-pills-active-background);
 }
 
 .vf-dropdown__item:focus-visible {
   outline: none;
-  border-color: var(--vf-color-primary);
+  border-color: var(--vf-dropdown-item-focus-border-color);
   box-shadow: 0 0 0 var(--vf-focus-ring-width) var(--vf-color-focus-ring);
-  color: var(--vf-color-primary);
+  color: var(--vf-dropdown-item-focus-color);
 }
 
 .vf-tooltip {
@@ -544,10 +544,10 @@
   z-index: var(--vf-z-tooltip);
   max-width: var(--vf-tooltip-max-width);
   padding: var(--vf-tooltip-padding);
-  border: 1px solid var(--vf-color-border);
+  border: 1px solid var(--vf-tooltip-content-border-color);
   border-radius: var(--vf-radius-control-tight);
-  background: var(--vf-color-surface);
-  color: var(--vf-color-text);
+  background: var(--vf-tooltip-content-background);
+  color: var(--vf-tooltip-content-color);
   font-size: var(--vf-tooltip-font-size);
   line-height: var(--vf-tooltip-line-height);
   opacity: 1;
@@ -577,17 +577,17 @@
   position: absolute;
   width: var(--vf-floating-arrow-size);
   height: var(--vf-floating-arrow-size);
-  background: var(--vf-color-surface);
+  background: var(--vf-tooltip-content-background);
   transform: rotate(45deg);
   pointer-events: none;
 }
 
 .vf-tooltip__arrow--bottom {
-  border-left: 1px solid var(--vf-color-border);
-  border-top: 1px solid var(--vf-color-border);
+  border-left: 1px solid var(--vf-tooltip-content-border-color);
+  border-top: 1px solid var(--vf-tooltip-content-border-color);
 }
 
 .vf-tooltip__arrow--top {
-  border-right: 1px solid var(--vf-color-border);
-  border-bottom: 1px solid var(--vf-color-border);
+  border-right: 1px solid var(--vf-tooltip-content-border-color);
+  border-bottom: 1px solid var(--vf-tooltip-content-border-color);
 }
