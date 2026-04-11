@@ -295,6 +295,16 @@ describe("core primitives", () => {
     expect(wrapper.classes()).toContain("vf-switch--static");
   });
 
+  it("supports inverse thumb contrast for switch", () => {
+    const wrapper = mount(VfSwitch, {
+      props: {
+        thumbContrast: "inverse",
+      },
+    });
+
+    expect(wrapper.classes()).toContain("vf-switch--thumb-contrast-inverse");
+  });
+
   it("supports invalid switch state", () => {
     const wrapper = mount(VfSwitch, {
       props: {
@@ -403,6 +413,28 @@ describe("core primitives", () => {
     const wrapper = mount(ThemeSwitchProbe);
 
     expect(wrapper.find(".vf-switch__content").exists()).toBe(false);
+  });
+
+  it("supports button variant for theme switch", async () => {
+    const wrapper = mount(
+      defineComponent({
+        components: {
+          VfThemeProvider,
+          VfThemeSwitch,
+        },
+        template: `
+          <VfThemeProvider default-theme="system">
+            <VfThemeSwitch variant="button" />
+          </VfThemeProvider>
+        `,
+      }),
+    );
+
+    const button = wrapper.get("button");
+
+    expect(wrapper.find(".vf-switch").exists()).toBe(false);
+    expect(button.classes()).toContain("vf-icon-button");
+    expect(button.attributes("aria-label")).toBe("Switch to dark theme");
   });
 
   it("renders table of contents items, hrefs, and active state", () => {

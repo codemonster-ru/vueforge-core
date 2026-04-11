@@ -593,25 +593,6 @@
   height: var(--vf-switch-thumb-icon-size);
 }
 
-:root.vf-theme-transitioning .vf-switch__control {
-  transition:
-    background-color var(--vf-motion-duration-normal)
-      var(--vf-motion-ease-standard),
-    border-color var(--vf-motion-duration-normal) var(--vf-motion-ease-standard),
-    box-shadow var(--vf-motion-duration-normal) var(--vf-motion-ease-standard),
-    color var(--vf-motion-duration-normal) var(--vf-motion-ease-standard),
-    transform var(--vf-motion-duration-normal) var(--vf-motion-ease-standard);
-}
-
-:root.vf-theme-transitioning .vf-switch__thumb {
-  transition:
-    transform var(--vf-motion-duration-normal) var(--vf-motion-ease-standard),
-    background-color var(--vf-motion-duration-normal)
-      var(--vf-motion-ease-standard),
-    border-color var(--vf-motion-duration-normal) var(--vf-motion-ease-standard),
-    box-shadow var(--vf-motion-duration-normal) var(--vf-motion-ease-standard);
-}
-
 .vf-switch__input:checked + .vf-switch__control,
 .vf-switch--checked .vf-switch__control {
   border-color: var(--vf-switch-track-checked-border-color);
@@ -748,6 +729,32 @@ html[data-vf-theme="dark"]
   .vf-switch__thumb {
   border-color: var(--vf-color-primary-contrast);
   background: var(--vf-color-primary-contrast);
+}
+
+.vf-switch--thumb-contrast-inverse:not(.vf-switch--disabled) .vf-switch__thumb,
+.vf-switch--thumb-contrast-inverse:not(.vf-switch--disabled)
+  .vf-switch__input:checked
+  + .vf-switch__control
+  .vf-switch__thumb,
+.vf-switch--thumb-contrast-inverse:not(.vf-switch--disabled).vf-switch--checked
+  .vf-switch__thumb {
+  border-color: var(--vf-switch-thumb-inverse-border-color);
+  background: var(--vf-switch-thumb-inverse-background);
+  color: var(--vf-switch-thumb-inverse-color);
+}
+
+html[data-vf-theme="dark"]
+  .vf-switch--thumb-contrast-inverse:not(.vf-switch--disabled)
+  .vf-switch__input:checked
+  + .vf-switch__control
+  .vf-switch__thumb,
+html[data-vf-theme="dark"]
+  .vf-switch--thumb-contrast-inverse:not(
+    .vf-switch--disabled
+  ).vf-switch--checked
+  .vf-switch__thumb {
+  border-color: var(--vf-switch-thumb-inverse-border-color);
+  background: var(--vf-switch-thumb-inverse-background);
 }
 
 .vf-switch--sm .vf-switch__control {

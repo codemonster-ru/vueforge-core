@@ -1,5 +1,28 @@
 # Changelog
 
+## 1.13.0 - 2026-04-11
+
+Minor release for `@codemonster-ru/vueforge-core`.
+
+### Added
+
+- `VfThemeSwitch` now supports:
+  - `variant="button"` alongside the default switch presentation
+  - `static` as an explicit typed prop
+  - `thumbContrast="auto" | "inverse"` as an explicit typed prop
+- `VfSwitch` now supports `thumbContrast="auto" | "inverse"` for controlling thumb contrast independently from track behavior
+- Expanded demo coverage for:
+  - `VfThemeSwitch` switch, static, inverse-thumb, and button variants
+  - `VfThemeSwitch` button sizes
+  - `VfSwitch` inverse-thumb static presentation
+
+### Changed
+
+- Updated `@codemonster-ru/vueiconify` to `^1.1.1`
+- Refined `VfThemeSwitch` behavior so visual state tracks resolved theme more predictably during theme changes
+- Improved `VfSwitch` thumb theming with dedicated inverse-thumb tokens for better contrast tuning across light and dark themes
+- Theme-change transitions are now handled more consistently across VueForge components by preventing color-transition interpolation during `vf-theme-transitioning`
+
 ## 1.12.0 - 2026-04-11
 
 Minor release for `@codemonster-ru/vueforge-core`.

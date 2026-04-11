@@ -360,6 +360,16 @@ const tabContent = computed<Record<string, string>>(() => ({
             <div class="demo-stack">
               <div class="demo-inline">
                 <VfThemeSwitch />
+                <VfThemeSwitch static />
+                <VfThemeSwitch static thumb-contrast="inverse" />
+                <VfThemeSwitch variant="button" />
+                <VfThemeSwitch variant="button" size="sm" />
+                <VfThemeSwitch variant="button">
+                  {{ resolvedTheme === "dark" ? "Dark" : "Light" }}
+                </VfThemeSwitch>
+                <VfThemeSwitch variant="button" size="lg">
+                  {{ resolvedTheme === "dark" ? "Dark" : "Light" }}
+                </VfThemeSwitch>
               </div>
               <p class="demo-text">
                 The switch reflects the resolved theme and turns system mode
@@ -789,6 +799,9 @@ const tabContent = computed<Record<string, string>>(() => ({
             <div class="demo-stack">
               <VfSwitch v-model="switchValue">Enable notifications</VfSwitch>
               <VfSwitch static>Static track</VfSwitch>
+              <VfSwitch static thumb-contrast="inverse">
+                Static track inverse thumb
+              </VfSwitch>
               <VfSwitch v-model="iconSwitchValue">
                 <template #thumb="{ checked }">
                   <VueIconify :icon="checked ? icons.check : icons.xmark" />

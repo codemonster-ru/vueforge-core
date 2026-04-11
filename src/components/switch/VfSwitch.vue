@@ -10,7 +10,10 @@ import {
   type VNode,
 } from "vue";
 import { cx } from "@/utils/classes";
-import type { VfControlSize } from "@/types/components";
+import type {
+  VfControlSize,
+  VfSwitchThumbContrast,
+} from "@/types/components";
 
 defineOptions({
   inheritAttrs: false,
@@ -20,6 +23,7 @@ interface VfSwitchProps {
   modelValue?: boolean;
   size?: VfControlSize;
   static?: boolean;
+  thumbContrast?: VfSwitchThumbContrast;
   invalid?: boolean;
   disabled?: boolean;
   label?: string;
@@ -29,6 +33,7 @@ const props = withDefaults(defineProps<VfSwitchProps>(), {
   modelValue: false,
   size: "md",
   static: false,
+  thumbContrast: "auto",
   invalid: false,
   disabled: false,
   label: undefined,
@@ -47,6 +52,8 @@ const rootClasses = computed(() =>
     "vf-switch",
     `vf-switch--${props.size}`,
     props.static && "vf-switch--static",
+    props.thumbContrast !== "auto" &&
+      `vf-switch--thumb-contrast-${props.thumbContrast}`,
     props.modelValue && "vf-switch--checked",
     props.invalid && "vf-switch--invalid",
     props.disabled && "vf-switch--disabled",

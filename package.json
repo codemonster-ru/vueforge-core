@@ -1,6 +1,6 @@
 {
   "name": "@codemonster-ru/vueforge-core",
-  "version": "1.12.0",
+  "version": "1.13.0",
   "description": "Foundation layer for the VueForge design system.",
   "type": "module",
   "license": "MIT",
@@ -98,7 +98,7 @@
   "dependencies": {
     "@codemonster-ru/floater.js": "^1.0.8",
     "@codemonster-ru/vueforge-theme": "^1.2.0",
-    "@codemonster-ru/vueiconify": "^1.1.0"
+    "@codemonster-ru/vueiconify": "^1.1.1"
   },
   "overrides": {
     "@microsoft/api-extractor": "^7.58.1"

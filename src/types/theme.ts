@@ -328,6 +328,9 @@ export interface VfThemeTokens extends BaseVfThemeTokensWithoutLegacyTypography 
   switchThumbCheckedBorderColor: string;
   switchThumbCheckedShadow: string;
   switchThumbCheckedColor: string;
+  switchThumbInverseBackground: string;
+  switchThumbInverseBorderColor: string;
+  switchThumbInverseColor: string;
   proseHeadingMargin: string;
   proseHeadingGap: string;
   proseBlockSpacing: string;

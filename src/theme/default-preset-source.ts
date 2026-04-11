@@ -362,6 +362,9 @@ export const defaultThemePresetSource = {
     switchThumbCheckedShadow: "none",
     switchThumbCheckedColor:
       "color-mix(in srgb, var(--vf-color-text) 82%, transparent)",
+    switchThumbInverseBackground: "var(--vf-color-surface)",
+    switchThumbInverseBorderColor: "var(--vf-color-border)",
+    switchThumbInverseColor: "var(--vf-color-text)",
     proseHeadingMargin: "1.5em",
     proseHeadingGap: "0.5em",
     proseBlockSpacing: "1em",
@@ -623,6 +626,9 @@ export const defaultThemePresetSource = {
     switchThumbCheckedBorderColor: "var(--vf-switch-thumb-checked-background)",
     switchThumbCheckedColor:
       "color-mix(in srgb, var(--vf-color-surface) 84%, var(--vf-color-text))",
+    switchThumbInverseBackground: "var(--vf-color-bg)",
+    switchThumbInverseBorderColor: "var(--vf-color-border)",
+    switchThumbInverseColor: "var(--vf-color-text)",
     focusRingWidth: "3px",
     zOverlay: "1000",
     zDrawer: "1000",
