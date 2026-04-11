@@ -1,38 +1,16 @@
-.vf-button,
-.vf-link,
-.vf-input,
-.vf-select,
-.vf-card,
-.vf-table,
-.vf-table-wrap,
-.vf-menu-bar,
-.vf-menu-bar__item,
-.vf-textarea,
-.vf-panel,
-.vf-badge,
-.vf-divider,
-.vf-dialog,
-.vf-dialog__overlay,
-.vf-dialog__content,
-.vf-drawer,
-.vf-drawer__overlay,
-.vf-drawer__content,
-.vf-dropdown,
-.vf-dropdown__trigger,
-.vf-dropdown__menu,
-.vf-accordion,
-.vf-accordion__trigger,
-.vf-nav-menu,
-.vf-nav-menu__item,
-.vf-table-of-contents,
-.vf-table-of-contents__link,
-.vf-tooltip,
-.vf-tooltip__trigger,
-.vf-tooltip__content,
-.vf-tabs,
-.vf-tabs__list,
-.vf-tabs__tab,
-.vf-tabs__panel {
+:where([class^="vf-"], [class*=" vf-"], [class^="vif-"], [class*=" vif-"]),
+:where(
+  [class^="vf-"],
+  [class*=" vf-"],
+  [class^="vif-"],
+  [class*=" vif-"]
+)::before,
+:where(
+  [class^="vf-"],
+  [class*=" vf-"],
+  [class^="vif-"],
+  [class*=" vif-"]
+)::after {
   box-sizing: border-box;
   font-size: inherit;
   font-weight: inherit;

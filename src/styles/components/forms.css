@@ -588,9 +588,24 @@
     box-shadow var(--vf-motion-duration-normal) var(--vf-motion-ease-standard);
 }
 
-.vf-switch__thumb > .vif-icon {
+.vf-switch__thumb > .vif-icon-wrapper {
   width: var(--vf-switch-thumb-icon-size);
   height: var(--vf-switch-thumb-icon-size);
+}
+
+.vf-switch__thumb > .vif-icon-wrapper > .vif-icon {
+  width: var(--vf-switch-thumb-icon-size);
+  height: var(--vf-switch-thumb-icon-size);
+}
+
+.vf-switch--thumb-contrast-inverse .vf-switch__thumb > .vif-icon-wrapper {
+  width: 0.6875rem;
+  height: 0.6875rem;
+}
+
+.vf-switch--thumb-contrast-inverse .vf-switch__thumb > .vif-icon-wrapper > .vif-icon {
+  width: 0.6875rem;
+  height: 0.6875rem;
 }
 
 .vf-switch__input:checked + .vf-switch__control,

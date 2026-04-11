@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.14.0 - 2026-04-11
+
+Minor release for `@codemonster-ru/vueforge-core`.
+
+### Changed
+
+- Applied `border-box` sizing consistently across VueForge component elements and internal parts
+- Rebalanced `VfSwitch`, `VfCheckbox`, and `VfRadio` sizing after the sizing-model update to preserve their intended visual scale
+- Refined inverse-thumb presentation in `VfSwitch` and `VfThemeSwitch`
+- Reduced default `VfAlert` icon size for a calmer text-to-icon balance
+- Simplified demo table content so `VfTable` examples use regular text instead of inline code styling
+
 ## 1.13.0 - 2026-04-11
 
 Minor release for `@codemonster-ru/vueforge-core`.

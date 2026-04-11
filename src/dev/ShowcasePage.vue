@@ -620,23 +620,23 @@ const tabContent = computed<Record<string, string>>(() => ({
 
               <tr>
                 <td>size</td>
-                <td><code>"sm" | "md" | "lg"</code></td>
-                <td><code>"md"</code></td>
+                <td>"sm" | "md" | "lg"</td>
+                <td>"md"</td>
               </tr>
               <tr>
                 <td>disabled</td>
-                <td><code>boolean</code></td>
-                <td><code>false</code></td>
+                <td>boolean</td>
+                <td>false</td>
               </tr>
               <tr>
                 <td>invalid</td>
-                <td><code>boolean</code></td>
-                <td><code>false</code></td>
+                <td>boolean</td>
+                <td>false</td>
               </tr>
               <tr>
                 <td>placeholder</td>
-                <td><code>string</code></td>
-                <td><code>undefined</code></td>
+                <td>string</td>
+                <td>undefined</td>
               </tr>
             </VfTable>
           </div>
@@ -654,23 +654,23 @@ const tabContent = computed<Record<string, string>>(() => ({
 
               <tr>
                 <td>size</td>
-                <td><code>"sm" | "md" | "lg"</code></td>
-                <td><code>"md"</code></td>
+                <td>"sm" | "md" | "lg"</td>
+                <td>"md"</td>
               </tr>
               <tr>
                 <td>disabled</td>
-                <td><code>boolean</code></td>
-                <td><code>false</code></td>
+                <td>boolean</td>
+                <td>false</td>
               </tr>
               <tr>
                 <td>invalid</td>
-                <td><code>boolean</code></td>
-                <td><code>false</code></td>
+                <td>boolean</td>
+                <td>false</td>
               </tr>
               <tr>
                 <td>placeholder</td>
-                <td><code>string</code></td>
-                <td><code>undefined</code></td>
+                <td>string</td>
+                <td>undefined</td>
               </tr>
             </VfTable>
           </div>

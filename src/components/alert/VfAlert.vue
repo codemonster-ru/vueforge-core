@@ -65,7 +65,7 @@ const showsIcon = computed(() => !props.hideIcon);
   <section :class="classes" role="alert" v-bind="attrs">
     <div v-if="showsIcon" class="vf-alert__icon" aria-hidden="true">
       <slot name="icon">
-        <VueIconify :icon="iconName" size="2rem" />
+        <VueIconify :icon="iconName" size="1.5rem" />
       </slot>
     </div>
 
