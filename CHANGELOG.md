@@ -1,5 +1,29 @@
 # Changelog
 
+## 1.15.0 - 2026-04-13
+
+Minor release for `@codemonster-ru/vueforge-core`.
+
+### Added
+
+- `VfDrawer` now supports:
+  - `dividers`
+  - `drawerHeaderMinHeight` and `drawerFooterMinHeight` theme tokens
+- `VfDialog` now supports:
+  - `dividers`
+  - `dialogDividerColor`, `dialogHeaderMinHeight`, and `dialogFooterMinHeight` theme tokens
+- `VfThemeSwitch` button mode now supports `buttonVariant="secondary" | "ghost"`
+
+### Changed
+
+- Aligned `VfDialog` section layout with `VfDrawer` so header, body, and footer manage their own padding instead of relying on container padding
+- Updated dialog and drawer dividers to use inset separators aligned with section padding
+- Increased the default close-button size in `VfDialog` and `VfDrawer` headers to `md`
+- Expanded demo coverage for:
+  - dialog and drawer footers
+  - dialog and drawer divider presentation
+  - `VfThemeSwitch` ghost button variants
+
 ## 1.14.0 - 2026-04-11
 
 Minor release for `@codemonster-ru/vueforge-core`.

@@ -10,10 +10,7 @@ import {
   type VNode,
 } from "vue";
 import { cx } from "@/utils/classes";
-import type {
-  VfControlSize,
-  VfSwitchThumbContrast,
-} from "@/types/components";
+import type { VfControlSize, VfSwitchThumbContrast } from "@/types/components";
 
 defineOptions({
   inheritAttrs: false,

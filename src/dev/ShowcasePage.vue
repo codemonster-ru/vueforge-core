@@ -363,8 +363,12 @@ const tabContent = computed<Record<string, string>>(() => ({
                 <VfThemeSwitch static />
                 <VfThemeSwitch static thumb-contrast="inverse" />
                 <VfThemeSwitch variant="button" />
+                <VfThemeSwitch variant="button" button-variant="ghost" />
                 <VfThemeSwitch variant="button" size="sm" />
                 <VfThemeSwitch variant="button">
+                  {{ resolvedTheme === "dark" ? "Dark" : "Light" }}
+                </VfThemeSwitch>
+                <VfThemeSwitch variant="button" button-variant="ghost">
                   {{ resolvedTheme === "dark" ? "Dark" : "Light" }}
                 </VfThemeSwitch>
                 <VfThemeSwitch variant="button" size="lg">
@@ -1034,31 +1038,35 @@ const tabContent = computed<Record<string, string>>(() => ({
       </section>
     </div>
 
-    <VfDialog v-model:open="dialogOpen" title="Dialog">
-      <template #default="{ close }">
+    <VfDialog v-model:open="dialogOpen" title="Dialog" dividers>
+      <template #default>
         <div class="demo-stack">
           <p>Dialog content.</p>
-          <div class="demo-inline">
-            <VfButton data-autofocus @click="close">Looks good</VfButton>
-            <VfButton variant="secondary" @click="dialogOpen = false"
-              >Close</VfButton
-            >
-          </div>
+        </div>
+      </template>
+      <template #footer="{ close }">
+        <div class="demo-inline">
+          <VfButton data-autofocus @click="close">Looks good</VfButton>
+          <VfButton variant="secondary" @click="dialogOpen = false"
+            >Close</VfButton
+          >
         </div>
       </template>
     </VfDialog>
 
-    <VfDrawer v-model:open="drawerOpen" title="Drawer">
-      <template #default="{ close }">
+    <VfDrawer v-model:open="drawerOpen" title="Drawer" dividers>
+      <template #default>
         <div class="demo-stack">
-          <p>Drawer content.</p>
+          <p style="margin-top: 0">Drawer content.</p>
           <VfInput placeholder="Search in drawer" />
-          <div class="demo-inline">
-            <VfButton data-autofocus @click="close">Apply</VfButton>
-            <VfButton variant="secondary" @click="drawerOpen = false"
-              >Close</VfButton
-            >
-          </div>
+        </div>
+      </template>
+      <template #footer="{ close }">
+        <div class="demo-inline">
+          <VfButton data-autofocus @click="close">Apply</VfButton>
+          <VfButton variant="secondary" @click="drawerOpen = false"
+            >Close</VfButton
+          >
         </div>
       </template>
     </VfDrawer>

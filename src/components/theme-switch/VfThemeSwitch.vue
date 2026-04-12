@@ -6,6 +6,7 @@ import VfButton from "@/components/button/VfButton.vue";
 import VfIconButton from "@/components/icon-button/VfIconButton.vue";
 import VfSwitch from "@/components/switch/VfSwitch.vue";
 import type {
+  VfButtonVariant,
   VfControlSize,
   VfSwitchThumbContrast,
 } from "@/types/components";
@@ -15,6 +16,10 @@ defineOptions({
 });
 
 type VfThemeSwitchVariant = "switch" | "button";
+type VfThemeSwitchButtonVariant = Extract<
+  VfButtonVariant,
+  "secondary" | "ghost"
+>;
 
 interface VfThemeSwitchProps {
   size?: VfControlSize;
@@ -23,6 +28,7 @@ interface VfThemeSwitchProps {
   static?: boolean;
   thumbContrast?: VfSwitchThumbContrast;
   variant?: VfThemeSwitchVariant;
+  buttonVariant?: VfThemeSwitchButtonVariant;
 }
 
 const props = withDefaults(defineProps<VfThemeSwitchProps>(), {
@@ -32,6 +38,7 @@ const props = withDefaults(defineProps<VfThemeSwitchProps>(), {
   static: false,
   thumbContrast: "auto",
   variant: "switch",
+  buttonVariant: "secondary",
 });
 
 const attrs = useAttrs();
@@ -86,7 +93,7 @@ onBeforeUnmount(() => {
       v-if="hasContent"
       class="vf-theme-switch vf-theme-switch--button"
       v-bind="attrs"
-      variant="secondary"
+      :variant="props.buttonVariant"
       :size="props.size"
       :disabled="props.disabled"
       :aria-label="nextThemeLabel"
@@ -99,7 +106,7 @@ onBeforeUnmount(() => {
       v-else
       class="vf-theme-switch vf-theme-switch--button"
       v-bind="attrs"
-      variant="secondary"
+      :variant="props.buttonVariant"
       :size="props.size"
       :disabled="props.disabled"
       :icon="iconName"

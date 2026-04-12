@@ -34,6 +34,7 @@ interface VfDrawerProps {
   title?: string;
   size?: VfDialogSize;
   placement?: VfDrawerPlacement;
+  dividers?: boolean;
   rounded?: boolean;
   offsetTop?: string | number;
   bodyPadding?: string | number;
@@ -51,6 +52,7 @@ const props = withDefaults(defineProps<VfDrawerProps>(), {
   title: undefined,
   size: "md",
   placement: "right",
+  dividers: false,
   rounded: false,
   offsetTop: undefined,
   bodyPadding: undefined,
@@ -118,6 +120,7 @@ const rootClasses = computed(() =>
   cx(
     "vf-drawer",
     `vf-drawer--${props.placement}`,
+    props.dividers && "vf-drawer--dividers",
     props.rounded && "vf-drawer--rounded",
     props.offsetTop != null && "vf-drawer--offset-top",
   ),
@@ -296,7 +299,7 @@ onBeforeUnmount(() => {
                 v-if="props.closable"
                 :icon="icons.xmark"
                 aria-label="Close drawer"
-                size="sm"
+                size="md"
                 variant="ghost"
                 @click="close"
               />

@@ -9,7 +9,9 @@ import {
   VfButton,
   VfCard,
   VfCheckbox,
+  VfDialog,
   VfDivider,
+  VfDrawer,
   VfIconButton,
   VfInput,
   VfLink,
@@ -437,6 +439,26 @@ describe("core primitives", () => {
     expect(button.attributes("aria-label")).toBe("Switch to dark theme");
   });
 
+  it("supports ghost button variant for theme switch", async () => {
+    const wrapper = mount(
+      defineComponent({
+        components: {
+          VfThemeProvider,
+          VfThemeSwitch,
+        },
+        template: `
+          <VfThemeProvider default-theme="system">
+            <VfThemeSwitch variant="button" button-variant="ghost" />
+          </VfThemeProvider>
+        `,
+      }),
+    );
+
+    const button = wrapper.get("button");
+
+    expect(button.classes()).toContain("vf-icon-button--ghost");
+  });
+
   it("renders table of contents items, hrefs, and active state", () => {
     const wrapper = mount(VfTableOfContents, {
       props: {
@@ -550,6 +572,60 @@ describe("core primitives", () => {
     expect(wrapper.attributes("aria-orientation")).toBe("vertical");
     expect(wrapper.attributes("role")).toBe("separator");
     expect(wrapper.classes()).toContain("vf-divider--vertical");
+  });
+
+  it("supports optional drawer dividers", () => {
+    const wrapper = mount(VfDrawer, {
+      props: {
+        open: true,
+        title: "Drawer",
+        dividers: true,
+      },
+      slots: {
+        default: "Content",
+        footer: "Footer",
+      },
+      attachTo: document.body,
+    });
+
+    expect(document.body.querySelector(".vf-drawer")).not.toBeNull();
+    expect(
+      document.body
+        .querySelector(".vf-drawer")
+        ?.classList.contains("vf-drawer--dividers"),
+    ).toBe(true);
+    expect(document.body.querySelector(".vf-drawer__footer")).not.toBeNull();
+
+    wrapper.unmount();
+
+    expect(document.body.querySelector(".vf-drawer")).toBeNull();
+  });
+
+  it("supports optional dialog dividers", () => {
+    const wrapper = mount(VfDialog, {
+      props: {
+        open: true,
+        title: "Dialog",
+        dividers: true,
+      },
+      slots: {
+        default: "Content",
+        footer: "Footer",
+      },
+      attachTo: document.body,
+    });
+
+    expect(document.body.querySelector(".vf-dialog")).not.toBeNull();
+    expect(
+      document.body
+        .querySelector(".vf-dialog__content")
+        ?.classList.contains("vf-dialog__content--dividers"),
+    ).toBe(true);
+    expect(document.body.querySelector(".vf-dialog__footer")).not.toBeNull();
+
+    wrapper.unmount();
+
+    expect(document.body.querySelector(".vf-dialog")).toBeNull();
   });
 
   it("renders badge tone and panel content", () => {

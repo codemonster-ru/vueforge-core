@@ -62,11 +62,10 @@
   z-index: 1;
   display: flex;
   flex-direction: column;
-  gap: var(--vf-overlay-gap);
   width: min(100%, var(--vf-dialog-width-md));
   max-height: var(--vf-dialog-max-height);
-  overflow: auto;
-  padding: var(--vf-overlay-padding);
+  overflow: hidden;
+  padding: 0;
   border: 1px solid var(--vf-dialog-content-border-color);
   border-radius: var(--vf-radius-overlay);
   background: var(--vf-dialog-content-background);
@@ -84,7 +83,6 @@
   z-index: 1;
   display: flex;
   flex-direction: column;
-  gap: var(--vf-overlay-gap);
   overflow: hidden;
   padding: 0;
   border: 1px solid var(--vf-drawer-content-border-color);
@@ -282,6 +280,7 @@
 .vf-dialog__footer,
 .vf-drawer__header,
 .vf-drawer__footer {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -338,8 +337,67 @@
   padding: var(--vf-overlay-padding);
 }
 
+.vf-dialog__header,
+.vf-dialog__footer {
+  padding: var(--vf-overlay-padding);
+}
+
+.vf-dialog__header {
+  min-height: var(--vf-dialog-header-min-height);
+}
+
+.vf-dialog__footer {
+  min-height: var(--vf-dialog-footer-min-height);
+}
+
+.vf-dialog__content--dividers .vf-dialog__header::after,
+.vf-drawer--dividers .vf-drawer__header::after {
+  content: "";
+  position: absolute;
+  inset-inline: var(--vf-overlay-padding);
+  inset-block-end: 0;
+  border-bottom: 1px solid;
+}
+
+.vf-dialog__content--dividers .vf-dialog__header::after {
+  border-color: var(--vf-dialog-divider-color);
+}
+
+.vf-drawer--dividers .vf-drawer__header::after {
+  border-color: var(--vf-drawer-divider-color);
+}
+
+.vf-dialog__content--dividers .vf-dialog__footer::before,
+.vf-drawer--dividers .vf-drawer__footer::before {
+  content: "";
+  position: absolute;
+  inset-inline: var(--vf-overlay-padding);
+  inset-block-start: 0;
+  border-top: 1px solid;
+}
+
+.vf-dialog__content--dividers .vf-dialog__footer::before {
+  border-color: var(--vf-dialog-divider-color);
+}
+
+.vf-drawer--dividers .vf-drawer__footer::before {
+  border-color: var(--vf-drawer-divider-color);
+}
+
+.vf-drawer__header {
+  min-height: var(--vf-drawer-header-min-height);
+}
+
+.vf-drawer__footer {
+  min-height: var(--vf-drawer-footer-min-height);
+}
+
 .vf-drawer__body {
   padding: var(--vf-drawer-body-padding);
+}
+
+.vf-dialog__body {
+  padding: var(--vf-overlay-padding);
 }
 
 .vf-dropdown {

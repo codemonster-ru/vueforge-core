@@ -27,6 +27,7 @@ interface VfDialogProps {
   title?: string;
   description?: string;
   size?: VfDialogSize;
+  dividers?: boolean;
   teleportTo?: string | HTMLElement | null | false;
   disableTeleport?: boolean;
   closeOnOverlayClick?: boolean;
@@ -40,6 +41,7 @@ const props = withDefaults(defineProps<VfDialogProps>(), {
   title: undefined,
   description: undefined,
   size: "md",
+  dividers: false,
   teleportTo: undefined,
   disableTeleport: false,
   closeOnOverlayClick: true,
@@ -96,6 +98,7 @@ const teleportTarget = computed(() => {
 const dialogClasses = computed(() =>
   cx(
     "vf-dialog__content",
+    props.dividers && "vf-dialog__content--dividers",
     props.size !== "md" && `vf-dialog__content--${props.size}`,
   ),
 );
@@ -243,7 +246,7 @@ onBeforeUnmount(() => {
                 v-if="props.closable"
                 :icon="icons.xmark"
                 aria-label="Close dialog"
-                size="sm"
+                size="md"
                 variant="ghost"
                 @click="close"
               />

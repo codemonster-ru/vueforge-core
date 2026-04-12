@@ -199,10 +199,16 @@ export interface VfThemeTokens extends BaseVfThemeTokensWithoutLegacyTypography 
   dialogContentBackground: string;
   dialogContentColor: string;
   dialogContentFocusBorderColor: string;
+  dialogDividerColor: string;
+  dialogHeaderMinHeight: string;
+  dialogFooterMinHeight: string;
   drawerContentBorderColor: string;
   drawerContentBackground: string;
   drawerContentColor: string;
   drawerContentFocusBorderColor: string;
+  drawerDividerColor: string;
+  drawerHeaderMinHeight: string;
+  drawerFooterMinHeight: string;
   popoverTriggerFocusBorderColor: string;
   popoverContentBorderColor: string;
   popoverContentBackground: string;
