@@ -21,10 +21,13 @@
   color-scheme: light;
   background-color: var(--vf-color-bg);
   color: var(--vf-color-text);
+  --vf-prose-color: var(--vf-color-muted);
+  --vf-prose-heading-color: var(--vf-color-text);
 }
 
 :root[data-vf-theme="dark"] {
   color-scheme: dark;
+  --vf-prose-heading-color: #ffffff;
 }
 
 button,
@@ -261,7 +264,7 @@ textarea {
 }
 
 .vf-prose {
-  color: var(--vf-color-text);
+  color: var(--vf-prose-color);
   font-size: var(--vf-text-body-font-size);
   font-weight: var(--vf-text-body-font-weight);
   line-height: var(--vf-text-body-line-height);
@@ -278,7 +281,7 @@ textarea {
 .vf-prose :where(h1, h2, h3, h4, h5, h6) {
   font-family: var(--vf-font-family-heading);
   font-weight: var(--vf-heading-font-weight);
-  color: var(--vf-color-text);
+  color: var(--vf-prose-heading-color);
 }
 
 .vf-prose h1 {

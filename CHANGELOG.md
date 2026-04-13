@@ -1,5 +1,20 @@
 # Changelog
 
+## 1.16.1 - 2026-04-14
+
+### Changed
+
+- Refined `VfNavMenu` and `VfTableOfContents` nesting tokens to use the generated `level0` variable names consistently, restoring expected nested indentation.
+- Restored filled active state for `VfTableOfContents` in `pills` variant by wiring `tableOfContentsPillsActiveBackground` to `--vf-selectable-active-background`.
+- Updated `VfDropdown` hover selectors so active items keep their active background on hover in both `default` and `pills` variants.
+- Rebalanced heading scale:
+  - `h1` reduced to `30px`
+  - `h2–h6` scaled down proportionally and rounded to whole-pixel values (`26px`, `23px`, `19px`, `17px`, `14px`)
+- Updated `vf-prose` color hierarchy:
+  - body text now uses muted tone
+  - headings use contrast tone
+  - dark theme headings are rendered white
+
 ## 1.16.0 - 2026-04-13
 
 Minor release for `@codemonster-ru/vueforge-core`.

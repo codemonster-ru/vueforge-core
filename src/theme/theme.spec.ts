@@ -25,6 +25,9 @@ describe("theme bridge", () => {
     expect(config.preset.light.controlHeightMd).toBe(
       defaultThemePreset.tokens.controlHeightMd,
     );
+    expect(defaultThemePreset.tokens.tableOfContentsPillsActiveBackground).toBe(
+      "var(--vf-selectable-active-background)",
+    );
   });
 
   it("applies resolved theme variables through the bridge API", () => {
