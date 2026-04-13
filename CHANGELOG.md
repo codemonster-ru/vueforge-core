@@ -1,5 +1,24 @@
 # Changelog
 
+## 1.16.0 - 2026-04-13
+
+Minor release for `@codemonster-ru/vueforge-core`.
+
+### Added
+
+- Introduced typography and content utility classes, including:
+  - heading scale utilities (`vf-heading`, `vf-heading-h1` … `vf-heading-h6`)
+  - text utilities (`vf-text-body`, `vf-text-label`, `vf-text-caption`, tone helpers, and link/code helpers)
+  - content utilities (`vf-list-*`, `vf-blockquote`, `vf-prose`, `vf-sr-only`, truncation and wrapping helpers)
+- Added dedicated theme tokens for typography/content utilities so heading, link, code, list, blockquote, and prose rhythm can be customized via tokens.
+- Expanded demo coverage with a dedicated Typography section and examples for all new utilities.
+
+### Changed
+
+- Switched theme token injection to a single runtime source via plugin application (removed static token/theme CSS side-effect imports from package entry).
+- Moved base color-scheme/form-font defaults into component base styles so default behavior remains stable with single-source theme injection.
+- Added TypeScript module declaration support for side-effect CSS imports (`declare module "*.css"`).
+
 ## 1.15.0 - 2026-04-13
 
 Minor release for `@codemonster-ru/vueforge-core`.

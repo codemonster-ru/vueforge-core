@@ -1,5 +1,3 @@
-import "../.generated/theme/tokens.css";
-import "../.generated/theme/theme.css";
 import "./styles/components.css";
 
 export { default, VueForgeCore, createVueForgeCore } from "./plugin";

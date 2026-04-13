@@ -98,6 +98,22 @@ body {
   gap: 0.75rem;
 }
 
+.demo-m-0 {
+  margin: 0;
+}
+
+.demo-mt-0 {
+  margin-top: 0;
+}
+
+.demo-max-w-16 {
+  max-width: 16rem;
+}
+
+.demo-max-w-20 {
+  max-width: 20rem;
+}
+
 @media (max-width: 960px) {
   .demo-grid--two,
   .demo-grid--three {

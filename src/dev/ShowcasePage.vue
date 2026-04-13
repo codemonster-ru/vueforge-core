@@ -295,6 +295,7 @@ const breadcrumbItems: VfBreadcrumbItem[] = [
 
 const tocItems: VfTableOfContentsItem[] = [
   { id: "demo-theme", label: "Theme", level: 1 },
+  { id: "demo-typography", label: "Typography", level: 1 },
   { id: "demo-actions", label: "Actions and Links", level: 1 },
   { id: "demo-overlay", label: "Overlay", level: 1 },
   { id: "demo-surfaces", label: "Surface Components", level: 1 },
@@ -380,6 +381,170 @@ const tabContent = computed<Record<string, string>>(() => ({
                 into an explicit light or dark choice after interaction.
               </p>
             </div>
+          </div>
+
+          <div class="demo-example">
+            <p class="demo-label">Theme utilities</p>
+            <p class="demo-text">
+              Use the controls above to switch theme mode and verify component
+              contrast in light, dark, and system states.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="demo-block">
+        <div class="demo-block__header">
+          <h2 id="demo-typography">Typography</h2>
+        </div>
+
+        <div class="demo-grid demo-grid--three">
+          <div class="demo-example">
+            <p class="demo-label">h1-h6 headings</p>
+            <div class="demo-stack">
+              <h1 class="vf-heading vf-heading-h1">Heading H1</h1>
+              <h2 class="vf-heading vf-heading-h2">Heading H2</h2>
+              <h3 class="vf-heading vf-heading-h3">Heading H3</h3>
+              <h4 class="vf-heading vf-heading-h4">Heading H4</h4>
+              <h5 class="vf-heading vf-heading-h5">Heading H5</h5>
+              <h6 class="vf-heading vf-heading-h6">Heading H6</h6>
+            </div>
+          </div>
+
+          <div class="demo-example">
+            <p class="demo-label">text utilities</p>
+            <div class="demo-stack">
+              <p class="vf-text-body demo-m-0">Body text utility</p>
+              <p class="vf-text-label demo-m-0">Label text utility</p>
+              <p class="vf-text-caption demo-m-0">Caption text utility</p>
+              <p class="vf-text-body vf-text-muted demo-m-0">
+                Muted body text utility
+              </p>
+              <p class="vf-text-body vf-text-primary demo-m-0">
+                Primary body text utility
+              </p>
+              <p class="vf-text-body vf-text-success demo-m-0">
+                Success body text utility
+              </p>
+              <p class="vf-text-body vf-text-info demo-m-0">
+                Info body text utility
+              </p>
+              <p class="vf-text-body vf-text-warn demo-m-0">
+                Warn body text utility
+              </p>
+              <p class="vf-text-body vf-text-help demo-m-0">
+                Help body text utility
+              </p>
+              <p class="vf-text-body vf-text-danger demo-m-0">
+                Danger body text utility
+              </p>
+              <p class="vf-text-body vf-text-contrast demo-m-0">
+                Contrast body text utility
+              </p>
+              <p class="vf-text-body demo-m-0">
+                Link utility:
+                <a href="#demo-typography" class="vf-text-link"
+                  >Open typography section</a
+                >
+              </p>
+              <p class="vf-text-body demo-m-0">
+                Link utility muted:
+                <a
+                  href="#demo-typography"
+                  class="vf-text-link vf-text-link--muted"
+                  >Open typography section</a
+                >
+              </p>
+              <p class="vf-text-body demo-m-0">
+                Link utility underline hover:
+                <a
+                  href="#demo-typography"
+                  class="vf-text-link vf-text-link--underline-hover"
+                  >Open typography section</a
+                >
+              </p>
+              <p class="vf-text-body demo-m-0">
+                Link utility underline always:
+                <a
+                  href="#demo-typography"
+                  class="vf-text-link vf-text-link--underline-always"
+                  >Open typography section</a
+                >
+              </p>
+              <p class="vf-text-body demo-m-0">
+                Inline code utility:
+                <code class="vf-text-code">npm run check</code>
+              </p>
+              <p class="vf-text-body demo-m-0">
+                Mono text utility:
+                <span class="vf-text-mono">theme.tokens.headingH1FontSize</span>
+              </p>
+            </div>
+          </div>
+
+          <div class="demo-example">
+            <p class="demo-label">content utilities</p>
+            <div class="demo-stack">
+              <ul class="vf-list-disc">
+                <li>Disc list item one</li>
+                <li>Disc list item two</li>
+              </ul>
+              <ol class="vf-list-decimal">
+                <li>Decimal list item one</li>
+                <li>Decimal list item two</li>
+              </ol>
+              <ul class="vf-list-reset demo-inline">
+                <li><span class="vf-text-code">reset</span></li>
+                <li><span class="vf-text-code">list</span></li>
+                <li><span class="vf-text-code">utility</span></li>
+              </ul>
+              <blockquote class="vf-blockquote">
+                Utility-driven content rhythm keeps docs and UI copy consistent.
+              </blockquote>
+              <p class="vf-text-body vf-text-truncate demo-m-0 demo-max-w-16">
+                This line demonstrates truncation behavior for long text content
+                in constrained UI areas.
+              </p>
+              <p class="vf-text-body vf-text-nowrap demo-m-0">
+                No-wrap utility keeps short status labels on a single line.
+              </p>
+              <p class="vf-text-body vf-text-balance demo-m-0 demo-max-w-20">
+                Balanced wrapping improves heading and summary rhythm in narrow
+                content columns.
+              </p>
+              <p class="vf-text-body demo-m-0">
+                <span class="vf-sr-only">Utility text for screen readers.</span>
+                <span aria-hidden="true">SR-only utility is active.</span>
+              </p>
+            </div>
+          </div>
+
+          <div class="demo-example">
+            <p class="demo-label">vf-prose</p>
+            <article class="vf-prose">
+              <h3>Prose Heading</h3>
+              <p>
+                Prose container keeps content rhythm consistent for
+                documentation and text-heavy screens.
+              </p>
+              <p>
+                Use <code>vf-prose</code> when regular semantic HTML should look
+                polished by default.
+              </p>
+              <ul>
+                <li>Aligned heading scale</li>
+                <li>Stable paragraph rhythm</li>
+                <li>Styled links and inline code</li>
+              </ul>
+              <blockquote>
+                Typography should feel intentional without manual per-element
+                styling.
+              </blockquote>
+              <p>
+                Read more in
+                <a href="#demo-typography">typography section</a>.
+              </p>
+            </article>
           </div>
         </div>
       </section>
@@ -1057,7 +1222,7 @@ const tabContent = computed<Record<string, string>>(() => ({
     <VfDrawer v-model:open="drawerOpen" title="Drawer" dividers>
       <template #default>
         <div class="demo-stack">
-          <p style="margin-top: 0">Drawer content.</p>
+          <p class="demo-mt-0">Drawer content.</p>
           <VfInput placeholder="Search in drawer" />
         </div>
       </template>
