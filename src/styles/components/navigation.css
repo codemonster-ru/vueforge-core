@@ -189,6 +189,7 @@
 .vf-menu-bar__item--top {
   width: auto;
   padding-inline: 0.5rem;
+  font-weight: var(--vf-menu-bar-top-item-font-weight);
   white-space: nowrap;
 }
 
@@ -561,7 +562,10 @@
 
 .vf-nav-menu__collapse {
   overflow: hidden;
-  margin-top: var(--vf-nav-menu-current-collapse-offset-top);
+}
+
+.vf-nav-menu__collapse > .vf-nav-menu__list--nested {
+  padding-top: var(--vf-nav-menu-current-collapse-offset-top);
 }
 
 .vf-nav-menu__collapse--level-0 {
@@ -649,7 +653,7 @@
   font-size: var(--vf-control-font-size-md);
   font-weight: var(--vf-text-body-font-weight);
   line-height: var(--vf-text-body-line-height);
-  color: var(--vf-color-text);
+  color: var(--vf-selectable-color);
   text-align: left;
   text-decoration: none;
   cursor: pointer;
@@ -667,6 +671,10 @@
   padding: var(--vf-nav-menu-current-item-padding);
   border-radius: var(--vf-nav-menu-item-radius);
   color: var(--vf-nav-menu-item-color);
+}
+
+.vf-nav-menu__item--top {
+  font-weight: var(--vf-nav-menu-top-item-font-weight);
 }
 
 .vf-nav-menu:not(.vf-nav-menu--simple) .vf-nav-menu__item--icon-offset {
@@ -727,7 +735,7 @@
   opacity: 0.5;
 }
 
-.vf-nav-menu__item--branch {
+.vf-nav-menu__item--branch:not(.vf-nav-menu__item--top) {
   font-weight: var(--vf-text-label-font-weight);
   color: var(--vf-nav-menu-branch-color);
 }

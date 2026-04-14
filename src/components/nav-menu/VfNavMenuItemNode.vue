@@ -175,6 +175,7 @@ function onNestedListAfterLeave(element: Element) {
       :class="[
         'vf-nav-menu__item',
         'vf-nav-menu__item--branch',
+        level === 0 && 'vf-nav-menu__item--top',
         !item.leadingIcon && 'vf-nav-menu__item--icon-offset',
         isAncestorActive && 'vf-nav-menu__item--ancestor-active',
         isExpanded && 'vf-nav-menu__item--expanded',
@@ -209,6 +210,7 @@ function onNestedListAfterLeave(element: Element) {
       v-bind="linkProps"
       :class="[
         'vf-nav-menu__item',
+        level === 0 && 'vf-nav-menu__item--top',
         !item.leadingIcon && 'vf-nav-menu__item--icon-offset',
         isActive && 'vf-nav-menu__item--active',
         isAncestorActive && 'vf-nav-menu__item--ancestor-active',
@@ -241,6 +243,7 @@ function onNestedListAfterLeave(element: Element) {
       v-else
       :class="[
         'vf-nav-menu__item',
+        level === 0 && 'vf-nav-menu__item--top',
         !item.leadingIcon && 'vf-nav-menu__item--icon-offset',
         isActive && 'vf-nav-menu__item--active',
         isAncestorActive && 'vf-nav-menu__item--ancestor-active',

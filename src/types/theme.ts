@@ -38,6 +38,7 @@ export interface VfThemeTokens extends BaseVfThemeTokensWithoutLegacyTypography 
   lineHeightTight: string;
   lineHeightNormal: string;
   lineHeightRelaxed: string;
+  selectableColor: string;
   selectableHoverColor: string;
   selectableHoverBackground: string;
   selectableActiveColor: string;
@@ -57,6 +58,7 @@ export interface VfThemeTokens extends BaseVfThemeTokensWithoutLegacyTypography 
   navMenuPillsItemActiveBackground: string;
   navMenuGroupLabelColor: string;
   navMenuItemColor: string;
+  navMenuTopItemFontWeight: string;
   navMenuItemRadius: string;
   navMenuItemFocusColor: string;
   navMenuItemFocusBorderColor: string;
@@ -74,6 +76,7 @@ export interface VfThemeTokens extends BaseVfThemeTokensWithoutLegacyTypography 
   menuBarPillsSubmenuActiveBackground: string;
   menuBarPillsListGap: string;
   menuBarItemColor: string;
+  menuBarTopItemFontWeight: string;
   menuBarItemFocusColor: string;
   menuBarItemFocusBorderColor: string;
   menuBarItemAncestorActiveColor: string;
@@ -305,6 +308,13 @@ export interface VfThemeTokens extends BaseVfThemeTokensWithoutLegacyTypography 
   selectPlaceholderColor: string;
   selectIconColor: string;
   selectDisabledIconColor: string;
+  selectOptionColor: string;
+  selectOptionHoverColor: string;
+  selectOptionHoverBackground: string;
+  selectOptionFocusColor: string;
+  selectOptionActiveColor: string;
+  selectOptionActiveBackground: string;
+  selectOptionDisabledColor: string;
   selectionControlBackground: string;
   selectionControlBorderColor: string;
   selectionControlHoverBorderColor: string;

@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.16.2 - 2026-04-14
+
+### Changed
+
+- Added shared `selectableColor` token and aligned default inactive item/link colors in navigation-style components (`VfDropdown`, `VfBreadcrumbs`, `VfTabs`, `VfAccordion`, `VfNavMenu`, `VfMenuBar`, `VfTableOfContents`) to use it, while active states stay on `primary` via `--vf-selectable-active-color`.
+- Added dedicated `VfSelect` option tokens (`selectOption*`) that default to the shared selectable token family, so select option colors can be overridden independently from dropdown menus.
+- Increased default contrast for `VfNavMenu` group labels by setting `navMenuGroupLabelColor` to `--vf-color-text` instead of a muted mix.
+- Added `menuBarTopItemFontWeight` token and applied it to top-level `VfMenuBar` items so the whole first level can be consistently emphasized without mixing weights item-by-item.
+- Added `navMenuTopItemFontWeight` token and applied it to top-level `VfNavMenu` items so root-level branch and leaf items share the same weight.
+- Fixed `VfNavMenu` collapse-close motion in `pills` variant by moving collapse spacing from `margin-top` to `padding-top`, removing the end-of-animation snap.
+- Refined the same `VfNavMenu` collapse fix by applying top spacing to the nested list inside the collapse container (instead of the animated container itself), eliminating residual close snap.
+- Set default `alertBodyColor` to `--vf-color-muted` for more consistent secondary-content tone.
+- Added `selectOptionDisabledColor` token and explicit disabled-option styling for `VfSelect` menu items.
+
 ## 1.16.1 - 2026-04-14
 
 ### Changed
