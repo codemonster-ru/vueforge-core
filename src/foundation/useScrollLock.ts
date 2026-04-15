@@ -14,6 +14,7 @@ export function useScrollLock(
   options: UseScrollLockOptions = {},
 ) {
   let previousOverflow = "";
+  let previousPaddingRight = "";
 
   const resolveTarget = () => {
     const target = toValue(options.target);
@@ -37,6 +38,10 @@ export function useScrollLock(
     }
 
     target.style.overflow = previousOverflow;
+
+    if (typeof document !== "undefined" && target === document.body) {
+      target.style.paddingRight = previousPaddingRight;
+    }
   };
 
   watchEffect((onCleanup) => {
@@ -53,10 +58,29 @@ export function useScrollLock(
     }
 
     previousOverflow = target.style.overflow;
+    previousPaddingRight = target.style.paddingRight;
     target.style.overflow = "hidden";
+
+    if (typeof document !== "undefined" && target === document.body) {
+      const scrollbarWidth = Math.max(
+        window.innerWidth - document.documentElement.clientWidth,
+        0,
+      );
+
+      if (scrollbarWidth > 0) {
+        const computedPaddingRight = Number.parseFloat(
+          window.getComputedStyle(target).paddingRight || "0",
+        );
+        const nextPaddingRight = computedPaddingRight + scrollbarWidth;
+        target.style.paddingRight = `${nextPaddingRight}px`;
+      }
+    }
 
     onCleanup(() => {
       target.style.overflow = previousOverflow;
+      if (typeof document !== "undefined" && target === document.body) {
+        target.style.paddingRight = previousPaddingRight;
+      }
     });
   });
 

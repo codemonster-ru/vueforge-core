@@ -276,6 +276,23 @@
   min-height: min(100dvh, var(--vf-drawer-size-lg));
 }
 
+.vf-drawer__content--full.vf-drawer__content--left,
+.vf-drawer__content--full.vf-drawer__content--right {
+  width: 100dvw;
+  height: 100%;
+  border: none;
+  border-radius: 0;
+}
+
+.vf-drawer__content--full.vf-drawer__content--top,
+.vf-drawer__content--full.vf-drawer__content--bottom {
+  width: 100dvw;
+  height: 100%;
+  min-height: 100%;
+  border: none;
+  border-radius: 0;
+}
+
 .vf-dialog__header,
 .vf-dialog__footer,
 .vf-drawer__header,

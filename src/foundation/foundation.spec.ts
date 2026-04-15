@@ -119,4 +119,55 @@ describe("foundation", () => {
     await wrapper.get('[data-test="toggle"]').trigger("click");
     expect(document.body.style.overflow).toBe("auto");
   });
+
+  it("compensates body padding for scrollbar width while locked", async () => {
+    const originalInnerWidth = window.innerWidth;
+    const originalClientWidth = document.documentElement.clientWidth;
+
+    Object.defineProperty(window, "innerWidth", {
+      configurable: true,
+      value: 1200,
+    });
+    Object.defineProperty(document.documentElement, "clientWidth", {
+      configurable: true,
+      value: 1180,
+    });
+
+    document.body.style.overflow = "auto";
+    document.body.style.paddingRight = "10px";
+
+    const wrapper = mount(
+      defineComponent({
+        setup() {
+          const enabled = ref(true);
+          useScrollLock(computed(() => enabled.value));
+
+          return () =>
+            h("button", {
+              "data-test": "toggle",
+              onClick: () => {
+                enabled.value = !enabled.value;
+              },
+            });
+        },
+      }),
+    );
+
+    await wrapper.vm.$nextTick();
+    expect(document.body.style.overflow).toBe("hidden");
+    expect(document.body.style.paddingRight).toBe("30px");
+
+    await wrapper.get('[data-test="toggle"]').trigger("click");
+    expect(document.body.style.overflow).toBe("auto");
+    expect(document.body.style.paddingRight).toBe("10px");
+
+    Object.defineProperty(window, "innerWidth", {
+      configurable: true,
+      value: originalInnerWidth,
+    });
+    Object.defineProperty(document.documentElement, "clientWidth", {
+      configurable: true,
+      value: originalClientWidth,
+    });
+  });
 });

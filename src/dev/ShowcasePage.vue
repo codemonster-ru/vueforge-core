@@ -43,6 +43,7 @@ const { theme, resolvedTheme, setTheme, toggleTheme } = useTheme();
 
 const dialogOpen = ref(false);
 const drawerOpen = ref(false);
+const drawerFullscreenOpen = ref(false);
 const dropdownControlled = ref(false);
 const popoverOpen = ref(false);
 const inputValue = ref("");
@@ -1167,7 +1168,7 @@ const tabContent = computed<Record<string, string>>(() => ({
           <h2 id="demo-dialog">Dialog</h2>
         </div>
 
-        <div class="demo-grid demo-grid--two">
+        <div class="demo-grid demo-grid--three">
           <div class="demo-example">
             <p class="demo-label">vf-dialog</p>
             <div class="demo-stack">
@@ -1195,6 +1196,23 @@ const tabContent = computed<Record<string, string>>(() => ({
                   variant="secondary"
                   @click="drawerOpen = true"
                   >Open Drawer</VfButton
+                >
+              </div>
+            </div>
+          </div>
+
+          <div class="demo-example">
+            <p class="demo-label">vf-drawer (fullscreen)</p>
+            <div class="demo-stack">
+              <p class="demo-text">
+                Fullscreen drawer for immersive flows and mobile-like panels.
+              </p>
+              <div class="demo-inline">
+                <VfButton
+                  data-test="open-drawer-fullscreen"
+                  variant="secondary"
+                  @click="drawerFullscreenOpen = true"
+                  >Open Fullscreen Drawer</VfButton
                 >
               </div>
             </div>
@@ -1230,6 +1248,29 @@ const tabContent = computed<Record<string, string>>(() => ({
         <div class="demo-inline">
           <VfButton data-autofocus @click="close">Apply</VfButton>
           <VfButton variant="secondary" @click="drawerOpen = false"
+            >Close</VfButton
+          >
+        </div>
+      </template>
+    </VfDrawer>
+
+    <VfDrawer
+      v-model:open="drawerFullscreenOpen"
+      title="Fullscreen Drawer"
+      size="full"
+      placement="left"
+      dividers
+    >
+      <template #default>
+        <div class="demo-stack">
+          <p class="demo-mt-0">Fullscreen drawer content.</p>
+          <VfInput placeholder="Search in fullscreen drawer" />
+        </div>
+      </template>
+      <template #footer="{ close }">
+        <div class="demo-inline">
+          <VfButton data-autofocus @click="close">Apply</VfButton>
+          <VfButton variant="secondary" @click="drawerFullscreenOpen = false"
             >Close</VfButton
           >
         </div>

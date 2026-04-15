@@ -20,7 +20,7 @@ describe("ShowcasePage", () => {
     expect(document.body.querySelector('[role="dialog"]')).not.toBeNull();
   });
 
-  it("opens the drawer from the demo button", async () => {
+  it("opens the regular drawer from the demo button", async () => {
     const wrapper = mount(VfThemeProvider, {
       attachTo: document.body,
       slots: {
@@ -30,5 +30,20 @@ describe("ShowcasePage", () => {
 
     await wrapper.get('[data-test="open-drawer"]').trigger("click");
     expect(document.body.querySelector(".vf-drawer__content")).not.toBeNull();
+    expect(document.body.querySelector(".vf-drawer__content--full")).toBeNull();
+  });
+
+  it("opens the fullscreen drawer from the demo button", async () => {
+    const wrapper = mount(VfThemeProvider, {
+      attachTo: document.body,
+      slots: {
+        default: ShowcasePage,
+      },
+    });
+
+    await wrapper.get('[data-test="open-drawer-fullscreen"]').trigger("click");
+    expect(
+      document.body.querySelector(".vf-drawer__content--full"),
+    ).not.toBeNull();
   });
 });

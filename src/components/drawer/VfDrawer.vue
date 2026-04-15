@@ -22,7 +22,7 @@ import {
 } from "@/composables";
 import { useScrollLock } from "@/foundation";
 import { vfMotionDurationsMs } from "@/theme/motion";
-import type { VfDialogSize, VfDrawerPlacement } from "@/types/components";
+import type { VfDrawerPlacement, VfDrawerSize } from "@/types/components";
 
 defineOptions({
   inheritAttrs: false,
@@ -32,7 +32,7 @@ interface VfDrawerProps {
   open?: boolean;
   defaultOpen?: boolean;
   title?: string;
-  size?: VfDialogSize;
+  size?: VfDrawerSize;
   placement?: VfDrawerPlacement;
   dividers?: boolean;
   rounded?: boolean;

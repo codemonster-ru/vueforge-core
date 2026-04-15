@@ -56,6 +56,26 @@ describe("VfDrawer", () => {
     expect(content?.className).toContain("vf-drawer__content--lg");
   });
 
+  it("supports fullscreen size class", async () => {
+    mount(VfDrawer, {
+      attachTo: document.body,
+      props: {
+        open: true,
+        placement: "right",
+        size: "full",
+        title: "Fullscreen",
+      },
+      slots: {
+        default: "Drawer body",
+      },
+    });
+
+    await nextTick();
+
+    const content = document.body.querySelector(".vf-drawer__content");
+    expect(content?.className).toContain("vf-drawer__content--full");
+  });
+
   it("is square by default and can opt into rounded corners", async () => {
     const wrapper = mount(VfDrawer, {
       attachTo: document.body,

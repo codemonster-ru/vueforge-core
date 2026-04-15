@@ -34,6 +34,7 @@ export type VfFeedbackTone =
   | "contrast";
 export type VfDividerOrientation = "horizontal" | "vertical";
 export type VfDialogSize = "sm" | "md" | "lg";
+export type VfDrawerSize = VfDialogSize | "full";
 export type VfDrawerPlacement = "left" | "right" | "top" | "bottom";
 export type VfDropdownPlacement = "bottom-start" | "bottom-end";
 export type VfTooltipPlacement = "top" | "bottom";

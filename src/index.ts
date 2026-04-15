@@ -58,6 +58,7 @@ export type {
   VfButtonVariant,
   VfControlSize,
   VfDialogSize,
+  VfDrawerSize,
   VfDrawerPlacement,
   VfDividerOrientation,
   VfDropdownPlacement,

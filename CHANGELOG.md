@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.16.3 - 2026-04-15
+
+### Added
+
+- Added `VfDrawer` fullscreen sizing via `size="full"` and exported `VfDrawerSize` in the public type API.
+
+### Changed
+
+- Added fullscreen drawer layout styles for all drawer placements (`left`, `right`, `top`, `bottom`) so full-screen mode behaves consistently regardless of direction.
+- Improved overlay scroll locking by compensating `document.body` right padding for scrollbar width while locked, preventing layout shift on open/close.
+- Expanded drawer demo coverage with separate regular and fullscreen examples, including a fullscreen drawer example that opens from the left.
+
 ## 1.16.2 - 2026-04-14
 
 ### Changed
