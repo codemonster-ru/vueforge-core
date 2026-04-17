@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { computed, onBeforeUnmount, onMounted, ref } from "vue";
 import { VueIconify, icons } from "@codemonster-ru/vueiconify";
 import {
   VfAccordion,
@@ -9,6 +9,7 @@ import {
   VfButton,
   VfCard,
   VfCheckbox,
+  VfCommandPalette,
   VfDrawer,
   VfDialog,
   VfDivider,
@@ -44,15 +45,25 @@ const { theme, resolvedTheme, setTheme, toggleTheme } = useTheme();
 const dialogOpen = ref(false);
 const drawerOpen = ref(false);
 const drawerFullscreenOpen = ref(false);
+const commandPaletteOpen = ref(false);
+const commandPaletteQuery = ref("");
 const dropdownControlled = ref(false);
 const popoverOpen = ref(false);
 const inputValue = ref("");
+const inputLeadingValue = ref("Search docs");
+const inputTrailingValue = ref("Filter query");
+const inputClearableValue = ref("Clearable search");
+const inputTrailingClearValue = ref("Trailing + clear");
 const textareaValue = ref("A compact foundation for the ecosystem.");
 const checkboxValue = ref(true);
 const switchValue = ref(true);
 const iconSwitchValue = ref(true);
 const radioValue = ref("pro");
 const selectValue = ref("");
+const selectLeadingValue = ref("pro");
+const selectTrailingValue = ref("team");
+const selectClearableValue = ref("starter");
+const selectTrailingClearValue = ref("enterprise");
 const activeTab = ref("overview");
 const activeAccordion = ref<string | null>("section-one");
 const activeMenuValue = ref("");
@@ -63,6 +74,130 @@ const releaseTabs = [
   { value: "api", label: "API" },
   { value: "status", label: "Status" },
 ];
+
+interface CommandItem {
+  title: string;
+  label: string;
+  section: string;
+  snippet: string;
+  type: string;
+}
+
+const commandPaletteDataset: CommandItem[] = [
+  {
+    title: "Getting Started",
+    label: "Getting Started",
+    section: "Guide / Introduction",
+    snippet: "Project setup, quick bootstrap, and base app wiring.",
+    type: "Guide",
+  },
+  {
+    title: "Installation",
+    label: "Installation",
+    section: "Guide / Setup",
+    snippet: "Install package, register styles, and configure entry point.",
+    type: "Guide",
+  },
+  {
+    title: "Theme Provider",
+    label: "Theme Provider",
+    section: "Theming / Core",
+    snippet: "Handle system theme sync and manual theme switching.",
+    type: "Guide",
+  },
+  {
+    title: "VfDialog",
+    label: "VfDialog",
+    section: "Components / Overlay",
+    snippet: "Modal dialog with header, content, footer, and focus trap.",
+    type: "Component",
+  },
+  {
+    title: "VfDrawer",
+    label: "VfDrawer",
+    section: "Components / Overlay",
+    snippet: "Side panel with responsive sizes and optional fullscreen mode.",
+    type: "Component",
+  },
+  {
+    title: "VfCommandPalette",
+    label: "VfCommandPalette",
+    section: "Components / Overlay",
+    snippet: "Keyboard-first search overlay for docs and command actions.",
+    type: "Component",
+  },
+  {
+    title: "VfNavMenu",
+    label: "VfNavMenu",
+    section: "Components / Navigation",
+    snippet: "Tree and pills variants for compact documentation navigation.",
+    type: "Component",
+  },
+  {
+    title: "VfTableOfContents",
+    label: "VfTableOfContents",
+    section: "Components / Navigation",
+    snippet: "Auto-generated section index with active heading tracking.",
+    type: "Component",
+  },
+  {
+    title: "Breakpoints",
+    label: "Breakpoints",
+    section: "Foundation / Layout",
+    snippet: "Design tokens for adaptive component and page layouts.",
+    type: "Foundation",
+  },
+  {
+    title: "Motion",
+    label: "Motion",
+    section: "Foundation / Animation",
+    snippet: "Timing and easing primitives for consistent transitions.",
+    type: "Foundation",
+  },
+];
+
+const commandPaletteItems = computed(() => {
+  const query = commandPaletteQuery.value.trim().toLowerCase();
+
+  if (!query) {
+    return [];
+  }
+
+  return commandPaletteDataset.filter(
+    (item) =>
+      item.label.toLowerCase().includes(query) ||
+      item.section.toLowerCase().includes(query) ||
+      item.snippet.toLowerCase().includes(query) ||
+      item.type.toLowerCase().includes(query),
+  );
+});
+
+function handleCommandPaletteSelect(item: unknown) {
+  if (item == null) {
+    return;
+  }
+}
+
+function handleGlobalCommandPaletteShortcut(event: KeyboardEvent) {
+  if (!(event.metaKey || event.ctrlKey)) {
+    return;
+  }
+
+  if (event.key.toLowerCase() !== "k") {
+    return;
+  }
+
+  event.preventDefault();
+  commandPaletteOpen.value = true;
+}
+
+onMounted(() => {
+  window.addEventListener("keydown", handleGlobalCommandPaletteShortcut);
+});
+
+onBeforeUnmount(() => {
+  window.removeEventListener("keydown", handleGlobalCommandPaletteShortcut);
+});
 
 const selectOptions = [
   { value: "starter", label: "Starter" },
@@ -916,6 +1051,29 @@ const tabContent = computed<Record<string, string>>(() => ({
               <VfInput v-model="inputValue" placeholder="Project name" />
               <VfInput invalid placeholder="Invalid input" />
               <VfInput disabled placeholder="Disabled input" />
+              <VfDivider />
+              <VfInput
+                v-model="inputLeadingValue"
+                leading-icon="magnifyingGlass"
+                placeholder="Input with leading icon"
+              />
+              <VfInput
+                v-model="inputTrailingValue"
+                trailing-icon="filter"
+                placeholder="Input with trailing icon"
+              />
+              <VfInput
+                v-model="inputClearableValue"
+                leading-icon="magnifyingGlass"
+                clearable
+                placeholder="Input with clear button"
+              />
+              <VfInput
+                v-model="inputTrailingClearValue"
+                trailing-icon="filter"
+                clearable
+                placeholder="Input with trailing + clear"
+              />
             </div>
           </div>
 
@@ -947,6 +1105,33 @@ const tabContent = computed<Record<string, string>>(() => ({
               <VfSelect
                 disabled
                 placeholder="Disabled select"
+                :options="selectOptions"
+              />
+              <VfDivider />
+              <VfSelect
+                v-model="selectLeadingValue"
+                leading-icon="layers"
+                placeholder="Select with leading icon"
+                :options="selectOptions"
+              />
+              <VfSelect
+                v-model="selectTrailingValue"
+                trailing-icon="filter"
+                placeholder="Select with trailing icon"
+                :options="selectOptions"
+              />
+              <VfSelect
+                v-model="selectClearableValue"
+                leading-icon="layers"
+                clearable
+                placeholder="Select with clear button"
+                :options="selectOptions"
+              />
+              <VfSelect
+                v-model="selectTrailingClearValue"
+                trailing-icon="filter"
+                clearable
+                placeholder="Select with trailing + clear"
                 :options="selectOptions"
               />
             </div>
@@ -1217,6 +1402,25 @@ const tabContent = computed<Record<string, string>>(() => ({
               </div>
             </div>
           </div>
+
+          <div class="demo-example">
+            <p class="demo-label">vf-command-palette</p>
+            <div class="demo-stack">
+              <p class="demo-text">
+                Search overlay with keyboard navigation and quick-access
+                shortcut.
+              </p>
+              <div class="demo-inline">
+                <VfButton
+                  data-test="open-command-palette"
+                  variant="secondary"
+                  @click="commandPaletteOpen = true"
+                  >Open Command Palette</VfButton
+                >
+              </div>
+              <p class="demo-text demo-mt-0">Shortcut: Ctrl/Cmd + K</p>
+            </div>
+          </div>
         </div>
       </section>
     </div>
@@ -1276,5 +1480,14 @@ const tabContent = computed<Record<string, string>>(() => ({
         </div>
       </template>
     </VfDrawer>
+
+    <VfCommandPalette
+      v-model:open="commandPaletteOpen"
+      v-model="commandPaletteQuery"
+      title="Search Documentation"
+      placeholder="Search components, guides, and API..."
+      :items="commandPaletteItems"
+      @select="handleCommandPaletteSelect"
+    />
   </div>
 </template>

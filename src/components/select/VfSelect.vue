@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, nextTick, ref, useAttrs } from "vue";
+import { computed, nextTick, ref, useAttrs, useSlots } from "vue";
 import {
   flip,
   offset,
@@ -7,7 +7,8 @@ import {
   type MiddlewareType,
   type PlacementType,
 } from "@codemonster-ru/floater.js";
-import { VueIconify, icons } from "@codemonster-ru/vueiconify";
+import { VueIconify, icons, type IconName } from "@codemonster-ru/vueiconify";
+import VfIconButton from "@/components/icon-button/VfIconButton.vue";
 import {
   useClickOutside,
   useDisclosure,
@@ -32,6 +33,9 @@ interface VfSelectProps {
   options: VfSelectOption[];
   size?: VfControlSize;
   invalid?: boolean;
+  leadingIcon?: IconName | string;
+  trailingIcon?: IconName | string;
+  clearable?: boolean;
   placeholder?: string;
   disabled?: boolean;
   placement?: VfDropdownPlacement;
@@ -43,6 +47,9 @@ const props = withDefaults(defineProps<VfSelectProps>(), {
   modelValue: "",
   size: "md",
   invalid: false,
+  leadingIcon: undefined,
+  trailingIcon: undefined,
+  clearable: false,
   placeholder: undefined,
   disabled: false,
   placement: "bottom-start",
@@ -55,6 +62,7 @@ const emit = defineEmits<{
 }>();
 
 const attrs = useAttrs();
+const slots = useSlots();
 const triggerRef = ref<HTMLElement | null>(null);
 const menuRef = ref<HTMLElement | null>(null);
 const triggerId = useId({ prefix: "vf-select-trigger" });
@@ -71,6 +79,17 @@ const selectedOption = computed(() =>
   props.options.find((option) => option.value === props.modelValue),
 );
 
+const hasValue = computed(() => String(props.modelValue ?? "").length > 0);
+const hasLeadingAdornment = computed(
+  () => Boolean(props.leadingIcon) || Boolean(slots.leading),
+);
+const hasTrailingAdornment = computed(
+  () => Boolean(props.trailingIcon) || Boolean(slots.trailing),
+);
+const hasClearControl = computed(
+  () => Boolean(props.clearable) && hasValue.value && !props.disabled,
+);
+
 const triggerClasses = computed(() =>
   cx(
     "vf-select",
@@ -78,6 +97,19 @@ const triggerClasses = computed(() =>
     props.invalid && "vf-select--invalid",
     isOpen.value && "vf-select--open",
     !selectedOption.value && props.placeholder && "vf-select--placeholder",
+    hasLeadingAdornment.value && "vf-select--with-leading",
+    hasTrailingAdornment.value && "vf-select--with-trailing",
+    hasClearControl.value && "vf-select--with-clear",
+  ),
+);
+
+const wrapperClasses = computed(() =>
+  cx(
+    "vf-select-wrap",
+    props.size !== "md" && `vf-select-wrap--${props.size}`,
+    hasLeadingAdornment.value && "vf-select-wrap--with-leading",
+    hasTrailingAdornment.value && "vf-select-wrap--with-trailing",
+    hasClearControl.value && "vf-select-wrap--with-clear",
   ),
 );
 
@@ -210,12 +242,28 @@ function closeMenu(options: { restoreFocus?: boolean } = {}) {
 }
 
 function toggleMenu() {
+  if (props.disabled) {
+    return;
+  }
+
   if (isOpen.value) {
     closeMenu();
     return;
   }
 
   openMenu();
+}
+
+function clearValue(event: MouseEvent) {
+  event.preventDefault();
+  event.stopPropagation();
+
+  if (props.disabled || !hasClearControl.value) {
+    return;
+  }
+
+  emit("update:modelValue", "");
+  closeMenu();
 }
 
 function selectOption(
@@ -323,7 +371,7 @@ useEscapeKey(
 </script>
 
 <template>
-  <div class="vf-select-wrap">
+  <div :class="wrapperClasses">
     <input
       v-if="typeof attrs.name === 'string'"
       type="hidden"
@@ -344,11 +392,58 @@ useEscapeKey(
       @click="toggleMenu"
       @keydown="onTriggerKeydown"
     >
+      <span
+        v-if="hasLeadingAdornment"
+        class="vf-select__icon vf-select__icon--leading"
+        aria-hidden="true"
+      >
+        <slot name="leading">
+          <VueIconify
+            v-if="props.leadingIcon"
+            :icon="props.leadingIcon"
+            size="var(--vf-field-icon-size)"
+          />
+        </slot>
+      </span>
+
       <span class="vf-select__value">{{ displayLabel }}</span>
-      <span class="vf-select__icon" aria-hidden="true">
-        <VueIconify :icon="icons.chevronDown" size="1rem" />
+
+      <span
+        v-if="hasTrailingAdornment"
+        class="vf-select__icon vf-select__icon--trailing"
+        aria-hidden="true"
+      >
+        <slot name="trailing">
+          <VueIconify
+            v-if="props.trailingIcon"
+            :icon="props.trailingIcon"
+            size="var(--vf-field-icon-size)"
+          />
+        </slot>
+      </span>
+
+      <span
+        v-if="!hasClearControl"
+        class="vf-select__icon vf-select__icon--chevron"
+        aria-hidden="true"
+      >
+        <VueIconify
+          :icon="icons.chevronDown"
+          size="var(--vf-field-icon-size)"
+        />
       </span>
     </button>
+
+    <VfIconButton
+      v-if="hasClearControl"
+      class="vf-select-wrap__clear"
+      :icon="icons.xmark"
+      variant="ghost"
+      size="sm"
+      aria-label="Clear select"
+      @mousedown.prevent
+      @click="clearValue"
+    />
 
     <Teleport :to="teleportTarget" :disabled="teleportDisabled">
       <Transition

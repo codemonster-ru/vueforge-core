@@ -10,6 +10,7 @@ export {
   VfButton,
   VfCard,
   VfCheckbox,
+  VfCommandPalette,
   VfDrawer,
   VfDialog,
   VfDivider,

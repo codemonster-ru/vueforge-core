@@ -9,6 +9,7 @@ import {
   VfButton,
   VfCard,
   VfCheckbox,
+  VfCommandPalette,
   VfDialog,
   VfDivider,
   VfDrawer,
@@ -204,6 +205,78 @@ describe("core primitives", () => {
     await wrapper.setValue("world");
 
     expect(wrapper.emitted("update:modelValue")).toEqual([["world"]]);
+  });
+
+  it("renders leading and trailing input icons", async () => {
+    const wrapper = mount(VfInput, {
+      props: {
+        modelValue: "hello",
+        leadingIcon: "infoCircle",
+        trailingIcon: "xmark",
+      },
+    });
+
+    expect(wrapper.find(".vf-input-wrap").exists()).toBe(true);
+    expect(wrapper.find(".vf-input-wrap__icon--leading").exists()).toBe(true);
+    expect(wrapper.find(".vf-input-wrap__icon--trailing").exists()).toBe(true);
+
+    await wrapper.get("input").setValue("world");
+
+    expect(wrapper.emitted("update:modelValue")).toEqual([["world"]]);
+  });
+
+  it("supports clearable input control", async () => {
+    const wrapper = mount(VfInput, {
+      props: {
+        modelValue: "hello",
+        clearable: true,
+      },
+    });
+
+    const clearButton = wrapper.find(".vf-input-wrap__clear");
+    expect(clearButton.exists()).toBe(true);
+
+    await clearButton.trigger("click");
+
+    expect(wrapper.emitted("update:modelValue")).toEqual([[""]]);
+  });
+
+  it("supports showing trailing icon and clearable control together", () => {
+    const withTrailing = mount(VfInput, {
+      props: {
+        modelValue: "hello",
+        clearable: true,
+        trailingIcon: "xmark",
+      },
+    });
+    expect(withTrailing.find(".vf-input-wrap__clear").exists()).toBe(true);
+    expect(withTrailing.find(".vf-input-wrap__icon--trailing").exists()).toBe(
+      true,
+    );
+  });
+
+  it("hides clearable control when disabled or readonly attrs are present", () => {
+    const disabledInput = mount(VfInput, {
+      props: {
+        modelValue: "hello",
+        clearable: true,
+      },
+      attrs: {
+        disabled: true,
+      },
+    });
+    expect(disabledInput.find(".vf-input-wrap__clear").exists()).toBe(false);
+
+    const readonlyInput = mount(VfInput, {
+      props: {
+        modelValue: "hello",
+        clearable: true,
+      },
+      attrs: {
+        readonly: true,
+      },
+    });
+    expect(readonlyInput.find(".vf-input-wrap__clear").exists()).toBe(false);
   });
 
   it("emits textarea updates and supports size modifiers", async () => {
@@ -626,6 +699,27 @@ describe("core primitives", () => {
     wrapper.unmount();
 
     expect(document.body.querySelector(".vf-dialog")).toBeNull();
+  });
+
+  it("renders command palette search items and emits select", async () => {
+    const wrapper = mount(VfCommandPalette, {
+      attachTo: document.body,
+      props: {
+        open: true,
+        items: [{ label: "VfDrawer" }, { label: "VfDialog" }],
+      },
+    });
+
+    await nextTick();
+
+    expect(document.body.querySelector(".vf-command-palette")).not.toBeNull();
+    expect(document.body.textContent).toContain("VfDrawer");
+
+    document.body
+      .querySelectorAll<HTMLButtonElement>(".vf-command-palette__item")[0]
+      ?.click();
+
+    expect(wrapper.emitted("select")?.[0]).toEqual([{ label: "VfDrawer" }]);
   });
 
   it("renders badge tone and panel content", () => {

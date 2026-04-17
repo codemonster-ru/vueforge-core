@@ -1,5 +1,35 @@
 # Changelog
 
+## 1.17.0 - 2026-04-18
+
+### Added
+
+- Added new `VfCommandPalette` component with:
+  - keyboard-first navigation (`ArrowUp`, `ArrowDown`, `Enter`, `Escape`)
+  - controlled/uncontrolled query support
+  - default docs-style result rendering
+  - default footer keyboard hints
+  - extensibility slots for custom item/footer rendering
+- Added `VfInput` support for:
+  - `leadingIcon` / `trailingIcon`
+  - `clearable` clear-action button
+  - `leading` / `trailing` slots for custom adornments
+- Added `VfSelect` support for:
+  - `leadingIcon` / `trailingIcon`
+  - `clearable` clear-action button
+  - `leading` / `trailing` slots for custom adornments
+- Added new field and command-palette theme tokens to replace hardcoded icon/adornment sizing and spacing values.
+
+### Changed
+
+- Updated `@codemonster-ru/vueiconify` to `^1.2.0`.
+- Refined command palette result-item interactions:
+  - consistent hover/keyboard-active behavior
+  - improved matched-text highlighting behavior for title vs breadcrumb/snippet
+  - right-side enter icon visibility aligned with active/hover state
+- Aligned `vf-input` and `vf-select` demo blocks to the same example order and coverage.
+- Improved select clear/trailing icon layout to avoid right-side icon overlap.
+
 ## 1.16.3 - 2026-04-15
 
 ### Added

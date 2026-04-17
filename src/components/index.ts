@@ -5,6 +5,7 @@ export { VfBreadcrumbs } from "./breadcrumbs";
 export { VfButton } from "./button";
 export { VfCard } from "./card";
 export { VfCheckbox } from "./checkbox";
+export { VfCommandPalette } from "./command-palette";
 export { VfDrawer } from "./drawer";
 export { VfDialog } from "./dialog";
 export { VfDivider } from "./divider";

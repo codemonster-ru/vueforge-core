@@ -46,4 +46,18 @@ describe("ShowcasePage", () => {
       document.body.querySelector(".vf-drawer__content--full"),
     ).not.toBeNull();
   });
+
+  it("opens command palette from the demo button", async () => {
+    const wrapper = mount(VfThemeProvider, {
+      attachTo: document.body,
+      slots: {
+        default: ShowcasePage,
+      },
+    });
+
+    await wrapper.get('[data-test="open-command-palette"]').trigger("click");
+    expect(
+      document.body.querySelector(".vf-command-palette__content"),
+    ).not.toBeNull();
+  });
 });
