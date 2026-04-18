@@ -3,6 +3,7 @@ import {
   applyThemeConfig,
   defaultThemePreset,
   resolveThemeConfig,
+  themeTokensToCssVars,
 } from "@/theme";
 
 describe("theme bridge", () => {
@@ -68,6 +69,19 @@ describe("theme bridge", () => {
 
     expect(style.id).toBe("vf-test-theme");
     expect(style.textContent).toContain("--vf-color-primary: #ff5a36;");
+    expect(style.textContent).toContain(
+      "--vf-breakpoint-2xl: 1536px;",
+    );
+    expect(style.textContent).not.toContain("--vf-breakpoint2xl:");
     expect(document.getElementById("vf-test-theme")).toBe(style);
+  });
+
+  it("serializes numeric breakpoint tokens with kebab-case separators", () => {
+    const cssVars = themeTokensToCssVars({
+      breakpoint2xl: "1536px",
+    });
+
+    expect(cssVars["--vf-breakpoint-2xl"]).toBe("1536px");
+    expect(cssVars["--vf-breakpoint2xl"]).toBeUndefined();
   });
 });

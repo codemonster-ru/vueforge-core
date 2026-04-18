@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.17.1 - 2026-04-18
+
+### Changed
+
+- Updated `@codemonster-ru/vueforge-theme` to `^1.2.2`, which fixes CSS variable serialization for numeric token suffixes (for example, `breakpoint2xl` now serializes to `--vf-breakpoint-2xl`).
+- Added regression coverage in the theme bridge tests to keep `--vf-breakpoint-2xl` serialization stable.
+
 ## 1.17.0 - 2026-04-18
 
 ### Added
