@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.17.2 - 2026-04-18
+
+### Changed
+
+- Updated navigation and table-of-contents token references from `level0` to `level-0` CSS variable names, restoring nested indentation for `VfNavMenu` simple variants after the serializer update.
+- Updated heading utility/prose token references from `--vf-heading-h1-*` … `--vf-heading-h6-*` to `--vf-heading-h-1-*` … `--vf-heading-h-6-*` to match generated token names.
+- Replaced stale `--vf-radius-sm` references in form clear buttons with `--vf-radius-control-tight`.
+
 ## 1.17.1 - 2026-04-18
 
 ### Changed

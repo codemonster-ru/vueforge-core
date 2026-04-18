@@ -52,33 +52,33 @@ textarea {
 }
 
 .vf-heading-h1 {
-  font-size: var(--vf-heading-h1-font-size);
-  line-height: var(--vf-heading-h1-line-height);
+  font-size: var(--vf-heading-h-1-font-size);
+  line-height: var(--vf-heading-h-1-line-height);
 }
 
 .vf-heading-h2 {
-  font-size: var(--vf-heading-h2-font-size);
-  line-height: var(--vf-heading-h2-line-height);
+  font-size: var(--vf-heading-h-2-font-size);
+  line-height: var(--vf-heading-h-2-line-height);
 }
 
 .vf-heading-h3 {
-  font-size: var(--vf-heading-h3-font-size);
-  line-height: var(--vf-heading-h3-line-height);
+  font-size: var(--vf-heading-h-3-font-size);
+  line-height: var(--vf-heading-h-3-line-height);
 }
 
 .vf-heading-h4 {
-  font-size: var(--vf-heading-h4-font-size);
-  line-height: var(--vf-heading-h4-line-height);
+  font-size: var(--vf-heading-h-4-font-size);
+  line-height: var(--vf-heading-h-4-line-height);
 }
 
 .vf-heading-h5 {
-  font-size: var(--vf-heading-h5-font-size);
-  line-height: var(--vf-heading-h5-line-height);
+  font-size: var(--vf-heading-h-5-font-size);
+  line-height: var(--vf-heading-h-5-line-height);
 }
 
 .vf-heading-h6 {
-  font-size: var(--vf-heading-h6-font-size);
-  line-height: var(--vf-heading-h6-line-height);
+  font-size: var(--vf-heading-h-6-font-size);
+  line-height: var(--vf-heading-h-6-line-height);
 }
 
 .vf-text-body {
@@ -285,33 +285,33 @@ textarea {
 }
 
 .vf-prose h1 {
-  font-size: var(--vf-heading-h1-font-size);
-  line-height: var(--vf-heading-h1-line-height);
+  font-size: var(--vf-heading-h-1-font-size);
+  line-height: var(--vf-heading-h-1-line-height);
 }
 
 .vf-prose h2 {
-  font-size: var(--vf-heading-h2-font-size);
-  line-height: var(--vf-heading-h2-line-height);
+  font-size: var(--vf-heading-h-2-font-size);
+  line-height: var(--vf-heading-h-2-line-height);
 }
 
 .vf-prose h3 {
-  font-size: var(--vf-heading-h3-font-size);
-  line-height: var(--vf-heading-h3-line-height);
+  font-size: var(--vf-heading-h-3-font-size);
+  line-height: var(--vf-heading-h-3-line-height);
 }
 
 .vf-prose h4 {
-  font-size: var(--vf-heading-h4-font-size);
-  line-height: var(--vf-heading-h4-line-height);
+  font-size: var(--vf-heading-h-4-font-size);
+  line-height: var(--vf-heading-h-4-line-height);
 }
 
 .vf-prose h5 {
-  font-size: var(--vf-heading-h5-font-size);
-  line-height: var(--vf-heading-h5-line-height);
+  font-size: var(--vf-heading-h-5-font-size);
+  line-height: var(--vf-heading-h-5-line-height);
 }
 
 .vf-prose h6 {
-  font-size: var(--vf-heading-h6-font-size);
-  line-height: var(--vf-heading-h6-line-height);
+  font-size: var(--vf-heading-h-6-font-size);
+  line-height: var(--vf-heading-h-6-line-height);
 }
 
 .vf-prose :where(ul, ol) {

@@ -585,7 +585,7 @@ export const defaultThemePresetSource = {
     tableOfContentsTitleColor: "var(--vf-color-muted)",
     tableOfContentsItemPadding: "0.25rem 0",
     tableOfContentsLevelStep:
-      "calc(var(--vf-nav-menu-collapse-inset-simple-level0-margin) + var(--vf-nav-menu-collapse-inset-simple-level0-padding))",
+      "calc(var(--vf-nav-menu-collapse-inset-simple-level-0-margin) + var(--vf-nav-menu-collapse-inset-simple-level-0-padding))",
     tableOfContentsColor: "var(--vf-selectable-color)",
     tableOfContentsHoverColor: "var(--vf-selectable-hover-color)",
     tableOfContentsHoverBackground: "var(--vf-selectable-hover-background)",

@@ -569,8 +569,8 @@
 }
 
 .vf-nav-menu__collapse--level-0 {
-  margin-left: var(--vf-nav-menu-collapse-inset-level0-margin);
-  padding-left: var(--vf-nav-menu-collapse-inset-level0-padding);
+  margin-left: var(--vf-nav-menu-collapse-inset-level-0-margin);
+  padding-left: var(--vf-nav-menu-collapse-inset-level-0-padding);
 }
 
 .vf-nav-menu:not(.vf-nav-menu--simple) .vf-nav-menu__collapse--level-0 {
@@ -579,8 +579,8 @@
 }
 
 .vf-nav-menu--simple .vf-nav-menu__collapse--level-0 {
-  margin-left: var(--vf-nav-menu-collapse-inset-simple-level0-margin);
-  padding-left: var(--vf-nav-menu-collapse-inset-simple-level0-padding);
+  margin-left: var(--vf-nav-menu-collapse-inset-simple-level-0-margin);
+  padding-left: var(--vf-nav-menu-collapse-inset-simple-level-0-padding);
 }
 
 .vf-nav-menu__collapse:not(.vf-nav-menu__collapse--level-0) {
