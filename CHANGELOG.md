@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.17.3 - 2026-04-28
+
+### Changed
+
+- Reworked `vf-prose` vertical rhythm rules to make top-level spacing predictable across semantic content combinations (`headings`, `paragraphs`, `lists`, `blockquotes`, `code blocks`, and `hr`).
+- Resolved multiple prose spacing regressions caused by selector ordering and margin resets, ensuring intended spacing rules are not overridden by list/blockquote reset styles.
+- Added explicit `vf-prose hr` styling based on theme border tokens so separators remain visually consistent in both light and dark themes.
+- Added `proseHrBorderWidth` and `proseHrOpacity` theme tokens for prose separator customization.
+- Refined `vf-prose` blockquote layout by removing vertical inner padding to align visual rhythm with surrounding prose blocks.
+- Expanded `vf-prose` demo coverage with a spacing matrix that exercises common block-to-block transitions for easier visual QA.
+- Updated dependency range for `@codemonster-ru/floater.js` to `^1.0.8`.
+
 ## 1.17.2 - 2026-04-18
 
 ### Changed

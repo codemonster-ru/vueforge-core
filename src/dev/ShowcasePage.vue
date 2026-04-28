@@ -658,7 +658,7 @@ const tabContent = computed<Record<string, string>>(() => ({
           <div class="demo-example">
             <p class="demo-label">vf-prose</p>
             <article class="vf-prose">
-              <h3>Prose Heading</h3>
+              <h3>Baseline Example</h3>
               <p>
                 Prose container keeps content rhythm consistent for
                 documentation and text-heavy screens.
@@ -680,6 +680,81 @@ const tabContent = computed<Record<string, string>>(() => ({
                 Read more in
                 <a href="#demo-typography">typography section</a>.
               </p>
+            </article>
+
+            <article class="vf-prose">
+              <h3>Spacing Matrix</h3>
+              <p>
+                This matrix intentionally places many neighboring block
+                combinations to reveal where vertical spacing feels too tight.
+              </p>
+
+              <h4>Heading followed by list</h4>
+              <ul>
+                <li>Unordered item one</li>
+                <li>Unordered item two</li>
+              </ul>
+
+              <h4>Heading followed by ordered list</h4>
+              <ol>
+                <li>Ordered item one</li>
+                <li>Ordered item two</li>
+              </ol>
+
+              <h4>Heading followed by blockquote</h4>
+              <blockquote>
+                Blockquote directly after heading is a common docs pattern.
+              </blockquote>
+
+              <h4>Heading followed by code block</h4>
+              <pre><code>npm install vueforge-core</code></pre>
+
+              <h4>Paragraph followed by list</h4>
+              <p>
+                Paragraph text should comfortably separate from the list below.
+              </p>
+              <ul>
+                <li>Paragraph to unordered list</li>
+                <li>Second item for rhythm check</li>
+              </ul>
+
+              <h4>List followed by heading</h4>
+              <ul>
+                <li>List content line one</li>
+                <li>List content line two</li>
+              </ul>
+              <h5>Heading after list</h5>
+              <p>Subheading after list should not stick to the previous block.</p>
+
+              <h4>Paragraph followed by blockquote</h4>
+              <p>Intro sentence before quote.</p>
+              <blockquote>
+                Quoted content can look cramped without enough top margin.
+              </blockquote>
+
+              <h4>Blockquote followed by paragraph</h4>
+              <blockquote>
+                Another quote to inspect spacing from quote to regular text.
+              </blockquote>
+              <p>Body text after quote.</p>
+
+              <h4>Paragraph followed by horizontal rule</h4>
+              <p>Some content before separator line.</p>
+              <hr />
+              <p>Some content after separator line.</p>
+
+              <h4>Mixed list content</h4>
+              <ul>
+                <li>
+                  Item with nested paragraph to inspect inner flow.
+                  <p>
+                    Nested paragraph in list item with
+                    <a href="#demo-actions">inline link</a> and
+                    <code>inlineCode()</code>.
+                  </p>
+                </li>
+                <li>Simple sibling item.</li>
+              </ul>
             </article>
           </div>
         </div>

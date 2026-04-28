@@ -319,26 +319,38 @@ textarea {
 }
 
 .vf-prose ul {
-  padding-inline-start: var(--vf-list-disc-padding-inline-start);
+  padding-inline-start: var(--vf-prose-list-padding-inline-start);
   list-style: disc;
 }
 
 .vf-prose ol {
-  padding-inline-start: var(--vf-list-decimal-padding-inline-start);
+  padding-inline-start: var(--vf-prose-list-padding-inline-start);
   list-style: decimal;
 }
 
 .vf-prose :where(ul, ol) li + li {
-  margin-top: var(--vf-list-item-gap);
+  margin-top: var(--vf-prose-list-item-spacing);
 }
 
 .vf-prose blockquote {
   margin: 0;
-  padding: var(--vf-blockquote-padding-block) 0
-    var(--vf-blockquote-padding-block) var(--vf-blockquote-padding-inline-start);
-  border-inline-start: var(--vf-blockquote-border-width) solid
+  padding: 0 0 0 var(--vf-prose-blockquote-padding-inline-start);
+  border-inline-start: var(--vf-prose-blockquote-border-width) solid
     var(--vf-color-border);
   color: var(--vf-color-muted);
+}
+
+.vf-prose hr {
+  margin: 0;
+  border: 0;
+  border-top: var(--vf-prose-hr-border-width) solid var(--vf-color-border);
+  opacity: var(--vf-prose-hr-opacity);
+}
+
+.vf-prose
+  > :is(h1, h2, h3, h4, h5, h6, p, ul, ol, blockquote, pre, hr)
+  + :is(h1, h2, h3, h4, h5, h6, p, ul, ol, blockquote, pre, hr) {
+  margin-top: var(--vf-prose-block-spacing);
 }
 
 .vf-prose a {
@@ -364,7 +376,7 @@ textarea {
 }
 
 .vf-prose a:hover {
-  color: var(--vf-text-link-hover-color);
+  color: var(--vf-prose-link-hover-color);
 }
 
 .vf-prose a:focus-visible {
@@ -376,13 +388,27 @@ textarea {
 
 .vf-prose :not(pre) > code {
   display: inline-block;
-  padding: var(--vf-text-code-padding-block) var(--vf-text-code-padding-inline);
+  padding: var(--vf-prose-inline-code-padding);
   border: var(--vf-text-code-border-width) solid var(--vf-color-border);
   border-radius: var(--vf-radius-control);
   background: var(--vf-color-surface-muted);
   color: var(--vf-color-text);
   font-family: var(--vf-font-family-mono);
-  font-size: var(--vf-text-caption-font-size);
+  font-size: var(--vf-prose-inline-code-font-size);
   font-weight: var(--vf-text-caption-font-weight);
   line-height: var(--vf-text-caption-line-height);
+}
+
+.vf-prose pre {
+  overflow-x: auto;
+  padding: var(--vf-prose-code-block-padding);
+  border: var(--vf-text-code-border-width) solid var(--vf-color-border);
+  border-radius: var(--vf-radius-control);
+  background: var(--vf-color-surface-muted);
+}
+
+.vf-prose pre code {
+  font-family: var(--vf-font-family-mono);
+  font-size: var(--vf-prose-inline-code-font-size);
+  color: var(--vf-color-text);
 }

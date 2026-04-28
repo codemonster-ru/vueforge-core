@@ -386,6 +386,8 @@ export interface VfThemeTokens extends BaseVfThemeTokensWithoutLegacyTypography 
   proseInlineCodeFontSize: string;
   proseInlineCodePadding: string;
   proseCodeBlockPadding: string;
+  proseHrBorderWidth: string;
+  proseHrOpacity: string;
   proseHrMargin: string;
 }
 
