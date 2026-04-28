@@ -387,24 +387,26 @@ textarea {
 }
 
 .vf-prose :not(pre) > code {
-  display: inline-block;
+  display: inline;
   padding: var(--vf-prose-inline-code-padding);
-  border: var(--vf-text-code-border-width) solid var(--vf-color-border);
+  border: 0;
   border-radius: var(--vf-radius-control);
-  background: var(--vf-color-surface-muted);
+  background: color-mix(in srgb, currentColor 16%, transparent);
   color: var(--vf-color-text);
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
   font-family: var(--vf-font-family-mono);
   font-size: var(--vf-prose-inline-code-font-size);
-  font-weight: var(--vf-text-caption-font-weight);
-  line-height: var(--vf-text-caption-line-height);
+  font-weight: var(--vf-text-body-font-weight);
+  line-height: inherit;
 }
 
 .vf-prose pre {
   overflow-x: auto;
   padding: var(--vf-prose-code-block-padding);
-  border: var(--vf-text-code-border-width) solid var(--vf-color-border);
+  border: 0;
   border-radius: var(--vf-radius-control);
-  background: var(--vf-color-surface-muted);
+  background: color-mix(in srgb, currentColor 12%, transparent);
 }
 
 .vf-prose pre code {

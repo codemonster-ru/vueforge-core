@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.17.4 - 2026-04-28
+
+### Changed
+
+- Refined `vf-prose` inline code styling so code snippets remain recognizable while aligning better with surrounding prose text.
+- Aligned `vf-prose` inline and block code treatments with shared mono sizing, text color, radius, and muted color-mix backgrounds.
+- Updated prose code tokens so inline code uses a fixed `0.875rem` font size with balanced padding.
+
 ## 1.17.3 - 2026-04-28
 
 ### Changed
