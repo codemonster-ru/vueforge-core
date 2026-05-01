@@ -73,6 +73,13 @@ const releaseTabs = [
   { value: "overview", label: "Overview" },
   { value: "api", label: "API" },
   { value: "status", label: "Status" },
+  { value: "changelog", label: "Changelog" },
+  { value: "roadmap", label: "Roadmap" },
+  { value: "examples", label: "Examples" },
+  { value: "guides", label: "Guides" },
+  { value: "theming", label: "Theming" },
+  { value: "accessibility", label: "A11y" },
+  { value: "community", label: "Community" },
 ];
 
 interface CommandItem {
@@ -450,6 +457,13 @@ const tabContent = computed<Record<string, string>>(() => ({
   overview: "Overview content.",
   api: "API content.",
   status: "Status content.",
+  changelog: "Changelog content.",
+  roadmap: "Roadmap content.",
+  examples: "Examples content.",
+  guides: "Guides content.",
+  theming: "Theming content.",
+  accessibility: "Accessibility content.",
+  community: "Community content.",
 }));
 </script>
 
@@ -1289,11 +1303,34 @@ const tabContent = computed<Record<string, string>>(() => ({
 
           <div class="demo-item">
             <p class="demo-label">vf-tabs</p>
-            <VfTabs v-model="activeTab" :items="releaseTabs">
-              <template #panel="{ activeValue }">
-                <p class="demo-text">{{ tabContent[activeValue] }}</p>
-              </template>
-            </VfTabs>
+            <div class="demo-stack">
+              <div class="demo-stack">
+                <p class="demo-text">size="sm"</p>
+                <VfTabs v-model="activeTab" :items="releaseTabs" size="sm">
+                  <template #panel="{ activeValue }">
+                    <p class="demo-text">{{ tabContent[activeValue] }}</p>
+                  </template>
+                </VfTabs>
+              </div>
+
+              <div class="demo-stack">
+                <p class="demo-text">size="md"</p>
+                <VfTabs v-model="activeTab" :items="releaseTabs" size="md">
+                  <template #panel="{ activeValue }">
+                    <p class="demo-text">{{ tabContent[activeValue] }}</p>
+                  </template>
+                </VfTabs>
+              </div>
+
+              <div class="demo-stack">
+                <p class="demo-text">size="lg"</p>
+                <VfTabs v-model="activeTab" :items="releaseTabs" size="lg">
+                  <template #panel="{ activeValue }">
+                    <p class="demo-text">{{ tabContent[activeValue] }}</p>
+                  </template>
+                </VfTabs>
+              </div>
+            </div>
           </div>
 
           <div class="demo-item">

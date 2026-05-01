@@ -142,4 +142,49 @@ describe("VfTabs", () => {
     );
     expect(wrapper.find(".vf-tabs__indicator").element).toBeTruthy();
   });
+
+  it("supports custom tab label content via tab slot", async () => {
+    const wrapper = mount(VfTabs, {
+      attachTo: document.body,
+      props: {
+        items,
+        defaultValue: "overview",
+      },
+      slots: {
+        tab: ({
+          item,
+          isActive,
+        }: {
+          item: { value: string; label: string };
+          isActive: boolean;
+        }) =>
+          h(
+            "span",
+            `${item.label}${isActive ? " (active)" : ""}`,
+          ),
+      },
+    });
+
+    const tabButtons = wrapper.findAll('[role="tab"]');
+    expect(tabButtons[0].text()).toBe("Overview (active)");
+    expect(tabButtons[1].text()).toBe("Settings");
+
+    await tabButtons[1].trigger("click");
+    await nextTick();
+
+    expect(wrapper.findAll('[role="tab"]')[1].text()).toBe("Settings (active)");
+  });
+
+  it("supports size prop", () => {
+    const wrapper = mount(VfTabs, {
+      attachTo: document.body,
+      props: {
+        items,
+        defaultValue: "overview",
+        size: "lg",
+      },
+    });
+
+    expect(wrapper.get(".vf-tabs__list").classes()).toContain("vf-tabs__list--lg");
+  });
 });

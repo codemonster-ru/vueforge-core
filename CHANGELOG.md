@@ -1,5 +1,20 @@
 # Changelog
 
+## 1.17.6 - 2026-05-02
+
+### Changed
+
+- Added `size` support to `VfTabs` with `sm`, `md`, and `lg` variants and corresponding tab sizing styles.
+- Updated `VfTabs` overflow behavior so long tab lists scroll horizontally inside component bounds instead of stretching adjacent layout.
+- Improved `VfTabs` active-indicator behavior during horizontal scroll:
+  - keeps indicator position synced with scrolled content
+  - clips indicator width to the visible viewport
+  - hides indicator when active tab is fully out of view
+  - disables transition while scrolling to avoid lagging "floating" motion
+- Added dynamic scroll-edge hints for `VfTabs` that appear only when content is actually hidden on the left or right side.
+- Expanded `VfTabs` showcase examples to demonstrate all supported sizes (`sm`, `md`, `lg`) with overflow scenarios.
+- Added regression coverage for `VfTabs` size class application.
+
 ## 1.17.5 - 2026-05-01
 
 ### Changed

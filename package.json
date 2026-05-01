@@ -1,6 +1,6 @@
 {
   "name": "@codemonster-ru/vueforge-core",
-  "version": "1.17.5",
+  "version": "1.17.6",
   "description": "Foundation layer for the VueForge design system.",
   "type": "module",
   "license": "MIT",

@@ -10,17 +10,19 @@ import {
   type CSSProperties,
 } from "vue";
 import { useId } from "@/composables";
-import type { VfTabItem } from "@/types/components";
+import type { VfControlSize, VfTabItem } from "@/types/components";
 
 interface VfTabsProps {
   items: VfTabItem[];
   modelValue?: string;
   defaultValue?: string;
+  size?: VfControlSize;
 }
 
 const props = withDefaults(defineProps<VfTabsProps>(), {
   modelValue: undefined,
   defaultValue: undefined,
+  size: "md",
 });
 
 const emit = defineEmits<{
@@ -32,6 +34,9 @@ const slots = useSlots();
 const baseId = useId({ prefix: "vf-tabs" });
 const listRef = ref<HTMLElement | null>(null);
 const tabRefs = ref<Array<HTMLElement | null>>([]);
+const canScrollLeft = ref(false);
+const canScrollRight = ref(false);
+const isListScrolling = ref(false);
 const indicatorReady = ref(false);
 const indicatorStyle = ref<CSSProperties>({
   opacity: "0",
@@ -49,6 +54,21 @@ const activeValue = computed(
 );
 
 let listResizeObserver: ResizeObserver | null = null;
+let scrollStopTimeout: ReturnType<typeof setTimeout> | null = null;
+
+function updateScrollState() {
+  const list = listRef.value;
+
+  if (!list) {
+    canScrollLeft.value = false;
+    canScrollRight.value = false;
+    return;
+  }
+
+  const maxScrollLeft = list.scrollWidth - list.clientWidth;
+  canScrollLeft.value = list.scrollLeft > 1;
+  canScrollRight.value = maxScrollLeft - list.scrollLeft > 1;
+}
 
 watch(
   () => props.items,
@@ -141,13 +161,14 @@ function panelId(value: string) {
   return `${baseId.value}-panel-${value}`;
 }
 
-function updateIndicator() {
+function updateIndicator(options?: { scrollIntoView?: boolean }) {
+  const list = listRef.value;
   const activeIndex = props.items.findIndex(
     (item) => item.value === activeValue.value,
   );
   const activeTab = activeIndex >= 0 ? tabRefs.value[activeIndex] : null;
 
-  if (!activeTab) {
+  if (!activeTab || !list) {
     indicatorStyle.value = {
       opacity: "0",
       transform: "translateX(0)",
@@ -156,25 +177,60 @@ function updateIndicator() {
     return;
   }
 
+  const tabStart = activeTab.offsetLeft - list.scrollLeft;
+  const tabEnd = tabStart + activeTab.offsetWidth;
+  const visibleStart = Math.max(0, tabStart);
+  const visibleEnd = Math.min(list.clientWidth, tabEnd);
+  const visibleWidth = Math.max(0, visibleEnd - visibleStart);
+  const isVisible = visibleWidth > 0;
+
   indicatorStyle.value = {
-    opacity: "1",
-    transform: `translateX(${activeTab.offsetLeft}px)`,
-    width: `${activeTab.offsetWidth}px`,
+    opacity: isVisible ? "1" : "0",
+    transform: `translateX(${visibleStart}px)`,
+    width: `${visibleWidth}px`,
   };
+
+  if (
+    options?.scrollIntoView &&
+    typeof activeTab.scrollIntoView === "function"
+  ) {
+    activeTab.scrollIntoView({ block: "nearest", inline: "nearest" });
+  }
+
+  updateScrollState();
+}
+
+function handleListScroll() {
+  isListScrolling.value = true;
+  if (scrollStopTimeout) {
+    clearTimeout(scrollStopTimeout);
+  }
+  scrollStopTimeout = setTimeout(() => {
+    isListScrolling.value = false;
+  }, 120);
+
+  updateScrollState();
+  updateIndicator();
+}
+
+function handleWindowResize() {
+  updateScrollState();
+  updateIndicator();
 }
 
 watch(
   () => [activeValue.value, props.items],
   async () => {
     await nextTick();
-    updateIndicator();
+    updateIndicator({ scrollIntoView: true });
   },
   { deep: true, immediate: true },
 );
 
 onMounted(async () => {
   await nextTick();
-  updateIndicator();
+  updateIndicator({ scrollIntoView: true });
+  updateScrollState();
   requestAnimationFrame(() => {
     indicatorReady.value = true;
   });
@@ -182,20 +238,24 @@ onMounted(async () => {
   if (typeof ResizeObserver !== "undefined" && listRef.value) {
     listResizeObserver = new ResizeObserver(() => {
       updateIndicator();
+      updateScrollState();
     });
     listResizeObserver.observe(listRef.value);
   }
 
   if (typeof window !== "undefined") {
-    window.addEventListener("resize", updateIndicator);
+    window.addEventListener("resize", handleWindowResize);
   }
 });
 
 onBeforeUnmount(() => {
   listResizeObserver?.disconnect();
+  if (scrollStopTimeout) {
+    clearTimeout(scrollStopTimeout);
+  }
 
   if (typeof window !== "undefined") {
-    window.removeEventListener("resize", updateIndicator);
+    window.removeEventListener("resize", handleWindowResize);
   }
 });
 </script>
@@ -203,37 +263,57 @@ onBeforeUnmount(() => {
 <template>
   <div class="vf-tabs">
     <div
-      ref="listRef"
       class="vf-tabs__list"
+      :class="[
+        `vf-tabs__list--${size}`,
+        {
+          'vf-tabs__list--can-scroll-left': canScrollLeft,
+          'vf-tabs__list--can-scroll-right': canScrollRight,
+        },
+      ]"
       role="tablist"
       aria-orientation="horizontal"
     >
-      <button
-        v-for="(item, index) in items"
-        :id="tabId(item.value)"
-        :key="item.value"
-        :ref="
-          (element) => {
-            tabRefs[index] = element as HTMLElement | null;
-          }
-        "
-        :aria-controls="panelId(item.value)"
-        :aria-selected="activeValue === item.value"
-        :disabled="item.disabled"
-        :tabindex="activeValue === item.value ? 0 : -1"
-        class="vf-tabs__tab"
-        role="tab"
-        type="button"
-        @click="activateTab(item)"
-        @keydown="handleKeydown($event, item)"
+      <div
+        ref="listRef"
+        class="vf-tabs__list-scroller"
+        @scroll="handleListScroll"
       >
-        {{ item.label }}
-      </button>
+        <button
+          v-for="(item, index) in items"
+          :id="tabId(item.value)"
+          :key="item.value"
+          :ref="
+            (element) => {
+              tabRefs[index] = element as HTMLElement | null;
+            }
+          "
+          :aria-controls="panelId(item.value)"
+          :aria-selected="activeValue === item.value"
+          :disabled="item.disabled"
+          :tabindex="activeValue === item.value ? 0 : -1"
+          class="vf-tabs__tab"
+          role="tab"
+          type="button"
+          @click="activateTab(item)"
+          @keydown="handleKeydown($event, item)"
+        >
+          <slot
+            name="tab"
+            v-bind="{ item, isActive: activeValue === item.value, index }"
+          >
+            {{ item.label }}
+          </slot>
+        </button>
+      </div>
 
       <span
         aria-hidden="true"
         class="vf-tabs__indicator"
-        :class="indicatorReady && 'vf-tabs__indicator--ready'"
+        :class="[
+          indicatorReady && 'vf-tabs__indicator--ready',
+          isListScrolling && 'vf-tabs__indicator--no-transition',
+        ]"
         :style="indicatorStyle"
       />
     </div>
