@@ -5,6 +5,7 @@ import {
   onBeforeUnmount,
   onMounted,
   ref,
+  useSlots,
   watch,
   type CSSProperties,
 } from "vue";
@@ -26,6 +27,7 @@ const emit = defineEmits<{
   "update:modelValue": [value: string];
   change: [value: string];
 }>();
+const slots = useSlots();
 
 const baseId = useId({ prefix: "vf-tabs" });
 const listRef = ref<HTMLElement | null>(null);
@@ -237,7 +239,7 @@ onBeforeUnmount(() => {
     </div>
 
     <div
-      v-if="activeValue"
+      v-if="activeValue && slots.panel"
       :id="panelId(activeValue)"
       :aria-labelledby="tabId(activeValue)"
       class="vf-tabs__panel"

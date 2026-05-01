@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.17.5 - 2026-05-01
+
+### Changed
+
+- Updated `VfTabs` so the `tabpanel` block is rendered only when the `panel` slot is provided, allowing use as a standalone tab switcher without empty content containers.
+- Added regression coverage to ensure `VfTabs` does not render `role="tabpanel"` when no `panel` slot is passed.
+
 ## 1.17.4 - 2026-04-28
 
 ### Changed

@@ -104,6 +104,18 @@ describe("VfTabs", () => {
     expect(wrapper.get('[role="tabpanel"]').text()).toBe("active:settings");
   });
 
+  it("does not render panel when panel slot is not provided", () => {
+    const wrapper = mount(VfTabs, {
+      attachTo: document.body,
+      props: {
+        items,
+        defaultValue: "overview",
+      },
+    });
+
+    expect(wrapper.find('[role="tabpanel"]').exists()).toBe(false);
+  });
+
   it("renders a moving indicator for the active tab", async () => {
     const wrapper = mount(VfTabs, {
       attachTo: document.body,
