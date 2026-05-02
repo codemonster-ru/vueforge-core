@@ -9,20 +9,19 @@ import {
   watch,
   type CSSProperties,
 } from "vue";
+import { VueIconify, icons } from "@codemonster-ru/vueiconify";
 import { useId } from "@/composables";
-import type { VfControlSize, VfTabItem } from "@/types/components";
+import type { VfTabItem } from "@/types/components";
 
 interface VfTabsProps {
   items: VfTabItem[];
   modelValue?: string;
   defaultValue?: string;
-  size?: VfControlSize;
 }
 
 const props = withDefaults(defineProps<VfTabsProps>(), {
   modelValue: undefined,
   defaultValue: undefined,
-  size: "md",
 });
 
 const emit = defineEmits<{
@@ -36,6 +35,8 @@ const listRef = ref<HTMLElement | null>(null);
 const tabRefs = ref<Array<HTMLElement | null>>([]);
 const canScrollLeft = ref(false);
 const canScrollRight = ref(false);
+const scrollControlsReady = ref(false);
+const scrollControlsAnimated = ref(false);
 const isListScrolling = ref(false);
 const indicatorReady = ref(false);
 const indicatorStyle = ref<CSSProperties>({
@@ -161,8 +162,9 @@ function panelId(value: string) {
   return `${baseId.value}-panel-${value}`;
 }
 
-function updateIndicator(options?: { scrollIntoView?: boolean }) {
+function updateIndicator() {
   const list = listRef.value;
+  const listContainer = list?.parentElement;
   const activeIndex = props.items.findIndex(
     (item) => item.value === activeValue.value,
   );
@@ -179,8 +181,22 @@ function updateIndicator(options?: { scrollIntoView?: boolean }) {
 
   const tabStart = activeTab.offsetLeft - list.scrollLeft;
   const tabEnd = tabStart + activeTab.offsetWidth;
-  const visibleStart = Math.max(0, tabStart);
-  const visibleEnd = Math.min(list.clientWidth, tabEnd);
+  const leftScrollButton =
+    canScrollLeft.value && listContainer
+      ? (listContainer.querySelector(
+          ".vf-tabs__scroll-button--left",
+        ) as HTMLElement | null)
+      : null;
+  const rightScrollButton =
+    canScrollRight.value && listContainer
+      ? (listContainer.querySelector(
+          ".vf-tabs__scroll-button--right",
+        ) as HTMLElement | null)
+      : null;
+  const visibleInsetStart = leftScrollButton?.offsetWidth ?? 0;
+  const visibleInsetEnd = rightScrollButton?.offsetWidth ?? 0;
+  const visibleStart = Math.max(visibleInsetStart, tabStart);
+  const visibleEnd = Math.min(list.clientWidth - visibleInsetEnd, tabEnd);
   const visibleWidth = Math.max(0, visibleEnd - visibleStart);
   const isVisible = visibleWidth > 0;
 
@@ -189,13 +205,6 @@ function updateIndicator(options?: { scrollIntoView?: boolean }) {
     transform: `translateX(${visibleStart}px)`,
     width: `${visibleWidth}px`,
   };
-
-  if (
-    options?.scrollIntoView &&
-    typeof activeTab.scrollIntoView === "function"
-  ) {
-    activeTab.scrollIntoView({ block: "nearest", inline: "nearest" });
-  }
 
   updateScrollState();
 }
@@ -218,21 +227,43 @@ function handleWindowResize() {
   updateIndicator();
 }
 
+function scrollListBy(direction: "left" | "right") {
+  const list = listRef.value;
+
+  if (!list) {
+    return;
+  }
+
+  const delta = Math.max(120, Math.round(list.clientWidth * 0.6));
+  const nextScrollLeft =
+    direction === "left" ? list.scrollLeft - delta : list.scrollLeft + delta;
+
+  list.scrollTo({
+    left: nextScrollLeft,
+    behavior: "smooth",
+  });
+}
+
 watch(
   () => [activeValue.value, props.items],
   async () => {
     await nextTick();
-    updateIndicator({ scrollIntoView: true });
+    updateScrollState();
+    updateIndicator();
   },
   { deep: true, immediate: true },
 );
 
 onMounted(async () => {
   await nextTick();
-  updateIndicator({ scrollIntoView: true });
   updateScrollState();
+  updateIndicator();
+  scrollControlsReady.value = true;
   requestAnimationFrame(() => {
     indicatorReady.value = true;
+    requestAnimationFrame(() => {
+      scrollControlsAnimated.value = true;
+    });
   });
 
   if (typeof ResizeObserver !== "undefined" && listRef.value) {
@@ -261,11 +292,16 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div class="vf-tabs">
+  <div
+    class="vf-tabs"
+    :class="{
+      'vf-tabs--scroll-controls-ready': scrollControlsReady,
+      'vf-tabs--scroll-controls-animated': scrollControlsAnimated,
+    }"
+  >
     <div
       class="vf-tabs__list"
       :class="[
-        `vf-tabs__list--${size}`,
         {
           'vf-tabs__list--can-scroll-left': canScrollLeft,
           'vf-tabs__list--can-scroll-right': canScrollRight,
@@ -274,6 +310,22 @@ onBeforeUnmount(() => {
       role="tablist"
       aria-orientation="horizontal"
     >
+      <button
+        aria-label="Scroll tabs left"
+        :aria-hidden="!scrollControlsReady || !canScrollLeft"
+        :tabindex="scrollControlsReady && canScrollLeft ? 0 : -1"
+        class="vf-tabs__scroll-button vf-tabs__scroll-button--left"
+        :class="{
+          'vf-tabs__scroll-button--hidden':
+            !scrollControlsReady || !canScrollLeft,
+        }"
+        type="button"
+        :disabled="!scrollControlsReady || !canScrollLeft"
+        @click="scrollListBy('left')"
+      >
+        <VueIconify :icon="icons.chevronLeft" aria-hidden="true" size="1.25em" />
+      </button>
+
       <div
         ref="listRef"
         class="vf-tabs__list-scroller"
@@ -306,6 +358,24 @@ onBeforeUnmount(() => {
           </slot>
         </button>
       </div>
+
+      <button
+        aria-label="Scroll tabs right"
+        :aria-hidden="!scrollControlsReady || !canScrollRight"
+        :tabindex="scrollControlsReady && canScrollRight ? 0 : -1"
+        class="vf-tabs__scroll-button vf-tabs__scroll-button--right"
+        :class="{
+          'vf-tabs__scroll-button--hidden':
+            !scrollControlsReady || !canScrollRight,
+        }"
+        type="button"
+        :disabled="!scrollControlsReady || !canScrollRight"
+        @click="scrollListBy('right')"
+      >
+        <VueIconify :icon="icons.chevronRight" aria-hidden="true" size="1.25em" />
+      </button>
+
+      <span aria-hidden="true" class="vf-tabs__baseline" />
 
       <span
         aria-hidden="true"

@@ -1,5 +1,23 @@
 # Changelog
 
+## 1.17.7 - 2026-05-02
+
+### Changed
+
+- Removed `size` support from `VfTabs` (`sm`, `md`, `lg`) and aligned the component to a single size behavior.
+- Removed automatic `scrollIntoView` call from `VfTabs` indicator sync to prevent page-level scroll jumps during page refresh and initial render.
+- Updated `VfTabs` overflow behavior so long tab lists scroll horizontally inside component bounds instead of stretching adjacent layout.
+- Improved `VfTabs` active-indicator behavior during horizontal scroll:
+  - keeps indicator position synced with scrolled content
+  - clips indicator width to the visible viewport
+  - hides indicator when active tab is fully out of view
+  - disables transition while scrolling to avoid lagging "floating" motion
+- Added dynamic scroll-edge hints for `VfTabs` that appear only when content is actually hidden on the left or right side.
+- Added side scroll buttons for `VfTabs` that appear only when tab content is clipped and allow quick left/right navigation.
+- Added/updated `VfTabs` theme tokens for scroll controls, backgrounds, focus ring, fade overlays, and disabled tab color.
+- Updated `VfTabs` showcase examples to remove size variants and reflect the current single-size API.
+- Added regression coverage for overflow scroll controls and removed obsolete size-prop coverage.
+
 ## 1.17.6 - 2026-05-02
 
 ### Changed

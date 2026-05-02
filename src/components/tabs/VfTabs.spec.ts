@@ -175,16 +175,65 @@ describe("VfTabs", () => {
     expect(wrapper.findAll('[role="tab"]')[1].text()).toBe("Settings (active)");
   });
 
-  it("supports size prop", () => {
+  it("does not set variant data attribute", () => {
     const wrapper = mount(VfTabs, {
       attachTo: document.body,
       props: {
         items,
         defaultValue: "overview",
-        size: "lg",
       },
     });
 
-    expect(wrapper.get(".vf-tabs__list").classes()).toContain("vf-tabs__list--lg");
+    expect(wrapper.get(".vf-tabs").attributes("data-variant")).toBeUndefined();
+  });
+
+  it("shows scroll buttons when tab list is horizontally overflowed", async () => {
+    const wrapper = mount(VfTabs, {
+      attachTo: document.body,
+      props: {
+        items: [
+          ...items,
+          { value: "docs", label: "Docs" },
+          { value: "release", label: "Release Notes" },
+        ],
+        defaultValue: "overview",
+      },
+    });
+
+    const list = wrapper.get(".vf-tabs__list-scroller").element as HTMLElement;
+
+    Object.defineProperty(list, "clientWidth", {
+      configurable: true,
+      value: 120,
+    });
+    Object.defineProperty(list, "scrollWidth", {
+      configurable: true,
+      value: 480,
+    });
+    Object.defineProperty(list, "scrollLeft", {
+      configurable: true,
+      writable: true,
+      value: 0,
+    });
+
+    await new Promise<void>((resolve) => {
+      requestAnimationFrame(() => resolve());
+    });
+
+    await wrapper.get(".vf-tabs__list-scroller").trigger("scroll");
+    expect(wrapper.find(".vf-tabs__scroll-button--right").exists()).toBe(true);
+    expect(
+      wrapper
+        .get(".vf-tabs__scroll-button--left")
+        .classes("vf-tabs__scroll-button--hidden"),
+    ).toBe(true);
+
+    list.scrollLeft = 40;
+    await wrapper.get(".vf-tabs__list-scroller").trigger("scroll");
+    expect(
+      wrapper
+        .get(".vf-tabs__scroll-button--left")
+        .classes("vf-tabs__scroll-button--hidden"),
+    ).toBe(false);
   });
 });

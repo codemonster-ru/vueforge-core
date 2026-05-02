@@ -465,6 +465,7 @@ const tabContent = computed<Record<string, string>>(() => ({
   accessibility: "Accessibility content.",
   community: "Community content.",
 }));
+
 </script>
 
 <template>
@@ -1304,32 +1305,11 @@ const tabContent = computed<Record<string, string>>(() => ({
           <div class="demo-item">
             <p class="demo-label">vf-tabs</p>
             <div class="demo-stack">
-              <div class="demo-stack">
-                <p class="demo-text">size="sm"</p>
-                <VfTabs v-model="activeTab" :items="releaseTabs" size="sm">
-                  <template #panel="{ activeValue }">
-                    <p class="demo-text">{{ tabContent[activeValue] }}</p>
-                  </template>
-                </VfTabs>
-              </div>
-
-              <div class="demo-stack">
-                <p class="demo-text">size="md"</p>
-                <VfTabs v-model="activeTab" :items="releaseTabs" size="md">
-                  <template #panel="{ activeValue }">
-                    <p class="demo-text">{{ tabContent[activeValue] }}</p>
-                  </template>
-                </VfTabs>
-              </div>
-
-              <div class="demo-stack">
-                <p class="demo-text">size="lg"</p>
-                <VfTabs v-model="activeTab" :items="releaseTabs" size="lg">
-                  <template #panel="{ activeValue }">
-                    <p class="demo-text">{{ tabContent[activeValue] }}</p>
-                  </template>
-                </VfTabs>
-              </div>
+              <VfTabs v-model="activeTab" :items="releaseTabs">
+                <template #panel="{ activeValue }">
+                  <p class="demo-text">{{ tabContent[activeValue] }}</p>
+                </template>
+              </VfTabs>
             </div>
           </div>
 
